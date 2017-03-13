@@ -3,6 +3,9 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
+
 public class Commentable extends DomainEntity {
 
 	// Attributes --------------------------------------
@@ -24,7 +27,8 @@ public class Commentable extends DomainEntity {
 
 	private Collection<Comment>	comments;
 
-
+	@Valid
+	@OneToMany(mappedBy="commentable")
 	public Collection<Comment> getComments() {
 		return comments;
 	}

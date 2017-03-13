@@ -4,8 +4,11 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -93,14 +96,16 @@ public class Deal extends Commentable {
 	private Customer				customer;
 	private Collection<ApplyFor>	applies;
 
-
+	@Valid
+	@ManyToOne(optional=false)
 	public Customer getCustomer() {
 		return customer;
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
+	@Valid
+	@OneToMany(mappedBy="deal")
 	public Collection<ApplyFor> getApplies() {
 		return applies;
 	}

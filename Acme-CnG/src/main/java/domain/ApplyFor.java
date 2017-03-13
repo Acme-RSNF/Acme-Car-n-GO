@@ -1,6 +1,8 @@
 
 package domain;
 
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,18 +31,20 @@ public class ApplyFor extends DomainEntity {
 	private Customer	customer;
 	private Deal		deal;
 
-
-	public synchronized Customer getCustomer() {
+	@Valid
+	@ManyToOne(optional=false)
+	public Customer getCustomer() {
 		return customer;
 	}
-	public synchronized void setCustomer(Customer customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
-	public synchronized Deal getDeal() {
+	@Valid
+	@ManyToOne(optional=false)
+	public Deal getDeal() {
 		return deal;
 	}
-	public synchronized void setDeal(Deal deal) {
+	public void setDeal(Deal deal) {
 		this.deal = deal;
 	}
 

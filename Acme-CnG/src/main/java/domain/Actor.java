@@ -3,6 +3,8 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
@@ -59,28 +61,31 @@ public class Actor extends Commentable {
 
 	private Collection<Message>	sended;
 	private Collection<Message>	received;
-	private Collection<Comment>	comments;
+	private Collection<Comment>	writtenComments;
 
-
+	@Valid
+	@OneToMany(mappedBy="actor")
 	public Collection<Message> getSended() {
 		return sended;
 	}
 	public void setSended(Collection<Message> sended) {
 		this.sended = sended;
 	}
-
+	@Valid
+	@OneToMany(mappedBy="actor")
 	public Collection<Message> getReceived() {
 		return received;
 	}
 	public void setReceived(Collection<Message> received) {
 		this.received = received;
 	}
-
-	public Collection<Comment> getComments() {
-		return comments;
+	@Valid
+	@OneToMany(mappedBy="actor")
+	public Collection<Comment> getWrittenComments() {
+		return writtenComments;
 	}
-	public void setComments(Collection<Comment> comments) {
-		this.comments = comments;
+	public void setWrittenComments(Collection<Comment> writtenComments) {
+		this.writtenComments = writtenComments;
 	}
 
 }

@@ -3,6 +3,9 @@ package domain;
 
 import java.util.Collection;
 
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
+
 public class Customer extends Actor {
 
 	// Attributes --------------------------------------
@@ -14,18 +17,20 @@ public class Customer extends Actor {
 	private Collection<Deal>		deals;
 	private Collection<ApplyFor>	applies;
 
-
-	public synchronized Collection<Deal> getDeals() {
+	@Valid
+	@OneToMany(mappedBy="customer")
+	public Collection<Deal> getDeals() {
 		return deals;
 	}
-	public synchronized void setDeals(Collection<Deal> deals) {
+	public void setDeals(Collection<Deal> deals) {
 		this.deals = deals;
 	}
-
-	public synchronized Collection<ApplyFor> getApplies() {
+	@Valid
+	@OneToMany(mappedBy="customer")
+	public Collection<ApplyFor> getApplies() {
 		return applies;
 	}
-	public synchronized void setApplies(Collection<ApplyFor> applies) {
+	public void setApplies(Collection<ApplyFor> applies) {
 		this.applies = applies;
 	}
 

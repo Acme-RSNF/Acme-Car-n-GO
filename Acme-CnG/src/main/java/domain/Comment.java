@@ -3,8 +3,10 @@ package domain;
 
 import java.util.Date;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -63,14 +65,16 @@ public class Comment extends DomainEntity {
 	private Actor		actor;
 	private Commentable	commentable;
 
-
+	@Valid
+	@ManyToOne(optional=false)
 	public Actor getActor() {
 		return actor;
 	}
 	public void setActor(Actor actor) {
 		this.actor = actor;
 	}
-
+	@Valid
+	@ManyToOne(optional=false)
 	public Commentable getCommentable() {
 		return commentable;
 	}

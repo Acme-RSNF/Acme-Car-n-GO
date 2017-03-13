@@ -4,8 +4,10 @@ package domain;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,14 +62,16 @@ public class Message extends DomainEntity {
 	private Actor	sender;
 	private Actor	recipient;
 
-
+	@Valid
+	@ManyToOne(optional=false)
 	public Actor getSender() {
 		return sender;
 	}
 	public void setSender(Actor sender) {
 		this.sender = sender;
 	}
-
+	@Valid
+	@ManyToOne(optional=false)
 	public Actor getRecipient() {
 		return recipient;
 	}
