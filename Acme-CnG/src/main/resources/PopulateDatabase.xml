@@ -155,6 +155,13 @@
 				<ref bean="message4"/>
 			</list>
 		</property>
+		 <property name="writtenComments">
+			<list>
+				<ref bean="comment1"/>
+				<ref bean="comment2"/>
+			</list>
+		</property>
+		
 	</bean>
 	
 	<bean id="customer2" class="domain.Customer">
@@ -174,6 +181,16 @@
 				<ref bean="message1"/>
 			</list>
 		</property>
+		 <property name="writtenComments">
+			<list>
+				<ref bean="comment3"/>
+			</list>
+		</property>
+		<property name="comments">
+			<list>
+				<ref bean="comment1"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="customer3" class="domain.Customer">
@@ -186,6 +203,11 @@
 		<property name="received">
 			<list>
 				<ref bean="message2"/>
+			</list>
+		</property>
+		 <property name="writtenComments">
+			<list>
+				<ref bean="comment4"/>
 			</list>
 		</property>
 	</bean>
@@ -278,6 +300,13 @@
 		<property name="destination" value="Sevilla"/>
 		<property name="banned" value="true"/>
 		<property name="customer" ref="customer1"/>
+		<property name="comments">
+			<list>
+				<ref bean="comment2"/>
+				<ref bean="comment3"/>
+			</list>
+		</property>
+		
 	</bean>
 	
 	<bean id="offer2" class="domain.Offer">
@@ -323,6 +352,12 @@
 		<property name="customer" ref="customer1"/>
 		<property name="originCoordinate" ref="coordinate3"/>
 		<property name="destinationCoordinate" ref="coordinate4"/>
+		<property name="comments">
+			<list>
+				<ref bean="comment4"/>
+			</list>
+		</property>
+		
 	</bean>
 	
 	<bean id="request2" class="domain.Request">
@@ -355,4 +390,92 @@
 		<property name="banned" value="false"/>
 		<property name="customer" ref="customer4"/>
 	</bean>
+	
+	<!-- ApplyFor -->
+	<bean id="apply1" class="domain.ApplyFor">
+		<property name="status" value="PENDING"/>
+		<property name="customer" ref="customer4"/>
+		<property name="deal" ref="offer1"/>
+	</bean>
+	
+	<bean id="apply2" class="domain.ApplyFor">
+		<property name="status" value="PENDING"/>
+		<property name="customer" ref="customer2"/>
+		<property name="deal" ref="offer1"/>
+	</bean>
+	
+	<bean id="apply3" class="domain.ApplyFor">
+		<property name="status" value="PENDING"/>
+		<property name="customer" ref="customer3"/>
+		<property name="deal" ref="offer1"/>
+	</bean>
+	
+	<bean id="apply4" class="domain.ApplyFor">
+		<property name="status" value="DENIED"/>
+		<property name="customer" ref="customer3"/>
+		<property name="deal" ref="offer2"/>
+	</bean>
+	
+	<bean id="apply5" class="domain.ApplyFor">
+		<property name="status" value="ACCEPTED"/>
+		<property name="customer" ref="customer5"/>
+		<property name="deal" ref="offer2"/>
+	</bean>
+	
+	<bean id="apply6" class="domain.ApplyFor">
+		<property name="status" value="PENDING"/>
+		<property name="customer" ref="customer1"/>
+		<property name="deal" ref="request3"/>
+	</bean>
+	
+	<bean id="apply7" class="domain.ApplyFor">
+		<property name="status" value="PENDING"/>
+		<property name="customer" ref="customer3"/>
+		<property name="deal" ref="request2"/>
+	</bean>
+	
+	<bean id="apply8" class="domain.ApplyFor">
+		<property name="status" value="ACCEPTED"/>
+		<property name="customer" ref="customer3"/>
+		<property name="deal" ref="request1"/>
+	</bean>
+	
+	<!-- Comment -->
+	<bean id="comment1" class="domain.Comment">
+		<property name="title" value="Comment1"/>
+		<property name="postedMoment" value="02/08/2017 17:58"/>
+		<property name="text" value="text1"/>
+		<property name="stars" value="5"/>
+		<property name="actor" ref="customer1"/>
+		<property name="commentable" ref="customer2"/>
+	</bean>
+		
+	<bean id="comment2" class="domain.Comment">
+		<property name="title" value="Comment2"/>
+		<property name="postedMoment" value="03/08/2017 17:58"/>
+		<property name="text" value="text2"/>
+		<property name="stars" value="1"/>
+		<property name="actor" ref="customer1"/>
+		<property name="commentable" ref="offer1"/>
+	</bean>
+		
+	<bean id="comment3" class="domain.Comment">
+		<property name="title" value="Comment3"/>
+		<property name="postedMoment" value="03/08/2017 17:58"/>
+		<property name="text" value="text3"/>
+		<property name="stars" value="1"/>
+		<property name="actor" ref="customer3"/>
+		<property name="commentable" ref="offer1"/>
+	</bean>
+		
+	<bean id="comment4" class="domain.Comment">
+		<property name="title" value="Comment4"/>
+		<property name="postedMoment" value="03/09/2017 17:58"/>
+		<property name="text" value="text4"/>
+		<property name="stars" value="4"/>
+		<property name="actor" ref="customer3"/>
+		<property name="commentable" ref="request1"/>
+	</bean>
+	
+	
 </beans>
