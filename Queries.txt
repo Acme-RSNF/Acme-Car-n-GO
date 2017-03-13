@@ -1,0 +1,48 @@
+C.1 - Ratio of offers versus requests.
+
+select 1.0*(select count(o) from Offer o)/count(r) from Request r;
+
+C.2 - Average number of offers and request per customer
+
+select avg(c.deals.size) from Customer c;
+
+C.3 - Average number of applications per offer or request.
+
+select avg(d.applies.size) from Deal d;
+
+C.4 - The customer who has more applications accepted
+
+select a.customer from ApplyFor a where a.status='ACCEPTED' group by a.customer having count(a)>=all(select count(a2) from ApplyFor a2 where a2.status='ACCEPTED' group by a2.customer);
+
+C.5 - The customer who has more applications denied
+
+select a.customer from ApplyFor a where a.status='DENIED' group by a.customer having count(a)>=all(select count(a2) from ApplyFor a2 where a2.status='DENIED' group by a2.customer);
+
+B.1 - Average number of comments per actor, offer, or request
+
+select avg(c.comments.size) from Commentable c;
+
+B.2 - Average number of comments posted by administrators and customers
+
+select avg(a.writtenComments.size) from Actor a;
+
+
+B.3 - The actors who have posted ±10% the average number of comments per ac-tor.
+
+
+A.1 - The minimum, the average, and the maximum number of messages sent per actor
+
+select min(a.sended.size), avg(a.sended.size), max(a.sended.size) from Actor a;
+
+A.2 - The minimum, the average, and the maximum number of messages received per actor
+
+select min(a.received.size), avg(a.received.size), max(a.received.size) from Actor a;
+
+A.3 - The actors who have sent more messages
+
+select a from Actor a where a.sended.size=(select max(a2.sended.size) from Actor a2);
+
+
+A.4 - The actors who have got more messages
+
+select a from Actor a where a.received.size=(select max(a2.received.size) from Actor a2);
