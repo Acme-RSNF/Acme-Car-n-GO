@@ -68,7 +68,7 @@ public class Actor extends Commentable {
 	private Collection<Comment>	writtenComments;
 
 	@Valid
-	@OneToMany(mappedBy="actor")
+	@OneToMany(mappedBy="sender")
 	public Collection<Message> getSended() {
 		return sended;
 	}
@@ -76,7 +76,7 @@ public class Actor extends Commentable {
 		this.sended = sended;
 	}
 	@Valid
-	@OneToMany(mappedBy="actor")
+	@OneToMany(mappedBy="recipient")
 	public Collection<Message> getReceived() {
 		return received;
 	}

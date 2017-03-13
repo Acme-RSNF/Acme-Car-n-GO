@@ -16,6 +16,39 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
 	
+	<!-- Banner -->
+	 
+	<bean id="banner" class="domain.Banner">
+	 	<property name="image" value="https://cdn.pixabay.com/photo/2015/12/01/08/44/banner-1071797_960_720.jpg" />
+	</bean>
+	 
+	<!-- Co-ordinate -->
+	
+	<bean id="coordinate1" class="domain.Coordinate">
+		<property name="latitude" value="84.253658" />
+		<property name="longitude" value="-125.235614" />
+	</bean>
+	
+	<bean id="coordinate2" class="domain.Coordinate">
+		<property name="latitude" value="90.3658" />
+		<property name="longitude" value="125.235614" />
+	</bean>
+	
+	<bean id="coordinate3" class="domain.Coordinate">
+		<property name="latitude" value="36.253658" />
+		<property name="longitude" value="86.235614" />
+	</bean>
+	
+	<bean id="coordinate4" class="domain.Coordinate">
+		<property name="latitude" value="71.986325" />
+		<property name="longitude" value="-71.235614" />
+	</bean>
+	
+	<bean id="coordinate5" class="domain.Coordinate">
+		<property name="latitude" value="88.963" />
+		<property name="longitude" value="-3.235614" />
+	</bean>
+
 	<!-- User accounts -->
 
 	<bean id="userAccount1" class="security.UserAccount">
@@ -31,8 +64,8 @@
 	</bean>
 
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
+		<property name="username" value="customer1" />
+		<property name="password" value="ffbc4675f864e0e9aab8bdf7a0437010" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -43,13 +76,10 @@
 	</bean>
 
 	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="username" value="customer2" />
+		<property name="password" value="5ce4d191fd14ac85a1469fb8c29b7a7b" />
 		<property name="authorities">
 			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="ADMIN" />
-				</bean>
 				<bean class="security.Authority">
 					<property name="authority" value="CUSTOMER" />
 				</bean>
@@ -57,6 +87,253 @@
 		</property>
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="customer3" />
+		<property name="password" value="033f7f6121501ae98285ad77f216d5e7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="customer4" />
+		<property name="password" value="55feb130be438e686ad6a80d12dd8f44" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="customer5" />
+		<property name="password" value="9e8486cdd435beda9a60806dd334d964" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+<!-- Other domain beans come here -->	
+	<!-- Administrator -->	
+
+	<bean id="admin" class="domain.Administrator">
+		<property name="name" value="Manuel"/>
+		<property name="surname" value="Robledo"/>
+		<property name="email" value="robledo@gmail.com"/>
+		<property name="phone" value="+34 956999111"/>
+		<property name="isCommentable" value="false"/>
+		<property name="userAccount" ref="userAccount1"/>
+	</bean>
+	
+	<!-- Customer -->	
+
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Antonio"/>
+		<property name="surname" value="Martinez"/>
+		<property name="email" value="antonio@gmail.com"/>
+		<property name="phone" value="+34 957239171"/>
+		<property name="isCommentable" value="true"/>
+		<property name="userAccount" ref="userAccount2"/>
+		<property name="sended">
+			<list>
+				<ref bean="message1"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="customer2" class="domain.Customer">
+		<property name="name" value="Juan"/>
+		<property name="surname" value="Ramirez"/>
+		<property name="email" value="juan@gmail.com"/>
+		<property name="phone" value="+34 954963111"/>
+		<property name="isCommentable" value="true"/>
+		<property name="userAccount" ref="userAccount3"/>
+		<property name="received">
+			<list>
+				<ref bean="message1"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="customer3" class="domain.Customer">
+		<property name="name" value="Pedro"/>
+		<property name="surname" value="Garcia"/>
+		<property name="email" value="pedro@gmail.com"/>
+		<property name="phone" value="954632510"/>
+		<property name="isCommentable" value="true"/>
+		<property name="userAccount" ref="userAccount4"/>
+	</bean>
+	
+	<bean id="customer4" class="domain.Customer">
+		<property name="name" value="Jose Luis"/>
+		<property name="surname" value="Pulido"/>
+		<property name="email" value="joseLuis@gmail.com"/>
+		<property name="phone" value="957412032"/>
+		<property name="isCommentable" value="true"/>
+		<property name="userAccount" ref="userAccount5"/>
+	</bean>
+	
+	<bean id="customer5" class="domain.Customer">
+		<property name="name" value="Daniel"/>
+		<property name="surname" value="Garcia"/>
+		<property name="email" value="dani@gmail.com"/>
+		<property name="phone" value="965325614"/>
+		<property name="isCommentable" value="true"/>
+		<property name="userAccount" ref="userAccount6"/>
+	</bean>
+	
+	<!-- Message -->	
+
+	<bean id="message1" class="domain.Message">
+		<property name="moment" value="03/13/2017 12:00"/>
+		<property name="title" value="Mensaje 1"/>
+		<property name="text" value="Te he enviado un mensaje."/>
+		<property name="sender" ref="customer1"/>
+		<property name="recipient" ref="customer2"/>
+		<property name="attachments">
+			<list>
+				<value>"https://www.google.es"</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message2" class="domain.Message">
+		<property name="moment" value="03/10/2017 12:00"/>
+		<property name="title" value="Mensaje 2"/>
+		<property name="text" value="Esto es un mensaje de prueba."/>
+		<property name="sender" ref="customer1"/>
+		<property name="recipient" ref="customer3"/>
+		<property name="attachments">
+			<list>
+				<value>"https://www.google.es"</value>
+				<value>"https://www.google.es"</value>
+				<value>"https://www.google.es"</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message3" class="domain.Message">
+		<property name="moment" value="03/10/2017 12:00"/>
+		<property name="title" value="Mensaje 3"/>
+		<property name="text" value="Esto es un mensaje de prueba."/>
+		<property name="sender" ref="customer2"/>
+		<property name="recipient" ref="customer1"/>
+		<property name="attachments">
+			<list>
+				<value>"https://www.google.es"</value>
+				<value>"https://www.google.es"</value>
+				<value>"https://www.google.es"</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message4" class="domain.Message">
+		<property name="moment" value="03/10/2017 12:00"/>
+		<property name="title" value="Mensaje 4"/>
+		<property name="text" value="Mensaje"/>
+		<property name="sender" ref="customer4"/>
+		<property name="recipient" ref="customer1"/>
+		<property name="attachments">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Offer -->	
+	<bean id="offer1" class="domain.Offer">
+		<property name="title" value="Offer 1"/>
+		<property name="description" value="Esta es la descripcion del offer1"/>
+		<property name="moment" value="03/13/2017 17:00"/>
+		<property name="origin" value="Córdoba"/>
+		<property name="destination" value="Sevilla"/>
+		<property name="banned" value="true"/>
+		<property name="customer" ref="customer1"/>
+	</bean>
+	
+	<bean id="offer2" class="domain.Offer">
+		<property name="title" value="Offer 2"/>
+		<property name="description" value="Esta es la descripcion del offer2"/>
+		<property name="moment" value="03/13/2017 16:00"/>
+		<property name="origin" value="Córdoba"/>
+		<property name="destination" value="Sevilla"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer1"/>
+	</bean>
+	
+	<bean id="offer3" class="domain.Offer">
+		<property name="title" value="Offer 3"/>
+		<property name="description" value="Esta es la descripcion del offer3"/>
+		<property name="moment" value="03/13/2017 16:00"/>
+		<property name="origin" value="Madrid"/>
+		<property name="destination" value="Cordoba"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer3"/>
+	</bean>
+	
+	<bean id="offer4" class="domain.Offer">
+		<property name="title" value="Offer 3"/>
+		<property name="description" value="Esta es la descripcion del offer4"/>
+		<property name="moment" value="03/17/2017 16:00"/>
+		<property name="origin" value="Sevilla"/>
+		<property name="destination" value="Cordoba"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer1"/>
+		<property name="originCoodinate" ref="coordinate1"/>
+		<property name="destinationCoodinate" ref="coordinate2"/>
+	</bean>
+	
+	<!-- Request -->	
+	<bean id="request1" class="domain.Request">
+		<property name="title" value="Request 1"/>
+		<property name="description" value="Esta es la descripcion de la request1"/>
+		<property name="moment" value="03/14/2017 17:00"/>
+		<property name="origin" value="Palma del Río"/>
+		<property name="destination" value="Sevilla"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer1"/>
+		<property name="originCoodinate" ref="coordinate3"/>
+		<property name="destinationCoodinate" ref="coordinate4"/>
+	</bean>
+	
+	<bean id="request2" class="domain.Request">
+		<property name="title" value="Request 2"/>
+		<property name="description" value="Esta es la descripcion de la request2"/>
+		<property name="moment" value="03/14/2017 17:00"/>
+		<property name="origin" value="Sevilla"/>
+		<property name="destination" value="Malaga"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer4"/>
+		<property name="destinationCoodinate" ref="coordinate5"/>
+	</bean>
+	
+	<bean id="request3" class="domain.Request">
+		<property name="title" value="Request 3"/>
+		<property name="description" value="Esta es la descripcion de la request3"/>
+		<property name="moment" value="03/21/2017 17:00"/>
+		<property name="origin" value="Malaga"/>
+		<property name="destination" value="Sevilla"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer4"/>
+	</bean>
+	
+	<bean id="request4" class="domain.Request">
+		<property name="title" value="Request 4"/>
+		<property name="description" value="Esta es la descripcion de la request4"/>
+		<property name="moment" value="03/14/2017 17:00"/>
+		<property name="origin" value="Ecija"/>
+		<property name="destination" value="Palma del Río"/>
+		<property name="banned" value="false"/>
+		<property name="customer" ref="customer4"/>
+	</bean>
 	
 </beans>
