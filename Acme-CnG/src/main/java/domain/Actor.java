@@ -5,13 +5,17 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
+import security.UserAccount;
 @Entity
 @Access(AccessType.PROPERTY)
 public class Actor extends Commentable {
@@ -52,7 +56,7 @@ public class Actor extends Commentable {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^([+]\\d {1,3})?[ ]?(\\d9})")
+	@Pattern(regexp = "^([+]?\\d{1,3})?[ ]?(\\d{9})")
 	public String getPhone() {
 		return phone;
 	}
@@ -66,7 +70,19 @@ public class Actor extends Commentable {
 	private Collection<Message>	sended;
 	private Collection<Message>	received;
 	private Collection<Comment>	writtenComments;
+	private UserAccount userAccount;
 
+	@Valid
+	@OneToOne(cascade=CascadeType.ALL,optional = false)
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
+	
+	
+	
 	@Valid
 	@OneToMany(mappedBy="sender")
 	public Collection<Message> getSended() {

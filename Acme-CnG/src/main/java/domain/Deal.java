@@ -6,12 +6,15 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.persistence.Column;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -66,7 +69,11 @@ public class Deal extends Commentable {
 		this.origin = origin;
 	}
 
-	public Coordinate getOriginCoordinate() {
+	 @AttributeOverrides({
+		 @AttributeOverride(name = "latitude", column = @Column(name = "originLatitude")),
+		 @AttributeOverride(name = "longitude", column = @Column(name = "originLongitude")),
+		 })
+	 public Coordinate getOriginCoordinate() {
 		return originCoordinate;
 	}
 	public void setOriginCoordinate(Coordinate originCoordinate) {
@@ -80,6 +87,10 @@ public class Deal extends Commentable {
 		this.destination = destination;
 	}
 
+	@AttributeOverrides({
+		@AttributeOverride(name = "latitude", column = @Column(name = "destinationLatitude")),
+		@AttributeOverride(name = "longitude", column = @Column(name = "destinationLongitude")),
+		})
 	public Coordinate getDestinationCoordinate() {
 		return destinationCoordinate;
 	}

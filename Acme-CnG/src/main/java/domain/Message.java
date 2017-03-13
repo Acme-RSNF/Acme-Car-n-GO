@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -53,6 +55,7 @@ public class Message extends DomainEntity {
 		this.text = text;
 	}
 
+	@ElementCollection
 	public Collection<String> getAttachment() {
 		return attachment;
 	}

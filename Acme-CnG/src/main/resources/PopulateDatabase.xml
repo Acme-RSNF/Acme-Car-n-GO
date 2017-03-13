@@ -16,8 +16,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
 	
-	<!-- Banner -->
-	 
+	<!-- Banner --> 
 	<bean id="banner" class="domain.Banner">
 	 	<property name="image" value="https://cdn.pixabay.com/photo/2015/12/01/08/44/banner-1071797_960_720.jpg" />
 	</bean>
@@ -122,8 +121,8 @@
 			</list>
 		</property>
 	</bean>
-	
-<!-- Other domain beans come here -->	
+
+ <!--Other domain beans come here -->	
 	<!-- Administrator -->	
 
 	<bean id="admin" class="domain.Administrator">
@@ -131,12 +130,12 @@
 		<property name="surname" value="Robledo"/>
 		<property name="email" value="robledo@gmail.com"/>
 		<property name="phone" value="+34 956999111"/>
-		<property name="isCommentable" value="false"/>
 		<property name="userAccount" ref="userAccount1"/>
+		<property name="isCommentable" value="false"/>
+		
 	</bean>
+	<!-- Customer -->
 	
-	<!-- Customer -->	
-
 	<bean id="customer1" class="domain.Customer">
 		<property name="name" value="Antonio"/>
 		<property name="surname" value="Martinez"/>
@@ -147,6 +146,13 @@
 		<property name="sended">
 			<list>
 				<ref bean="message1"/>
+				<ref bean="message2"/>
+			</list>
+		</property>
+		<property name="received">
+			<list>
+				<ref bean="message3"/>
+				<ref bean="message4"/>
 			</list>
 		</property>
 	</bean>
@@ -158,6 +164,11 @@
 		<property name="phone" value="+34 954963111"/>
 		<property name="isCommentable" value="true"/>
 		<property name="userAccount" ref="userAccount3"/>
+		<property name="sended">
+			<list>
+				<ref bean="message3"/>
+			</list>
+		</property>
 		<property name="received">
 			<list>
 				<ref bean="message1"/>
@@ -172,6 +183,11 @@
 		<property name="phone" value="954632510"/>
 		<property name="isCommentable" value="true"/>
 		<property name="userAccount" ref="userAccount4"/>
+		<property name="received">
+			<list>
+				<ref bean="message2"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="customer4" class="domain.Customer">
@@ -181,6 +197,11 @@
 		<property name="phone" value="957412032"/>
 		<property name="isCommentable" value="true"/>
 		<property name="userAccount" ref="userAccount5"/>
+		<property name="sended">
+			<list>
+				<ref bean="message4"/>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="customer5" class="domain.Customer">
@@ -192,18 +213,17 @@
 		<property name="userAccount" ref="userAccount6"/>
 	</bean>
 	
-	<!-- Message -->	
-
+	<!-- Message 	-->
 	<bean id="message1" class="domain.Message">
 		<property name="moment" value="03/13/2017 12:00"/>
 		<property name="title" value="Mensaje 1"/>
 		<property name="text" value="Te he enviado un mensaje."/>
 		<property name="sender" ref="customer1"/>
 		<property name="recipient" ref="customer2"/>
-		<property name="attachments">
-			<list>
-				<value>"https://www.google.es"</value>
-			</list>
+		<property name="attachment">
+			<set>
+				<value>http://www.google.es</value>
+			</set>
 		</property>
 	</bean>
 	
@@ -213,12 +233,12 @@
 		<property name="text" value="Esto es un mensaje de prueba."/>
 		<property name="sender" ref="customer1"/>
 		<property name="recipient" ref="customer3"/>
-		<property name="attachments">
-			<list>
-				<value>"https://www.google.es"</value>
-				<value>"https://www.google.es"</value>
-				<value>"https://www.google.es"</value>
-			</list>
+		<property name="attachment">
+			<set>
+				<value>http://www.google.es</value>
+				<value>http://www.google.es</value>
+				<value>http://www.google.es</value>
+			</set>
 		</property>
 	</bean>
 	
@@ -228,12 +248,12 @@
 		<property name="text" value="Esto es un mensaje de prueba."/>
 		<property name="sender" ref="customer2"/>
 		<property name="recipient" ref="customer1"/>
-		<property name="attachments">
-			<list>
-				<value>"https://www.google.es"</value>
-				<value>"https://www.google.es"</value>
-				<value>"https://www.google.es"</value>
-			</list>
+		<property name="attachment">
+			<set>
+				<value>http://www.google.es</value>
+				<value>http://www.google.es</value>
+				<value>http://www.google.es</value>
+			</set>
 		</property>
 	</bean>
 	
@@ -243,12 +263,12 @@
 		<property name="text" value="Mensaje"/>
 		<property name="sender" ref="customer4"/>
 		<property name="recipient" ref="customer1"/>
-		<property name="attachments">
+		<property name="attachment">
 			<list>
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Offer -->	
 	<bean id="offer1" class="domain.Offer">
 		<property name="title" value="Offer 1"/>
@@ -288,8 +308,8 @@
 		<property name="destination" value="Cordoba"/>
 		<property name="banned" value="false"/>
 		<property name="customer" ref="customer1"/>
-		<property name="originCoodinate" ref="coordinate1"/>
-		<property name="destinationCoodinate" ref="coordinate2"/>
+		<property name="originCoordinate" ref="coordinate1"/>
+		<property name="destinationCoordinate" ref="coordinate2"/>
 	</bean>
 	
 	<!-- Request -->	
@@ -301,8 +321,8 @@
 		<property name="destination" value="Sevilla"/>
 		<property name="banned" value="false"/>
 		<property name="customer" ref="customer1"/>
-		<property name="originCoodinate" ref="coordinate3"/>
-		<property name="destinationCoodinate" ref="coordinate4"/>
+		<property name="originCoordinate" ref="coordinate3"/>
+		<property name="destinationCoordinate" ref="coordinate4"/>
 	</bean>
 	
 	<bean id="request2" class="domain.Request">
@@ -313,7 +333,7 @@
 		<property name="destination" value="Malaga"/>
 		<property name="banned" value="false"/>
 		<property name="customer" ref="customer4"/>
-		<property name="destinationCoodinate" ref="coordinate5"/>
+		<property name="destinationCoordinate" ref="coordinate5"/>
 	</bean>
 	
 	<bean id="request3" class="domain.Request">
@@ -335,5 +355,4 @@
 		<property name="banned" value="false"/>
 		<property name="customer" ref="customer4"/>
 	</bean>
-	
 </beans>
