@@ -53,4 +53,12 @@ public class CommentableService {
 		return result;
 	}
 
+	//DashBoard Services -----
+
+	public Double avgComment() {
+		Double result;
+		result = commentableRepository.avgComment();
+		return result;
+	}
+
 }

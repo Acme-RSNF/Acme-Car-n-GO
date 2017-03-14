@@ -129,4 +129,24 @@ public class CustomerService {
 		return result;
 	}
 
+	//Dashboard Services ------
+
+	public Double avgOfferRequestCustomer() {
+		Double result;
+		result = customerRepository.avgOfferRequestCustomer();
+		return result;
+	}
+
+	public Customer customerApplyAccepted() {
+		Customer result;
+		result = customerRepository.customerApplyAccepted();
+		return result;
+	}
+
+	public Customer customerApplyDenied() {
+		Customer result;
+		result = customerRepository.customerApplyDenied();
+		return result;
+	}
+
 }

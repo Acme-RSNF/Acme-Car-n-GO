@@ -113,4 +113,17 @@ public class DealService {
 		return result;
 	}
 
+	// Dashboard Services -----------------------
+
+	public Double ratioOfferVsRequest() {
+		Double result;
+		result = dealRepository.ratioOfferVsRequest();
+		return result;
+	}
+
+	public Double avgApplyDeal() {
+		Double result;
+		result = dealRepository.avgApplyDeal();
+		return result;
+	}
 }

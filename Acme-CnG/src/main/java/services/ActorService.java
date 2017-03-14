@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,4 +92,57 @@ public class ActorService {
 		Assert.notNull(actor);
 		return actor;
 	}
+
+	//Dashboard Services ---------
+
+	public Double avgCommentByActor() {
+		Double result;
+		result = actorRepository.avgCommentByActor();
+		return result;
+	}
+
+	public Collection<Actor> actorAvgCommentPlusTenPercent() {
+		Collection<Actor> result = new ArrayList<Actor>();
+		result = actorRepository.actorAvgCommentPlusTenPercent();
+		return result;
+	}
+
+	public Collection<Actor> actorAvgCommentMinusTenPercent() {
+		Collection<Actor> result = new ArrayList<Actor>();
+		result = actorRepository.actorAvgCommentMinusTenPercent();
+		return result;
+	}
+
+	public Collection<Double> minAvgMaxSent() {
+		Collection<Double> result = new ArrayList<Double>();
+		Object[] aux = actorRepository.minAvgMaxSent();
+
+		for (int i = 0; i < 3; i++)
+			result.add((Double) aux[i]);
+
+		return result;
+	}
+
+	public Collection<Double> minAvgMaxReceived() {
+		Collection<Double> result = new ArrayList<Double>();
+		Object[] aux = actorRepository.minAvgMaxReceived();
+
+		for (int i = 0; i < 3; i++)
+			result.add((Double) aux[i]);
+
+		return result;
+	}
+
+	public Collection<Actor> actorSentMoreMessage() {
+		Collection<Actor> result = new ArrayList<Actor>();
+		result = actorRepository.actorSentMoreMessage();
+		return result;
+	}
+
+	public Collection<Actor> actorReceivedMoreMessage() {
+		Collection<Actor> result = new ArrayList<Actor>();
+		result = actorRepository.actorReceivedMoreMessage();
+		return result;
+	}
+
 }
