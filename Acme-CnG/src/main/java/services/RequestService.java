@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,5 +117,13 @@ public class RequestService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Request> findByCreator() {
+		Collection<Request> result = new ArrayList<Request>();
+		Customer customer;
+		customer = customerService.findByPrincipal();
+		result = requestRepository.findByCreator(customer);
+		return result;
+	}
 
 }

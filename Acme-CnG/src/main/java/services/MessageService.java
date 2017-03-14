@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,13 @@ public class MessageService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Message> allMessagesByActorId() {
+		Collection<Message> result = new ArrayList<Message>();
+		Actor actor = actorService.findByPrincipal();
+		int actorId = actor.getId();
+		result = messageRepository.allMessagesByActorId(actorId);
+		return result;
+	}
 
 }

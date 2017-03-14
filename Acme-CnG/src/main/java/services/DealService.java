@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import repositories.DealRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Customer;
 import domain.Deal;
 
 @Service
@@ -23,8 +25,11 @@ public class DealService {
 	@Autowired
 	private DealRepository	dealRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private CustomerService	customerService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -99,5 +104,13 @@ public class DealService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Deal> findByCreator() {
+		Collection<Deal> result = new ArrayList<Deal>();
+		Customer customer;
+		customer = customerService.findByPrincipal();
+		result = dealRepository.findByCreator(customer);
+		return result;
+	}
 
 }
