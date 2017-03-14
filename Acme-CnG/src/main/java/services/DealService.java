@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -7,40 +8,40 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Deal;
-
+import repositories.DealRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Deal;
 
 @Service
 @Transactional
 public class DealService {
-	
-/*
+
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private DealRepository dealRepository;
-	
+	private DealRepository	dealRepository;
+
+
 	// Supporting services ----------------------------------------------------
-	
+
 	// Constructors -----------------------------------------------------------
-	
-	public DealService(){
+
+	public DealService() {
 		super();
 	}
-	
+
 	// Simple CRUD methods ----------------------------------------------------
-	
+
 	public Deal create() {
-		
+
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
-		
+
 		Deal result;
 
 		result = new Deal();
@@ -67,36 +68,36 @@ public class DealService {
 	}
 
 	public Deal save(Deal deal) {
-		
+
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
-		
+
 		Assert.notNull(deal);
-		
+
 		Deal result;
 
 		result = dealRepository.save(deal);
-		
+
 		return result;
 	}
 
 	public void delete(Deal deal) {
-		
+
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
-		
+
 		Assert.notNull(deal);
 		Assert.isTrue(deal.getId() != 0);
 
 		dealRepository.delete(deal);
 	}
-	
+
 	// Other business methods -------------------------------------------------
-*/
+
 }

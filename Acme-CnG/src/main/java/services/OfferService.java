@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -7,121 +8,113 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Customer;
-import domain.Offer;
-
+import repositories.OfferRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Customer;
+import domain.Offer;
 
 @Service
 @Transactional
 public class OfferService {
-	
+
 	// Managed repository -----------------------------------------------------
-	/*
-		@Autowired
-		private OfferRepository	offerRepository;
+
+	@Autowired
+	private OfferRepository	offerRepository;
+
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private CustomerService	customerService;
 
 
-		// Supporting services ----------------------------------------------------
+	// Constructors -----------------------------------------------------------
 
-		// Constructors -----------------------------------------------------------
+	public OfferService() {
+		super();
+	}
 
-		public OfferService() {
-			super();
-		}
+	// Simple CRUD methods ----------------------------------------------------
 
-		// Simple CRUD methods ----------------------------------------------------
+	public Offer create() {
 
-		public Offer create() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		final Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			final Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
+		Offer result;
+		result = new Offer();
 
-			Offer result;
-			result = new Offer();
+		Customer customer;
+		customer = customerService.findByPrincipal();
 
-			Customer customer;
-			customer = customerService.findByPrincipal();
+		result.setCustomer(customer);
 
-			result.setCustomer(customer);
+		return result;
+	}
 
-			return result;
-		}
+	public Collection<Offer> findAll() {
+		Collection<Offer> result;
 
-		public Collection<Offer> findAll() {
-			Collection<Offer> result;
+		result = offerRepository.findAll();
+		Assert.notNull(result);
 
-			result = offerRepository.findAll();
-			Assert.notNull(result);
+		return result;
+	}
 
-			return result;
-		}
+	public Offer findOne(int offerId) {
+		Offer result;
 
-		public Offer findOne(int offerId) {
-			Offer result;
+		result = offerRepository.findOne(offerId);
+		Assert.notNull(result);
 
-			result = offerRepository.findOne(offerId);
-			Assert.notNull(result);
+		return result;
+	}
 
-			return result;
-		}
+	public Offer save(Offer offer) {
 
-		public Collection<Offer> findByPrincipal() {
-			Collection<Offer> result;
-			UserAccount userAccount;
+		Assert.notNull(offer);
+		Offer result;
+		result = offerRepository.save(offer);
 
-			userAccount = LoginService.getPrincipal();
-			result = offerRepository.findByUserAccount(userAccount);
+		return result;
+	}
 
-			return result;
-		}
+	public Offer save2(Offer offer) {
 
-		public Offer save(Offer offer) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		final Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			Assert.notNull(offer);
-			Offer result;
-			result = offerRepository.save(offer);
+		Assert.notNull(offer);
 
-			return result;
-		}
+		Offer result;
 
-		public Offer save2(Offer offer) {
+		result = offerRepository.save(offer);
 
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			final Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
+		return result;
+	}
 
-			Assert.notNull(offer);
+	public void delete(Offer offer) {
 
-			Offer result;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			result = offerRepository.save(offer);
+		Assert.notNull(offer);
+		Assert.isTrue(offer.getId() != 0);
 
-			return result;
-		}
+		offerRepository.delete(offer);
+	}
 
-		public void delete(Offer offer) {
-
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
-
-			Assert.notNull(offer);
-			Assert.isTrue(offer.getId() != 0);
-
-			offerRepository.delete(offer);
-		}
-
-		// Other business methods -------------------------------------------------
-	*/
+	// Other business methods -------------------------------------------------
 
 }

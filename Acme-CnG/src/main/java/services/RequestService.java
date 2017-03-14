@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -7,121 +8,113 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Customer;
-import domain.Request;
-
+import repositories.RequestRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Customer;
+import domain.Request;
 
 @Service
 @Transactional
 public class RequestService {
-	
+
 	// Managed repository -----------------------------------------------------
-	/*
-		@Autowired
-		private RequestRepository	requestRepository;
+
+	@Autowired
+	private RequestRepository	requestRepository;
+
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private CustomerService		customerService;
 
 
-		// Supporting services ----------------------------------------------------
+	// Constructors -----------------------------------------------------------
 
-		// Constructors -----------------------------------------------------------
+	public RequestService() {
+		super();
+	}
 
-		public RequestService() {
-			super();
-		}
+	// Simple CRUD methods ----------------------------------------------------
 
-		// Simple CRUD methods ----------------------------------------------------
+	public Request create() {
 
-		public Request create() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		final Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			final Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
+		Request result;
+		result = new Request();
 
-			Request result;
-			result = new Request();
+		Customer customer;
+		customer = customerService.findByPrincipal();
 
-			Customer customer;
-			customer = customerService.findByPrincipal();
+		result.setCustomer(customer);
 
-			result.setCustomer(customer);
+		return result;
+	}
 
-			return result;
-		}
+	public Collection<Request> findAll() {
+		Collection<Request> result;
 
-		public Collection<Request> findAll() {
-			Collection<Request> result;
+		result = requestRepository.findAll();
+		Assert.notNull(result);
 
-			result = requestRepository.findAll();
-			Assert.notNull(result);
+		return result;
+	}
 
-			return result;
-		}
+	public Request findOne(int requestId) {
+		Request result;
 
-		public Request findOne(int requestId) {
-			Request result;
+		result = requestRepository.findOne(requestId);
+		Assert.notNull(result);
 
-			result = requestRepository.findOne(requestId);
-			Assert.notNull(result);
+		return result;
+	}
 
-			return result;
-		}
+	public Request save(Request request) {
 
-		public Collection<Request> findByPrincipal() {
-			Collection<Request> result;
-			UserAccount userAccount;
+		Assert.notNull(request);
+		Request result;
+		result = requestRepository.save(request);
 
-			userAccount = LoginService.getPrincipal();
-			result = requestRepository.findByUserAccount(userAccount);
+		return result;
+	}
 
-			return result;
-		}
+	public Request save2(Request request) {
 
-		public Request save(Request request) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			Assert.notNull(request);
-			Request result;
-			result = requestRepository.save(request);
+		Assert.notNull(request);
 
-			return result;
-		}
+		Request result;
 
-		public Request save2(Request request) {
+		result = requestRepository.save(request);
 
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
+		return result;
+	}
 
-			Assert.notNull(request);
+	public void delete(Request request) {
 
-			Request result;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
-			result = requestRepository.save(request);
+		Assert.notNull(request);
+		Assert.isTrue(request.getId() != 0);
 
-			return result;
-		}
+		requestRepository.delete(request);
+	}
 
-		public void delete(Request request) {
+	// Other business methods -------------------------------------------------
 
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
-
-			Assert.notNull(request);
-			Assert.isTrue(request.getId() != 0);
-
-			requestRepository.delete(request);
-		}
-
-		// Other business methods -------------------------------------------------
-	
-*/
 }

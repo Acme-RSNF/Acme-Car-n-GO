@@ -1,3 +1,4 @@
+
 package services;
 
 import java.util.Collection;
@@ -7,121 +8,81 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Customer;
+import repositories.MessageRepository;
+import domain.Actor;
 import domain.Message;
-
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 
 @Service
 @Transactional
 public class MessageService {
-	
+
 	// Managed repository -----------------------------------------------------
-	/*
-		@Autowired
-		private MessageRepository	messageRepository;
+
+	@Autowired
+	private MessageRepository	messageRepository;
+
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private ActorService		actorService;
 
 
-		// Supporting services ----------------------------------------------------
+	// Constructors -----------------------------------------------------------
 
-		// Constructors -----------------------------------------------------------
+	public MessageService() {
+		super();
+	}
 
-		public MessageService() {
-			super();
-		}
+	// Simple CRUD methods ----------------------------------------------------
 
-		// Simple CRUD methods ----------------------------------------------------
+	public Message create() {
 
-		public Message create() {
+		Message result;
+		result = new Message();
 
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			final Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
+		Actor actor;
+		actor = actorService.findByPrincipal();
 
-			Message result;
-			result = new Message();
+		result.setSender(actor);
 
-			Customer customer;
-			customer = customerService.findByPrincipal();
+		return result;
+	}
 
-			result.setSender(customer);
+	public Collection<Message> findAll() {
+		Collection<Message> result;
 
-			return result;
-		}
+		result = messageRepository.findAll();
+		Assert.notNull(result);
 
-		public Collection<Message> findAll() {
-			Collection<Message> result;
+		return result;
+	}
 
-			result = messageRepository.findAll();
-			Assert.notNull(result);
+	public Message findOne(final int messageId) {
+		Message result;
 
-			return result;
-		}
+		result = messageRepository.findOne(messageId);
+		Assert.notNull(result);
 
-		public Message findOne(final int messageId) {
-			Message result;
+		return result;
+	}
 
-			result = messageRepository.findOne(messageId);
-			Assert.notNull(result);
+	public Message save(Message message) {
 
-			return result;
-		}
+		Assert.notNull(message);
+		Message result;
+		result = messageRepository.save(message);
 
-		public Collection<Message> findByPrincipal() {
-			Collection<Message> result;
-			UserAccount userAccount;
+		return result;
+	}
 
-			userAccount = LoginService.getPrincipal();
-			result = messageRepository.findByUserAccount(userAccount);
+	public void delete(Message message) {
 
-			return result;
-		}
+		Assert.notNull(message);
+		Assert.isTrue(message.getId() != 0);
 
-		public Message save(Message message) {
+		messageRepository.delete(message);
+	}
 
-			Assert.notNull(message);
-			Message result;
-			result = messageRepository.save(message);
+	// Other business methods -------------------------------------------------
 
-			return result;
-		}
-
-		public Message save2(Message message) {
-
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			final Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
-
-			Assert.notNull(message);
-
-			Message result;
-
-			result = messageRepository.save(message);
-
-			return result;
-		}
-
-		public void delete(Message message) {
-
-			UserAccount userAccount;
-			userAccount = LoginService.getPrincipal();
-			Authority au = new Authority();
-			au.setAuthority("CUSTOMER");
-			Assert.isTrue(userAccount.getAuthorities().contains(au));
-
-			Assert.notNull(message);
-			Assert.isTrue(message.getId() != 0);
-
-			messageRepository.delete(message);
-		}
-
-		// Other business methods -------------------------------------------------
-	
-*/
 }

@@ -1,52 +1,56 @@
+
 package services;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import repositories.CommentableRepository;
 import domain.Commentable;
 
 @Service
 @Transactional
 public class CommentableService {
-	
+
 	// Managed repository -----------------------------------------------------
-/*
-		 @Autowired
-		 private CommentableRepository commentableRepository;
-		
-		// Constructors -----------------------------------------------------------
 
-		// Simple CRUD methods ----------------------------------------------------
+	@Autowired
+	private CommentableRepository	commentableRepository;
 
-		public Collection<Commentable> findAll() {
-			Collection<Commentable> result;
-			result = commentableRepository.findAll();
-			return result;
-		}
 
-		public Commentable findOne(int commentableId) {
-			Commentable result;
-			result = commentableRepository.findOne(commentableId);
-			return result;
-		}
+	// Constructors -----------------------------------------------------------
 
-		public Commentable save(Commentable commentable) {
-			return commentableRepository.save(commentable);
-		}
+	// Simple CRUD methods ----------------------------------------------------
 
-		public void delete(Commentable commentable) {
-			commentableRepository.delete(commentable);
-		}
+	public Collection<Commentable> findAll() {
+		Collection<Commentable> result;
+		result = commentableRepository.findAll();
+		return result;
+	}
 
-		// Other bussines methods ---------------------------
-		public Commentable findCommentableById(int id) {
-			Commentable result;
+	public Commentable findOne(int commentableId) {
+		Commentable result;
+		result = commentableRepository.findOne(commentableId);
+		return result;
+	}
 
-			result = commentableRepository.findCommentableById(id);
+	public Commentable save(Commentable commentable) {
+		return commentableRepository.save(commentable);
+	}
 
-			return result;
-		}
-*/
+	public void delete(Commentable commentable) {
+		commentableRepository.delete(commentable);
+	}
+
+	// Other business methods ---------------------------
+	public Commentable findCommentableById(int id) {
+		Commentable result;
+
+		result = commentableRepository.findCommentableById(id);
+
+		return result;
+	}
+
 }

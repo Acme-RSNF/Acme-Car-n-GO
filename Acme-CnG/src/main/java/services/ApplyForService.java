@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.ApplyForRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -19,12 +20,15 @@ import domain.Customer;
 public class ApplyForService {
 
 	// Managed repository -----------------------------------------------------
-/*
+
 	@Autowired
 	private ApplyForRepository	applyForRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private CustomerService		customerService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -38,7 +42,7 @@ public class ApplyForService {
 
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		final Authority au = new Authority();
+		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
@@ -56,45 +60,35 @@ public class ApplyForService {
 	public Collection<ApplyFor> findAll() {
 		Collection<ApplyFor> result;
 
-		result = this.applyForRepository.findAll();
+		result = applyForRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public ApplyFor findOne(final int applyForId) {
+	public ApplyFor findOne(int applyForId) {
 		ApplyFor result;
 
-		result = this.applyForRepository.findOne(applyForId);
+		result = applyForRepository.findOne(applyForId);
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public Collection<ApplyFor> findByPrincipal() {
-		Collection<ApplyFor> result;
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-		result = this.applyForRepository.findByUserAccount(userAccount);
-
-		return result;
-	}
-
-	public ApplyFor save(final ApplyFor applyFor) {
+	public ApplyFor save(ApplyFor applyFor) {
 
 		Assert.notNull(applyFor);
 		ApplyFor result;
-		result = this.applyForRepository.save(applyFor);
+		result = applyForRepository.save(applyFor);
 
 		return result;
 	}
 
-	public ApplyFor save2(final ApplyFor applyFor) {
+	public ApplyFor save2(ApplyFor applyFor) {
 
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		final Authority au = new Authority();
+		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
@@ -102,25 +96,25 @@ public class ApplyForService {
 
 		ApplyFor result;
 
-		result = this.applyForRepository.save(applyFor);
+		result = applyForRepository.save(applyFor);
 
 		return result;
 	}
 
-	public void delete(final ApplyFor applyFor) {
+	public void delete(ApplyFor applyFor) {
 
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		final Authority au = new Authority();
+		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		Assert.notNull(applyFor);
 		Assert.isTrue(applyFor.getId() != 0);
 
-		this.applyForRepository.delete(applyFor);
+		applyForRepository.delete(applyFor);
 	}
 
 	// Other business methods -------------------------------------------------
-*/
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.AdministratorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
@@ -22,7 +23,7 @@ import domain.Message;
 public class AdministratorService {
 
 	// Managed repository -----------------------------------------------------
-/*
+
 	@Autowired
 	private AdministratorRepository	administratorRepository;
 
@@ -69,7 +70,7 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Administrator findOne(final int administratorId) {
+	public Administrator findOne(int administratorId) {
 		Administrator result;
 
 		result = administratorRepository.findOne(administratorId);
@@ -78,7 +79,7 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Administrator save(final Administrator administrator) {
+	public Administrator save(Administrator administrator) {
 		Assert.notNull(administrator);
 
 		Administrator result;
@@ -88,7 +89,7 @@ public class AdministratorService {
 		return result;
 	}
 
-	public void delete(final Administrator administrator) {
+	public void delete(Administrator administrator) {
 		Assert.notNull(administrator);
 		Assert.isTrue(administrator.getId() != 0);
 
@@ -103,13 +104,13 @@ public class AdministratorService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		result = this.findByUserAccountId(userAccount.getId());
+		result = findByUserAccountId(userAccount.getId());
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public Administrator findByUserAccountId(final int userAccount) {
+	public Administrator findByUserAccountId(int userAccount) {
 		Assert.notNull(userAccount);
 		Administrator result;
 
@@ -117,5 +118,5 @@ public class AdministratorService {
 
 		return result;
 	}
-*/
+
 }

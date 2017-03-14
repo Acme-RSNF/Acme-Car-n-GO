@@ -8,18 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
+import repositories.BannerRepository;
 import domain.Banner;
-import domain.Customer;
 
 @Service
 @Transactional
 public class BannerService {
 
 	// Managed repository -----------------------------------------------------
-/*
+
 	@Autowired
 	private BannerRepository	bannerRepository;
 
@@ -36,19 +33,8 @@ public class BannerService {
 
 	public Banner create() {
 
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		final Authority au = new Authority();
-		au.setAuthority("CUSTOMER");
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
-
 		Banner result;
 		result = new Banner();
-
-		Customer customer;
-		customer = customerService.findByPrincipal();
-
-		result.setCustomer(customer);
 
 		return result;
 	}
@@ -62,7 +48,7 @@ public class BannerService {
 		return result;
 	}
 
-	public Banner findOne(final int bannerId) {
+	public Banner findOne(int bannerId) {
 		Banner result;
 
 		result = bannerRepository.findOne(bannerId);
@@ -71,17 +57,7 @@ public class BannerService {
 		return result;
 	}
 
-	public Collection<Banner> findByPrincipal() {
-		Collection<Banner> result;
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-		result = bannerRepository.findByUserAccount(userAccount);
-
-		return result;
-	}
-
-	public Banner save(final Banner banner) {
+	public Banner save(Banner banner) {
 
 		Assert.notNull(banner);
 		Banner result;
@@ -90,30 +66,7 @@ public class BannerService {
 		return result;
 	}
 
-	public Banner save2(final Banner banner) {
-
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		final Authority au = new Authority();
-		au.setAuthority("CUSTOMER");
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
-
-		Assert.notNull(banner);
-
-		Banner result;
-
-		result = bannerRepository.save(banner);
-
-		return result;
-	}
-
-	public void delete(final Banner banner) {
-
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		final Authority au = new Authority();
-		au.setAuthority("CUSTOMER");
-		Assert.isTrue(userAccount.getAuthorities().contains(au));
+	public void delete(Banner banner) {
 
 		Assert.notNull(banner);
 		Assert.isTrue(banner.getId() != 0);
@@ -122,5 +75,5 @@ public class BannerService {
 	}
 
 	// Other business methods -------------------------------------------------
-*/
+
 }
