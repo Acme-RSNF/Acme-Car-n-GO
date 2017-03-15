@@ -69,6 +69,10 @@ public class AdministratorController extends AbstractController {
 		Collection<Actor> actorPavgC = actorService.actorAvgCommentPlusTenPercent();
 		Collection<Actor> actorMavgC = actorService.actorAvgCommentMinusTenPercent();
 		//A
+		Collection<Double> minavgmaxMSA = actorService.minAvgMaxSent();
+		Collection<Double> minavgmaxMRA = actorService.minAvgMaxReceived();
+		Collection<Actor> actorSM = actorService.actorSentMoreMessage();
+		Collection<Actor> actorRM = actorService.actorReceivedMoreMessage();
 
 		result = new ModelAndView("administrator/dashboard");
 
@@ -84,6 +88,10 @@ public class AdministratorController extends AbstractController {
 		result.addObject("actorPavgC", actorPavgC);
 		result.addObject("actorMavgC", actorMavgC);
 		//A
+		result.addObject("minavgmaxMSA", minavgmaxMSA);
+		result.addObject("minavgmaxMRA", minavgmaxMRA);
+		result.addObject("actorSM", actorSM);
+		result.addObject("actorRM", actorRM);
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 

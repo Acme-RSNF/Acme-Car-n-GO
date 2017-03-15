@@ -29,11 +29,26 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	@Query("select a from Actor a where a.writtenComments.size<=(select avg(a.writtenComments.size) from Actor a)*0.1")
 	Collection<Actor> actorAvgCommentMinusTenPercent();
 
-	@Query("select min(a.sended.size), avg(a.sended.size), max(a.sended.size) from Actor a")
-	Object[] minAvgMaxSent();
-
 	@Query("select min(a.received.size), avg(a.received.size), max(a.received.size) from Actor a")
 	Object[] minAvgMaxReceived();
+
+	@Query("select min(a.sended.size) from Actor a")
+	Double findMinMessageSentByActor();
+
+	@Query("select avg(a.sended.size) from Actor a")
+	Double findAvgMessageSentByActor();
+
+	@Query("select max(a.sended.size) from Actor a")
+	Double findMaxMessageSentByActor();
+
+	@Query("select min(a.received.size) from Actor a")
+	Double findMinMessageReceivedByActor();
+
+	@Query("select avg(a.received.size) from Actor a")
+	Double findAvgMessageReceivedByActor();
+
+	@Query("select max(a.received.size) from Actor a")
+	Double findMaxMessageReceivedByActor();
 
 	@Query("select a from Actor a where a.sended.size=(select max(a2.sended.size) from Actor a2)")
 	Collection<Actor> actorSentMoreMessage();

@@ -113,4 +113,68 @@
 
 <!-- A -->
 
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.minavgmaxMSA" /></legend>
+		<table id="minavgmaxMSA" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.min"/></th>
+				<jstl:if test="${not empty minavgmaxMSA }">
+					<td><jstl:out value="${minavgmaxMSA.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.avg"/></th>
+				<jstl:if test="${not empty minavgmaxMSA }">
+					<td><jstl:out value="${minavgmaxMSA.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.max"/></th>
+				<jstl:if test="${not empty minavgmaxMSA }">
+					<td><jstl:out value="${minavgmaxMSA.get(2) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<fieldset><legend class="dashLegend"><spring:message code="administrator.minavgmaxMRA" /></legend>
+		<table id="minavgmaxMRA" class="table">
+			<tr>
+				<th><spring:message code="administrator.dashboard.min"/></th>
+				<jstl:if test="${not empty minavgmaxMRA }">
+					<td><jstl:out value="${minavgmaxMRA.get(0) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.avg"/></th>
+				<jstl:if test="${not empty minavgmaxMRA }">
+					<td><jstl:out value="${minavgmaxMRA.get(1) }" /></td>
+				</jstl:if>
+			</tr>
+			<tr>
+				<th><spring:message code="administrator.dashboard.max"/></th>
+				<jstl:if test="${not empty minavgmaxMRA }">
+					<td><jstl:out value="${minavgmaxMRA.get(2) }" /></td>
+				</jstl:if>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div>
+	<display:table name="actorSM" id="row" class="displaytag" pagesize="5">
+		<spring:message code="administrator.actorSM" var="name"/>
+		<display:column title="${name}" property="userAccount.username"/>
+	</display:table>
+</div>
+
+<div>
+	<display:table name="actorRM" id="row" class="displaytag" pagesize="5">
+		<spring:message code="administrator.actorRM" var="name"/>
+		<display:column title="${name}" property="userAccount.username"/>
+	</display:table>
+</div>
+
 </security:authorize>

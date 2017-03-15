@@ -114,21 +114,37 @@ public class ActorService {
 	}
 
 	public Collection<Double> minAvgMaxSent() {
-		Collection<Double> result = new ArrayList<Double>();
-		Object[] aux = actorRepository.minAvgMaxSent();
+		Collection<Double> result;
+		Double aux;
 
-		for (int i = 0; i < 3; i++)
-			result.add((Double) aux[i]);
+		result = new ArrayList<Double>();
+
+		aux = actorRepository.findMinMessageSentByActor();
+		result.add(aux);
+
+		aux = actorRepository.findAvgMessageSentByActor();
+		result.add(aux);
+
+		aux = actorRepository.findMaxMessageSentByActor();
+		result.add(aux);
 
 		return result;
 	}
 
 	public Collection<Double> minAvgMaxReceived() {
-		Collection<Double> result = new ArrayList<Double>();
-		Object[] aux = actorRepository.minAvgMaxReceived();
+		Collection<Double> result;
+		Double aux;
 
-		for (int i = 0; i < 3; i++)
-			result.add((Double) aux[i]);
+		result = new ArrayList<Double>();
+
+		aux = actorRepository.findMinMessageReceivedByActor();
+		result.add(aux);
+
+		aux = actorRepository.findAvgMessageReceivedByActor();
+		result.add(aux);
+
+		aux = actorRepository.findMaxMessageReceivedByActor();
+		result.add(aux);
 
 		return result;
 	}
