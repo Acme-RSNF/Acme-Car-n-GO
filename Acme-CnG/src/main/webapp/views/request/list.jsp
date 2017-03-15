@@ -16,7 +16,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<security:authorize access="hasRole('CUSTOMER')">
+<security:authorize access="isAuthenticated()">
 
 <display:table name="requests"
 	id="row"
@@ -25,7 +25,7 @@
 	requestURI="${requestURI}" >
 	
 	<spring:message code="request.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" sortable="false"/>
+	<display:column property="title" title="${titleHeader}" sortable="true"/>
 	
 	<spring:message code="request.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}" sortable="false"/>
@@ -54,3 +54,4 @@
 </display:table>
 
 </security:authorize>
+
