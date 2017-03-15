@@ -10,13 +10,20 @@
 
 package controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
+import services.CommentableService;
+import services.CustomerService;
 import services.DealService;
+import domain.Actor;
+import domain.Customer;
 
 @Controller
 @RequestMapping("/administrator")
@@ -25,7 +32,16 @@ public class AdministratorController extends AbstractController {
 	// Services ---------------------------------------------------------------
 
 	@Autowired
-	private DealService	dealService;
+	private DealService			dealService;
+
+	@Autowired
+	private CustomerService		customerService;
+
+	@Autowired
+	private CommentableService	commentableService;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -43,10 +59,31 @@ public class AdministratorController extends AbstractController {
 
 		//C
 		Double ratioOVSR = dealService.ratioOfferVsRequest();
+		Double avgNORC = customerService.avgOfferRequestCustomer();
+		Double avgNAOR = dealService.avgApplyDeal();
+		Collection<Customer> customerMAA = customerService.customerApplyAccepted();
+		Collection<Customer> customerMAD = customerService.customerApplyDenied();
+		//B
+		Double avgCAOR = actorService.avgCommentByActor();
+		Double avgPAC = commentableService.avgComment();
+		Collection<Actor> actorPavgC = actorService.actorAvgCommentPlusTenPercent();
+		Collection<Actor> actorMavgC = actorService.actorAvgCommentMinusTenPercent();
+		//A
 
 		result = new ModelAndView("administrator/dashboard");
 
+		//C
 		result.addObject("ratioOVSR", ratioOVSR);
+		result.addObject("avgNORC", avgNORC);
+		result.addObject("avgNAOR", avgNAOR);
+		result.addObject("customerMAA", customerMAA);
+		result.addObject("customerMAD", customerMAD);
+		//B
+		result.addObject("avgCAOR", avgCAOR);
+		result.addObject("avgPAC", avgPAC);
+		result.addObject("actorPavgC", actorPavgC);
+		result.addObject("actorMavgC", actorMavgC);
+		//A
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 

@@ -137,14 +137,14 @@ public class CustomerService {
 		return result;
 	}
 
-	public Customer customerApplyAccepted() {
-		Customer result;
+	public Collection<Customer> customerApplyAccepted() {
+		Collection<Customer> result;
 		result = customerRepository.customerApplyAccepted();
 		return result;
 	}
 
-	public Customer customerApplyDenied() {
-		Customer result;
+	public Collection<Customer> customerApplyDenied() {
+		Collection<Customer> result;
 		result = customerRepository.customerApplyDenied();
 		return result;
 	}
