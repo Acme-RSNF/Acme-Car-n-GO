@@ -3,15 +3,19 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.MessageRepository;
 import domain.Actor;
 import domain.Message;
+import forms.MessageForm;
 
 @Service
 @Transactional
@@ -26,6 +30,9 @@ public class MessageService {
 
 	@Autowired
 	private ActorService		actorService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -43,8 +50,10 @@ public class MessageService {
 
 		Actor actor;
 		actor = actorService.findByPrincipal();
+		Date moment = new Date(System.currentTimeMillis() - 10);
 
 		result.setSender(actor);
+		result.setMoment(moment);
 
 		return result;
 	}
@@ -58,7 +67,7 @@ public class MessageService {
 		return result;
 	}
 
-	public Message findOne(final int messageId) {
+	public Message findOne(int messageId) {
 		Message result;
 
 		result = messageRepository.findOne(messageId);
@@ -92,6 +101,34 @@ public class MessageService {
 		int actorId = actor.getId();
 		result = messageRepository.allMessagesByActorId(actorId);
 		return result;
+	}
+
+	// Form methods ----------------------------------------------------------
+
+	public MessageForm generate() {
+		final MessageForm result = new MessageForm();
+
+		result.setSender(actorService.findByPrincipal());
+
+		return result;
+	}
+
+	public Message reconstruct(MessageForm messageForm, BindingResult binding) {
+
+		Message result = create();
+
+		Assert.isTrue(!messageForm.getSender().equals(messageForm.getRecipient()));
+
+		result.setAttachment(messageForm.getAttachement());
+		result.setRecipient(messageForm.getRecipient());
+		result.setSender(messageForm.getSender());
+		result.setText(messageForm.getText());
+		result.setTitle(messageForm.getTitle());
+
+		validator.validate(result, binding);
+
+		return result;
+
 	}
 
 }
