@@ -126,4 +126,17 @@ public class RequestService {
 		return result;
 	}
 
+	public void banUnbanRequest(Request request) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		if (request.getBanned())
+			request.setBanned(false);
+		else
+			request.setBanned(true);
+	}
+
 }

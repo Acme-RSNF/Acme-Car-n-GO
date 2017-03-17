@@ -330,7 +330,7 @@
 	</bean>
 	
 	<bean id="offer4" class="domain.Offer">
-		<property name="title" value="Offer 3"/>
+		<property name="title" value="Offer 4"/>
 		<property name="description" value="Esta es la descripcion del offer4"/>
 		<property name="moment" value="03/17/2017 16:00"/>
 		<property name="origin" value="Sevilla"/>
