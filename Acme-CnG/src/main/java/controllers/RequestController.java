@@ -59,7 +59,7 @@ public class RequestController extends AbstractController {
 
 		result = new ModelAndView("request/list");
 		result.addObject("requests", requests);
-		result.addObject("requestURI", "request/list.do");
+		result.addObject("requestURI", "request/listAdmin.do");
 
 		return result;
 	}

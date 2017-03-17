@@ -7,8 +7,12 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.CommentRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Comment;
 
 @Service
@@ -62,5 +66,18 @@ public class CommentService {
 	}
 
 	// Other business methods ---------------------------
+
+	public void banUnbanComment(Comment comment) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		if (comment.getBanned())
+			comment.setBanned(false);
+		else
+			comment.setBanned(true);
+	}
 
 }

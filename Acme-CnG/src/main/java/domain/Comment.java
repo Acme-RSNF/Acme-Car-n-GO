@@ -15,6 +15,7 @@ import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Comment extends DomainEntity {
@@ -25,6 +26,7 @@ public class Comment extends DomainEntity {
 	private Date	postedMoment;
 	private String	text;
 	private Integer	stars;
+	private Boolean	banned;
 
 
 	// Getters and Setters -----------------------------
@@ -63,14 +65,22 @@ public class Comment extends DomainEntity {
 		this.stars = stars;
 	}
 
+	public Boolean getBanned() {
+		return banned;
+	}
+	public void setBanned(Boolean banned) {
+		this.banned = banned;
+	}
+
 
 	// Relationships -----------------------------------
 
 	private Actor		actor;
 	private Commentable	commentable;
 
+
 	@Valid
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Actor getActor() {
 		return actor;
 	}
@@ -78,7 +88,7 @@ public class Comment extends DomainEntity {
 		this.actor = actor;
 	}
 	@Valid
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Commentable getCommentable() {
 		return commentable;
 	}
