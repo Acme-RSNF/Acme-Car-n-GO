@@ -125,4 +125,17 @@ public class OfferService {
 		result = offerRepository.findByCreator(customer);
 		return result;
 	}
+
+	public void banUnbanOffer(Offer offer) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		if (offer.getBanned())
+			offer.setBanned(false);
+		else
+			offer.setBanned(true);
+	}
 }

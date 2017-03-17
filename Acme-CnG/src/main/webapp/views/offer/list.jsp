@@ -40,6 +40,8 @@
 	<spring:message code="offer.destination" var="destinationHeader"/>
 	<display:column property="destination" title="${destinationHeader}" sortable="true"/>
 	
+	<security:authorize access="hasRole('CUSTOMER')">
+	
 	<spring:message code="offer.banned" var="bannedHeader" />
 	<display:column title="${bannedHeader}">
 		<jstl:if test="${row.banned==true}">
@@ -51,6 +53,28 @@
 			<jstl:out value="${noH}"/>
 		</jstl:if>
 	</display:column>
+	
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMIN')">
+	
+	<spring:message code="offer.banned" var="bannedHeader" />
+	<display:column title="${bannedHeader}">
+		<jstl:choose>
+			<jstl:when test="${row.banned}">
+				<a href="offer/banUnbanOffer.do?offerId=${row.id}">
+					<spring:message code="offer.unban" />
+				</a>
+			</jstl:when>
+			<jstl:otherwise>
+				<a href="offer/banUnbanOffer.do?offerId=${row.id}">
+					<spring:message code="offer.ban" />
+				</a>
+			</jstl:otherwise>
+		</jstl:choose>
+	</display:column>
+	
+	</security:authorize>
 	
 </display:table>
 

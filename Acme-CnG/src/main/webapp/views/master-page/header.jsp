@@ -25,6 +25,8 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/dashboard.do"><spring:message code="master.page.administrator.dashboard" /></a></li>
+					<li><a href="request/listAdmin.do"><spring:message code="master.page.request.list" /></a></li>
+					<li><a href="offer/listAdmin.do"><spring:message code="master.page.offer.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -37,6 +39,9 @@
 					<li><a href="customer/offer/myList.do"><spring:message code="master.page.offer.myList" /></a></li>
 				</ul>
 			</li>
+			<li><a href="request/list.do"><spring:message code="master.page.request.list" /></a></li>
+			<li><a href="offer/list.do"><spring:message code="master.page.offer.list" /></a></li>
+			
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
@@ -50,9 +55,7 @@
 			        (<security:authentication property="principal.username" />)
 				</a>
 				<ul>
-					<li class="arrow"></li>
-					<li><a href="request/list.do"><spring:message code="master.page.request.list" /></a></li>
-					<li><a href="offer/list.do"><spring:message code="master.page.offer.list" /></a></li>				
+					<li class="arrow"></li>				
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

@@ -47,6 +47,9 @@
 
 		<security:intercept-url pattern="/request/list.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/offer/list.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/offer/listAdmin.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/offer/banUnbanOffer.do" access="hasRole('ADMIN')" /> 
+		
 
 		<security:intercept-url pattern="/customer/request/myList.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/customer/offer/myList.do" access="hasRole('CUSTOMER')" />
