@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.BannerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Banner;
+import forms.BannerForm;
 
 @Service
 @Transactional
@@ -23,8 +26,11 @@ public class BannerService {
 	@Autowired
 	private BannerRepository	bannerRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -38,6 +44,7 @@ public class BannerService {
 
 		Banner result;
 		result = new Banner();
+		result.setIsPrincipal(false);
 
 		return result;
 	}
@@ -95,6 +102,45 @@ public class BannerService {
 	public Banner bannerIsPrincipal() {
 		Banner result;
 		result = bannerRepository.bannerIsPrincipal();
+		return result;
+	}
+
+	// Form methods ----------------------------------------------------------
+
+	public BannerForm generateForm() {
+		BannerForm result = new BannerForm();
+
+		return result;
+	}
+
+	public Banner reconstruct(BannerForm bannerForm, BindingResult binding) {
+
+		Banner result = create();
+
+		result.setId(bannerForm.getId());
+		result.setImage(bannerForm.getImage());
+
+		validator.validate(result, binding);
+
+		return result;
+
+	}
+
+	public Banner reconstruct(Banner banner, BindingResult binding) {
+		Banner result;
+		if (banner.getId() == 0)
+			result = banner;
+		else {
+			result = bannerRepository.findOne(banner.getId());
+			result.setImage(banner.getImage());
+			validator.validate(result, binding);
+		}
+		return result;
+	}
+
+	public BannerForm transform(Banner banner) {
+		BannerForm result = generateForm();
+		result.setImage(banner.getImage());
 		return result;
 	}
 

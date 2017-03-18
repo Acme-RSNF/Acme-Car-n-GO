@@ -17,13 +17,17 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<security:authorize access="isAuthenticated()">
+<security:authorize access="hasRole('ADMIN')">
 
 <display:table name="banners"
 	id="row"
 	class="displaytag"
 	pagesize="5"
 	requestURI="${requestURI}" >
+	
+	<display:column>
+		<a href="banner/edit.do?bannerId=${row.id}"><spring:message code="banner.edit" /></a>
+	</display:column>
 	
 	<spring:message code="banner.image" var="imageHeader" />
 	<display:column title="${imageHeader}">

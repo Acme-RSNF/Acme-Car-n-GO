@@ -28,7 +28,13 @@
 					<li><a href="request/listAdmin.do"><spring:message code="master.page.request.list" /></a></li>
 					<li><a href="offer/listAdmin.do"><spring:message code="master.page.offer.list" /></a></li>
 					<li><a href="comment/listAdmin.do"><spring:message code="master.page.comment.list" /></a></li>
+				</ul>
+			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.administrator.banner" /></a>
+				<ul>
+					<li class="arrow"></li>
 					<li><a href="banner/listAdmin.do"><spring:message code="master.page.banner.list" /></a></li>
+					<li><a href="banner/create.do"><spring:message code="master.page.banner.create" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
