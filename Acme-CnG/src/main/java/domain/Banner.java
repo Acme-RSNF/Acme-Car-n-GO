@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Banner extends DomainEntity {
@@ -14,6 +15,7 @@ public class Banner extends DomainEntity {
 	// Attributes --------------------------------------
 
 	private String	image;
+	private Boolean	isPrincipal;
 
 
 	// Getters and Setters -----------------------------
@@ -25,6 +27,13 @@ public class Banner extends DomainEntity {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public Boolean getIsPrincipal() {
+		return isPrincipal;
+	}
+	public void setIsPrincipal(Boolean isPrincipal) {
+		this.isPrincipal = isPrincipal;
 	}
 
 	// Relationships -----------------------------------

@@ -17,8 +17,19 @@
 	">
 	
 	<!-- Banner --> 
-	<bean id="banner" class="domain.Banner">
+	<bean id="banner1" class="domain.Banner">
 	 	<property name="image" value="https://cdn.pixabay.com/photo/2015/12/01/08/44/banner-1071797_960_720.jpg" />
+		<property name="isPrincipal" value="true"/>
+	</bean>
+	
+	<bean id="banner2" class="domain.Banner">
+	 	<property name="image" value="http://www.accars.es/images/banner.jpg" />
+		<property name="isPrincipal" value="false"/>
+	</bean>
+	
+	<bean id="banner3" class="domain.Banner">
+	 	<property name="image" value="http://www.autoavisa.es/img/4-promocion-5443/ford-nuevo-ford-ranger-banner-5443.jpg" />
+		<property name="isPrincipal" value="false"/>
 	</bean>
 	 
 	<!-- Co-ordinate -->
