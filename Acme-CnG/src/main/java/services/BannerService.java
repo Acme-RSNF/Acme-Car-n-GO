@@ -80,8 +80,8 @@ public class BannerService {
 
 		Assert.notNull(banner);
 		Assert.isTrue(banner.getId() != 0);
-
-		bannerRepository.delete(banner);
+		if (banner.getIsPrincipal() == false)
+			bannerRepository.delete(banner);
 	}
 
 	// Other business methods -------------------------------------------------

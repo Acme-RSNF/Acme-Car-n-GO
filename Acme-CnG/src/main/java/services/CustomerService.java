@@ -10,6 +10,8 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CustomerRepository;
 import security.Authority;
@@ -19,6 +21,7 @@ import domain.ApplyFor;
 import domain.Comment;
 import domain.Customer;
 import domain.Deal;
+import forms.CustomerForm;
 
 @Service
 @Transactional
@@ -29,8 +32,11 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository	customerRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -146,6 +152,80 @@ public class CustomerService {
 	public Collection<Customer> customerApplyDenied() {
 		Collection<Customer> result;
 		result = customerRepository.customerApplyDenied();
+		return result;
+	}
+
+	// Form methods ------------------------------------------------
+
+	public CustomerForm generateForm() {
+		CustomerForm result;
+
+		result = new CustomerForm();
+		return result;
+	}
+
+	public CustomerForm generateForm(Customer customer) {
+		CustomerForm result;
+
+		result = new CustomerForm();
+
+		result.setId(customer.getId());
+		result.setUsername(customer.getUserAccount().getUsername());
+		result.setPassword(customer.getUserAccount().getPassword());
+		result.setPassword2(customer.getUserAccount().getPassword());
+		result.setName(customer.getName());
+		result.setAgreed(true);
+		result.setSurname(customer.getSurname());
+		result.setPhone(customer.getPhone());
+		result.setEmail(customer.getEmail());
+
+		return result;
+	}
+
+	public Customer reconstruct(CustomerForm customerForm, BindingResult binding) {
+
+		Customer result = create();
+
+		String password;
+		password = customerForm.getPassword();
+
+		Assert.isTrue(customerForm.getPassword2().equals(password), "notEqualPassword");
+		Assert.isTrue(customerForm.getAgreed(), "agreedNotAccepted");
+
+		UserAccount userAccount;
+		userAccount = new UserAccount();
+		userAccount.setUsername(customerForm.getUsername());
+		userAccount.setPassword(password);
+
+		Authority authority;
+		authority = new Authority();
+		authority.setAuthority(Authority.CUSTOMER);
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+
+		result.setName(customerForm.getName());
+		result.setSurname(customerForm.getSurname());
+		result.setEmail(customerForm.getEmail());
+		result.setPhone(customerForm.getPhone());
+
+		validator.validate(result, binding);
+
+		return result;
+
+	}
+
+	public Customer reconstructEditPersonalData(CustomerForm customerForm, BindingResult binding) {
+		Customer result;
+
+		result = customerRepository.findOne(customerForm.getId());
+
+		result.setName(customerForm.getName());
+		result.setSurname(customerForm.getSurname());
+		result.setEmail(customerForm.getEmail());
+		result.setPhone(customerForm.getPhone());
+
+		validator.validate(result, binding);
+
 		return result;
 	}
 
