@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.BannerRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Banner;
 
 @Service
@@ -75,5 +78,24 @@ public class BannerService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public void makePrincipal(Banner banner) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
+		Collection<Banner> aux = bannerRepository.findAll();
+		for (Banner b : aux)
+			b.setIsPrincipal(false);
+		banner.setIsPrincipal(true);
+	}
+
+	public Banner bannerIsPrincipal() {
+		Banner result;
+		result = bannerRepository.bannerIsPrincipal();
+		return result;
+	}
 
 }

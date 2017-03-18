@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<img src="images/logo.png" alt="Acme-Car'n-Go Co., Inc." />
+	<a href="welcome/index.do"><img src="images/logo.png" alt="Acme-Car'n-Go Co., Inc."></a>
 </div>
 
 <div>
@@ -28,6 +28,7 @@
 					<li><a href="request/listAdmin.do"><spring:message code="master.page.request.list" /></a></li>
 					<li><a href="offer/listAdmin.do"><spring:message code="master.page.offer.list" /></a></li>
 					<li><a href="comment/listAdmin.do"><spring:message code="master.page.comment.list" /></a></li>
+					<li><a href="banner/listAdmin.do"><spring:message code="master.page.banner.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

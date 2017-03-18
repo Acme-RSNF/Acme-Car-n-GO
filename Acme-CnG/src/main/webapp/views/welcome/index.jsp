@@ -16,6 +16,8 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<img src="${banner.image}" width="400" height="100">
+
 <p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
 
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
