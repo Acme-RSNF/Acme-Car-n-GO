@@ -59,6 +59,9 @@
 
 		<security:intercept-url pattern="/customer/request/myList.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/customer/offer/myList.do" access="hasRole('CUSTOMER')" />
+		
+		<security:intercept-url pattern="/message/received.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/sent.do" access="isAuthenticated()" /> 
 
 		
 		

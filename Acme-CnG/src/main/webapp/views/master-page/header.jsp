@@ -50,6 +50,13 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+			<li><a class = "fNiv"><spring:message code="master.page.messages"/></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="message/sent.do" ><spring:message code="master.page.message.sent" /></a></li>
+					<li><a href="message/received.do" ><spring:message code="master.page.message.received" /></a></li>
+				</ul>
+			</li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

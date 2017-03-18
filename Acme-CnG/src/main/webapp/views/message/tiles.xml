@@ -16,14 +16,14 @@
        
 <tiles-definitions>
 
-	<definition name="message/listSended" extends="master.page">	
-		<put-attribute name="title" value="List sended messages" />
-		<put-attribute name="body" value="/views/message/listSended.jsp" />
+	<definition name="message/sent" extends="master.page">	
+		<put-attribute name="title" value="List sent messages" />
+		<put-attribute name="body" value="/views/message/list.jsp" />
 	</definition>
 	
-	<definition name="message/listReceived" extends="master.page">	
+	<definition name="message/received" extends="master.page">	
 		<put-attribute name="title" value="List received messages" />
-		<put-attribute name="body" value="/views/message/listReceived.jsp" />
+		<put-attribute name="body" value="/views/message/list.jsp" />
 	</definition>
 	
 </tiles-definitions>

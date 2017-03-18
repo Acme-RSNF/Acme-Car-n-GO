@@ -95,11 +95,19 @@ public class MessageService {
 
 	// Other business methods -------------------------------------------------
 
-	public Collection<Message> allMessagesByActorId() {
+	public Collection<Message> messagesSentByActorId() {
 		Collection<Message> result = new ArrayList<Message>();
 		Actor actor = actorService.findByPrincipal();
 		int actorId = actor.getId();
-		result = messageRepository.allMessagesByActorId(actorId);
+		result = messageRepository.messagesSentByActorId(actorId);
+		return result;
+	}
+
+	public Collection<Message> messagesReceivedByActorId() {
+		Collection<Message> result = new ArrayList<Message>();
+		Actor actor = actorService.findByPrincipal();
+		int actorId = actor.getId();
+		result = messageRepository.messagesReceivedByActorId(actorId);
 		return result;
 	}
 
