@@ -20,7 +20,7 @@ public class MessageForm {
 
 	private String				title;
 	private String				text;
-	private Collection<String>	attachement;
+	private Collection<String>	attachment;
 	private Actor				sender;
 	private Actor				recipient;
 
@@ -43,11 +43,11 @@ public class MessageForm {
 		this.text = text;
 	}
 
-	public Collection<String> getAttachement() {
-		return attachement;
+	public Collection<String> getAttachment() {
+		return attachment;
 	}
-	public void setAttachement(Collection<String> attachement) {
-		this.attachement = attachement;
+	public void setAttachment(Collection<String> attachement) {
+		this.attachment = attachement;
 	}
 
 	public Actor getSender() {

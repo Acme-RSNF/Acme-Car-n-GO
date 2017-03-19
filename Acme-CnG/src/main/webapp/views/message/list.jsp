@@ -21,10 +21,10 @@
 	<display:table name="messages" id="row" class="displaytag" pagesize="5" requestURI="${requestURI}" >
 	
 	<spring:message code = "message.sender" var = "senderHeader"/>
-	<display:column property="sender" title="${senderHeader}" sortable="true"/>
+	<display:column property="sender.userAccount.username" title="${senderHeader}" sortable="true"/>
 	
 	<spring:message code = "message.recipient" var = "recipientHeader"/>
-	<display:column property="recipient" title="${recipientHeader}" sortable="true"/>
+	<display:column property="recipient.userAccount.username" title="${recipientHeader}" sortable="true"/>
 	
 	<spring:message code = "message.moment" var = "momentHeader"/>
 	<display:column title="${momentHeader}"	sortable="false"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
@@ -35,8 +35,8 @@
 	<spring:message code = "message.text" var = "textHeader"/>
 	<display:column property="text" title="${textHeader}" sortable="true"/>
 	
-	<spring:message code = "message.attachement" var = "attachementHeader"/>
-	<display:column property="attachement" title="${attachementHeader}" sortable="true"/>
+	<spring:message code = "message.attachment" var = "attachementHeader"/>
+	<display:column property="attachment" title="${attachmentHeader}" sortable="true"/>
 	
 	<display:column><a href="message/view.do?messageId=${row.id }"><spring:message code="message.view"/></a></display:column>
 		

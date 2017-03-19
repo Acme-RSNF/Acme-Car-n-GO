@@ -51,9 +51,11 @@ public class MessageService {
 		Actor actor;
 		actor = actorService.findByPrincipal();
 		Date moment = new Date(System.currentTimeMillis() - 10);
+		Collection<String> attachments = new ArrayList<String>();
 
 		result.setSender(actor);
 		result.setMoment(moment);
+		result.setAttachment(attachments);
 
 		return result;
 	}
@@ -127,9 +129,9 @@ public class MessageService {
 
 		Assert.isTrue(!messageForm.getSender().equals(messageForm.getRecipient()));
 
-		result.setAttachment(messageForm.getAttachement());
+		result.setAttachment(messageForm.getAttachment());
 		result.setRecipient(messageForm.getRecipient());
-		result.setSender(messageForm.getSender());
+		result.setSender(actorService.findByPrincipal());
 		result.setText(messageForm.getText());
 		result.setTitle(messageForm.getTitle());
 

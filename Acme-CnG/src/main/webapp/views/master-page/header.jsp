@@ -53,14 +53,15 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv" href="customer/register.do"><spring:message code="master.page.customer.register" /></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
 			<li><a class = "fNiv"><spring:message code="master.page.messages"/></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="message/write.do" ><spring:message code="master.page.message.write" /></a></li>
 					<li><a href="message/sent.do" ><spring:message code="master.page.message.sent" /></a></li>
 					<li><a href="message/received.do" ><spring:message code="master.page.message.received" /></a></li>
 				</ul>
