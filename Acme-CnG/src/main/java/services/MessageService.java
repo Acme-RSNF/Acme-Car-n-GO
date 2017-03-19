@@ -90,6 +90,8 @@ public class MessageService {
 	public void delete(Message message) {
 
 		Assert.notNull(message);
+		Actor actor = actorService.findByPrincipal();
+		Assert.isTrue(actor.equals(message.getSender()) || actor.equals(message.getRecipient()));
 		Assert.isTrue(message.getId() != 0);
 
 		messageRepository.delete(message);
@@ -100,23 +102,67 @@ public class MessageService {
 	public Collection<Message> messagesSentByActorId() {
 		Collection<Message> result = new ArrayList<Message>();
 		Actor actor = actorService.findByPrincipal();
-		int actorId = actor.getId();
-		result = messageRepository.messagesSentByActorId(actorId);
+		result = messageRepository.messagesSentByActorId(actor.getId());
 		return result;
 	}
-
 	public Collection<Message> messagesReceivedByActorId() {
 		Collection<Message> result = new ArrayList<Message>();
 		Actor actor = actorService.findByPrincipal();
-		int actorId = actor.getId();
-		result = messageRepository.messagesReceivedByActorId(actorId);
+		result = actor.getReceived();
+		return result;
+	}
+
+	//	public void sendMessage(Message message) {
+	//
+	//		// Creamos un segundo mensaje que será una copia del mensaje creado.
+	//		Message message2 = create();
+	//
+	//		message2.setAttachment(message.getAttachment());
+	//		message2.setMoment(message.getMoment());
+	//		message2.setRecipient(message.getRecipient());
+	//		message2.setSender(message.getSender());
+	//		message2.setText(message.getText());
+	//		message2.setTitle(message.getTitle());
+	//
+	//		// Guardamos los dos mensajes en la base de datos.
+	//		save(message);
+	//		save(message2);
+	//
+	//		// Añadimos los mensajes en la lista de mensajes enviados y recividos de los dos actores correspondients.
+	//		Actor sender = message.getSender();
+	//		Actor recipient = message.getRecipient();
+	//
+	//		Collection<Message> sent = sender.getSended();
+	//		Collection<Message> recived = recipient.getReceived();
+	//
+	//		sent.add(message);
+	//		recived.add(message2);
+	//
+	//		sender.setSended(sent);
+	//		recipient.setReceived(recived);
+	//
+	//		actorService.save(sender);
+	//		actorService.save(recipient);
+	//	}
+
+	// Forward ------------------------------------------------------------
+
+	public MessageForm forward(int messageId) {
+		MessageForm result = generate();
+		Message message = findOne(messageId);
+
+		result.setAttachment(message.getAttachment());
+		result.setText(message.getText());
+		result.setTitle(message.getTitle());
+		result.setSender(actorService.findByPrincipal());
+
 		return result;
 	}
 
 	// Form methods ----------------------------------------------------------
 
 	public MessageForm generate() {
-		final MessageForm result = new MessageForm();
+		MessageForm result = new MessageForm();
 
 		result.setSender(actorService.findByPrincipal());
 

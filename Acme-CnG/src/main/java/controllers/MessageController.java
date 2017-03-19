@@ -1,6 +1,7 @@
 
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -118,6 +119,111 @@ public class MessageController extends AbstractController {
 
 	}
 
+	// Reply ---------------------------------------------------
+
+	@RequestMapping(value = "/reply", method = RequestMethod.GET)
+	public ModelAndView reply(@RequestParam int messageId) {
+
+		ModelAndView result;
+		MessageForm messageForm = messageService.generate();
+
+		Actor actor = messageService.findOne(messageId).getSender();
+		Collection<Actor> actors = new ArrayList<Actor>();
+
+		actors.add(actor);
+
+		result = new ModelAndView("message/forward");
+		result.addObject("messageForm", messageForm);
+		result.addObject("actors", actors);
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "/reply", method = RequestMethod.POST, params = "save")
+	public ModelAndView sendReply(@Valid MessageForm messageForm, BindingResult binding) {
+
+		ModelAndView result;
+		Message message;
+
+		if (binding.hasErrors()) {
+			result = createEditModelAndViewReply(messageForm);
+		} else {
+			try {
+				message = messageService.reconstruct(messageForm, binding);
+				messageService.save(message);
+				result = new ModelAndView("redirect:/message/sent.do");
+			} catch (Throwable oops) {
+				String msgCode = "message.error";
+				result = createEditModelAndViewReply(messageForm, msgCode);
+			}
+		}
+
+		return result;
+
+	}
+
+	// Forward ---------------------------------------------------
+
+	@RequestMapping(value = "/forward", method = RequestMethod.GET)
+	public ModelAndView forward(@RequestParam int messageId) {
+
+		ModelAndView result;
+		MessageForm messageForm = messageService.forward(messageId);
+
+		Collection<Actor> actors = actorService.findAll();
+
+		result = new ModelAndView("message/forward");
+		result.addObject("messageForm", messageForm);
+		result.addObject("actors", actors);
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "/forward", method = RequestMethod.POST, params = "save")
+	public ModelAndView sendForward(@Valid MessageForm messageForm, BindingResult binding) {
+
+		ModelAndView result;
+		Message message;
+
+		if (binding.hasErrors()) {
+			result = createEditModelAndViewForward(messageForm);
+		} else {
+			try {
+				message = messageService.reconstruct(messageForm, binding);
+				messageService.save(message);
+				result = new ModelAndView("redirect:/message/sent.do");
+			} catch (Throwable oops) {
+				String msgCode = "message.error";
+				result = createEditModelAndViewForward(messageForm, msgCode);
+			}
+		}
+
+		return result;
+
+	}
+
+	// Delete ---------------------------------------------------
+
+	@RequestMapping(value = "/view", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@RequestParam int messageId) {
+
+		ModelAndView result;
+		Message message = messageService.findOne(messageId);
+
+		try {
+			messageService.delete(message);
+			result = new ModelAndView("redirect:/message/sent.do");
+		} catch (Throwable oops) {
+			String msgCode = "message.error.delete";
+			result = createEditModelAndViewDelete(msgCode);
+		}
+
+		return result;
+
+	}
+
 	// Ancillary methods ---------------------------------------
 
 	protected ModelAndView createEditModelAndView(MessageForm messageForm) {
@@ -137,6 +243,68 @@ public class MessageController extends AbstractController {
 		result.addObject("messageForm", messageForm);
 		result.addObject("actors", actors);
 		result.addObject("message", message);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndViewReply(MessageForm messageForm) {
+		ModelAndView result;
+
+		result = createEditModelAndView(messageForm, null);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndViewReply(MessageForm messageForm, String message) {
+		ModelAndView result;
+		Collection<Actor> actors = actorService.findAll();
+
+		result = new ModelAndView("message/reply");
+		result.addObject("messageForm", messageForm);
+		result.addObject("actors", actors);
+		result.addObject("message", message);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndViewForward(MessageForm messageForm) {
+		ModelAndView result;
+
+		result = createEditModelAndView(messageForm, null);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndViewForward(MessageForm messageForm, String message) {
+		ModelAndView result;
+		Collection<Actor> actors = actorService.findAll();
+
+		result = new ModelAndView("message/forward");
+		result.addObject("messageForm", messageForm);
+		result.addObject("actors", actors);
+		result.addObject("message", message);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndViewDelete() {
+		ModelAndView result;
+
+		result = createEditModelAndView(null);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndViewDelete(String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("message/sent");
 
 		return result;
 

@@ -33,7 +33,7 @@
 		<br/>
 		<acme:textarea code="message.attachment" path="attachment" readonly="true" />
 		<br/>
-		
+		<input type="submit" name="delete" value="<spring:message code="message.delete" />" onclick="return confirm('<spring:message code="message.confirm.delete" />')" />
 		<acme:cancel code="message.back" url="welcome/index.do" />
 	
 	</form:form>

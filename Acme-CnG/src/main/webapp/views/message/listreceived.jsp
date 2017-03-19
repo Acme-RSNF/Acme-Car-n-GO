@@ -18,7 +18,7 @@
 
 <security:authorize access="isAuthenticated()">
 
-	<display:table name="messages" id="row" class="displaytag" pagesize="5" requestURI="${requestURI}" >
+	<display:table name="messages" id="row" class="displaytag" pagesize="5" requestURI="message/received.do" >
 	
 	<spring:message code = "message.sender" var = "senderHeader"/>
 	<display:column property="sender.userAccount.username" title="${senderHeader}" sortable="true"/>
@@ -39,6 +39,10 @@
 	<display:column property="attachment" title="${attachmentHeader}" sortable="true"/>
 	
 	<display:column><a href="message/view.do?messageId=${row.id }"><spring:message code="message.view"/></a></display:column>
+	
+	<display:column><a href="message/forward.do?messageId=${row.id }"><spring:message code="message.forward" /></a></display:column>
+	
+	<display:column><a href="message/reply.do?messageId=${row.id }"><spring:message code="message.respond" /></a></display:column>
 		
 	</display:table>
 	
