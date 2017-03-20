@@ -24,7 +24,7 @@ public class Coordinate {
 
 	// Getters and Setters -----------------------------
 
-	@Pattern(regexp = "^(-)?(\\d{1,2})(\\.)?(\\d{1,6})$")
+	@Pattern(regexp = "^$|^(-)?(\\d{1,2})(\\.)?(\\d{1,6})$")
 	public String getLatitude() {
 		return latitude;
 	}
@@ -32,7 +32,7 @@ public class Coordinate {
 		this.latitude = latitude;
 	}
 
-	@Pattern(regexp = "^(-)?(\\d{1,3})(\\.)?(\\d{1,6})$")
+	@Pattern(regexp = "^$|^(-)?(\\d{1,3})(\\.)?(\\d{1,6})$")
 	public String getLongitude() {
 		return longitude;
 	}

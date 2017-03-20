@@ -38,8 +38,8 @@
 	
 	<spring:message code="request.origin.coordinates" var="originCoordinateHeader" />
 	<display:column title="${originCoordinateHeader}"> 
-		<jstl:if test="${not empty row.originCoordinate}">
-			<jstl:out value="${row.originCoordinate.latitude} , ${row.originCoordinate.longitude}"/>
+		<jstl:if test="${row.originCoordinate!=''}">
+			<jstl:out value="${row.originCoordinate.latitude}    ${row.originCoordinate.longitude}"/>
 		</jstl:if>
 	</display:column>
 	
@@ -48,8 +48,8 @@
 	
 	<spring:message code="request.destination.coordinates" var="destinationCoordinateHeader"/>
 	<display:column title="${destinationCoordinate}"> 
-		<jstl:if test="${not empty row.destinationCoordinate}">
-			<jstl:out value="${row.destinationCoordinate.latitude} , ${row.destinationCoordinate.longitude}"/>
+		<jstl:if test="${row.destinationCoordinate!=''}">
+			<jstl:out value="${row.destinationCoordinate.latitude}    ${row.destinationCoordinate.longitude}"/>
 		</jstl:if>
 	</display:column>
 	
@@ -58,8 +58,10 @@
 	<spring:message code="request.banned" var="bannedHeader" />
 	<display:column title="${bannedHeader}">
 		<jstl:if test="${row.banned==true}">
+		 <td bgcolor='red'>
 			<spring:message code="request.banned.yes" var="yesH" />
 			<jstl:out value="${yesH}"/>
+		</td>
 		</jstl:if>
 		<jstl:if test="${row.banned==false}">
 			<spring:message code="request.banned.no" var="noH" />

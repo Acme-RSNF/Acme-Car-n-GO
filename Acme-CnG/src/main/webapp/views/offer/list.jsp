@@ -40,7 +40,7 @@
 	<spring:message code="offer.origin.coordinates" var="originCoordinateHeader" />
 	<display:column title="${originCoordinateHeader}"> 
 		<jstl:if test="${not empty row.originCoordinate}">
-			<jstl:out value="${row.originCoordinate.latitude} , ${row.originCoordinate.longitude}"/>
+			<jstl:out value="${row.originCoordinate.latitude}   ${row.originCoordinate.longitude}"/>
 		</jstl:if>
 	</display:column>
 	
@@ -50,7 +50,7 @@
 	<spring:message code="offer.destination.coordinates" var="destinationCoordinateHeader"/>
 	<display:column title="${destinationCoordinate}"> 
 		<jstl:if test="${not empty row.destinationCoordinate}">
-			<jstl:out value="${row.destinationCoordinate.latitude} , ${row.destinationCoordinate.longitude}"/>
+			<jstl:out value="${row.destinationCoordinate.latitude}   ${row.destinationCoordinate.longitude}"/>
 		</jstl:if>
 	</display:column>
 	
