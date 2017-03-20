@@ -44,6 +44,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="customer/request/myList.do"><spring:message code="master.page.request.myList" /></a></li>
+					<li><a href="customer/request/create.do"><spring:message code="master.page.request.create" /></a></li>
 					<li><a href="customer/offer/myList.do"><spring:message code="master.page.offer.myList" /></a></li>
 					<li><a href="customer/offer/create.do"><spring:message code="master.page.offer.create" /></a></li>
 				</ul>

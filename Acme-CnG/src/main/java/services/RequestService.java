@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.ApplyFor;
+import domain.Comment;
 import domain.Customer;
 import domain.Request;
+import forms.RequestForm;
 
 @Service
 @Transactional
@@ -29,6 +34,9 @@ public class RequestService {
 
 	@Autowired
 	private CustomerService		customerService;
+
+	@Autowired
+	private Validator			validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -54,6 +62,8 @@ public class RequestService {
 		customer = customerService.findByPrincipal();
 
 		result.setCustomer(customer);
+		result.setBanned(false);
+		result.setIsCommentable(true);
 
 		return result;
 	}
@@ -137,6 +147,38 @@ public class RequestService {
 			request.setBanned(false);
 		else
 			request.setBanned(true);
+	}
+
+	// Form methods -------------------------------------------------------------
+
+	public RequestForm generate() {
+		RequestForm result = new RequestForm();
+
+		return result;
+	}
+
+	public Request reconstruct(RequestForm requestForm, BindingResult binding) {
+		Request result;
+		Collection<Comment> comments = new ArrayList<Comment>();
+		Collection<ApplyFor> applies = new ArrayList<ApplyFor>();
+		Customer customer = customerService.findByPrincipal();
+
+		result = create();
+
+		result.setTitle(requestForm.getTitle());
+		result.setDescription(requestForm.getDescription());
+		result.setApplies(applies);
+		result.setComments(comments);
+		result.setDestination(requestForm.getDestination());
+		result.setOrigin(requestForm.getOrigin());
+		result.setDestinationCoordinate(requestForm.getDestinationCoordinate());
+		result.setOriginCoordinate(requestForm.getOriginCoordinate());
+		result.setMoment(requestForm.getMoment());
+		result.setCustomer(customer);
+
+		validator.validate(result, binding);
+
+		return result;
 	}
 
 }
