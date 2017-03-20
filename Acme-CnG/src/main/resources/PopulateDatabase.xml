@@ -40,7 +40,7 @@
 	</bean>
 	
 	<bean id="coordinate2" class="domain.Coordinate">
-		<property name="latitude" value="90.3658" />
+		<property name="latitude" value="80.3658" />
 		<property name="longitude" value="125.235614" />
 	</bean>
 	

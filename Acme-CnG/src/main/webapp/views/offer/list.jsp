@@ -37,8 +37,22 @@
 	<spring:message code="offer.origin" var="originHeader" />
 	<display:column property="origin" title="${originHeader}" sortable="true"/>
 	
+	<spring:message code="offer.origin.coordinates" var="originCoordinateHeader" />
+	<display:column title="${originCoordinateHeader}"> 
+		<jstl:if test="${not empty row.originCoordinate}">
+			<jstl:out value="${row.originCoordinate.latitude} , ${row.originCoordinate.longitude}"/>
+		</jstl:if>
+	</display:column>
+	
 	<spring:message code="offer.destination" var="destinationHeader"/>
 	<display:column property="destination" title="${destinationHeader}" sortable="true"/>
+	
+	<spring:message code="offer.destination.coordinates" var="destinationCoordinateHeader"/>
+	<display:column title="${destinationCoordinate}"> 
+		<jstl:if test="${not empty row.destinationCoordinate}">
+			<jstl:out value="${row.destinationCoordinate.latitude} , ${row.destinationCoordinate.longitude}"/>
+		</jstl:if>
+	</display:column>
 	
 	<security:authorize access="hasRole('CUSTOMER')">
 	
