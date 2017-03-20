@@ -16,13 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.AdministratorService;
 import services.CommentableService;
 import services.CustomerService;
 import services.DealService;
 import domain.Actor;
+import domain.Administrator;
 import domain.Customer;
 
 @Controller
@@ -42,6 +45,9 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
+	
+	@Autowired
+	private AdministratorService		administratorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -50,6 +56,38 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 
+	// Display
+		@RequestMapping(value="/display", method=RequestMethod.GET)
+		public ModelAndView display() {
+				ModelAndView result;
+				Administrator administrator;
+				
+				administrator = administratorService.findByPrincipal();
+				result=new ModelAndView("administrator/display");
+				result.addObject("administrator", administrator);
+				result.addObject("comments", administrator.getComments());
+				result.addObject("requestURI", "administrator/display.do");
+
+				return result;
+			}
+		
+			@RequestMapping(value="/displayById", method=RequestMethod.GET)
+			public ModelAndView display(@RequestParam int administratorId) {
+					ModelAndView result;
+					Administrator administrator;
+					
+					administrator = administratorService.findOne(administratorId);
+					result=new ModelAndView("administrator/display");
+					result.addObject("administrator", administrator);
+					result.addObject("comments", administrator.getComments());
+					result.addObject("requestURI", "administrator/displayById.do");
+
+					return result;
+				}
+			
+		
+	
+	
 	// Dashboard -----------------------------------------------
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
@@ -96,7 +134,6 @@ public class AdministratorController extends AbstractController {
 		result.addObject("requestURI", "administrator/dashboard.do");
 
 		return result;
-
 	}
 
 }
