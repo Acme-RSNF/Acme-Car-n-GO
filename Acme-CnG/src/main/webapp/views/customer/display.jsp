@@ -94,6 +94,6 @@
 
 <security:authorize access="hasAnyRole('CUSTOMER','ADMINISTRATOR')">
 	<input type="button" name="comment" value="<spring:message code="customer.comment" />"
-			onclick="javascript: window.location.replace('commentator/comment/create.do?commentableId=${customer.id}')" />
+			onclick="javascript: window.location.replace('comment/create.do?commentableId=${customer.id}')" />
 <br/>
 </security:authorize>

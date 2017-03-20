@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CommentRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Comment;
+import forms.CommentForm;
 
 @Service
 @Transactional
@@ -26,6 +29,16 @@ public class CommentService {
 
 
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private ActorService	actorService;
+	
+	@Autowired
+	private CommentableService	commentableService;
+	
+	@Autowired
+	private Validator	validator;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -41,6 +54,7 @@ public class CommentService {
 
 		result = new Comment();
 		result.setPostedMoment(date);
+		result.setBanned(false);
 
 		return result;
 	}
@@ -79,5 +93,29 @@ public class CommentService {
 		else
 			comment.setBanned(true);
 	}
+	
+	// Form methods ---------------------------
+		public CommentForm generateForm(int commentableId) {
+			CommentForm commentForm = new CommentForm();
+
+			commentForm.setCommentableId(commentableId);
+			return commentForm;
+		}
+
+		public Comment reconstruct(CommentForm commentForm, BindingResult binding) {
+			Comment result = create();
+
+			Assert.notNull(actorService.findByPrincipal(), "notCommentator");
+			result.setActor(actorService.findByPrincipal());
+			Assert.notNull(commentableService.findCommentableById(commentForm.getCommentableId()), "notCommentable");
+			result.setCommentable(commentableService.findOne(commentForm.getCommentableId()));
+			result.setStars(commentForm.getStars());
+			result.setText(commentForm.getText());
+			result.setTitle(commentForm.getTitle());
+			
+			validator.validate(result, binding);
+
+			return result;
+		}
 
 }
