@@ -39,6 +39,24 @@ public class CustomerController extends AbstractController {
 		super();
 	}
 
+	// Display
+	@RequestMapping(value="/display", method=RequestMethod.GET)
+	public ModelAndView display() {
+			ModelAndView result;
+			Customer customer;
+			
+			customer = customerService.findByPrincipal();
+			result=new ModelAndView("customer/display");
+			result.addObject("customer", customer);
+			result.addObject("comments", customer.getComments());
+			result.addObject("requestURI", "lessor/display.do");
+
+			return result;
+		}
+	
+	
+	
+	
 	// Creation ------------------------------------------------
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
