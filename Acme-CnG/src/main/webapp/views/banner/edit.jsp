@@ -30,7 +30,7 @@
 		
 		
 		<acme:submit name="save" code="banner.save"/>
-		<jstl:if test="${banner.id != 0}">
+		<jstl:if test="${banner.id != 0 && banner.isPrincipal == false}">
 			<acme:submit name="delete" code="banner.delete"/>
 		</jstl:if>
 		<acme:cancel code="banner.cancel" url="banner/listAdmin.do"/>
