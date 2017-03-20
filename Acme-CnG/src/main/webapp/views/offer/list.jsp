@@ -135,7 +135,7 @@
 	
 	</security:authorize>
 	<display:column>
-		<a href="customer/displayByOffer.do?offerId=${row.id}"><spring:message code="offer.view.customer" /></a>
+		<a href="customer/displayById.do?customerId=${row.customer.id}"><spring:message code="offer.view.customer" /></a>
 	</display:column>
 	<display:column>
 		<a href="offer/display.do?offerId=${row.id}"><spring:message code="offer.view" /></a>

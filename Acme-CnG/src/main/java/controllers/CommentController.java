@@ -120,16 +120,16 @@ public class CommentController extends AbstractController {
 						String requestURI = "customer/displayById.do?customerId="+id;
 						result.addObject("requestURI", requestURI);
 					}else if(offerService.findOne(id)!=null){
-						result = new ModelAndView("redirect:../offer/displayById.do?offerId="+id);
-						String requestURI = "offer/displayById.do?offerId="+id;
+						result = new ModelAndView("redirect:../offer/display.do?offerId="+id);
+						String requestURI = "offer/display.do?offerId="+id;
 						result.addObject("requestURI", requestURI);
 					}else if(administratorService.findOne(id)!=null){
 						result = new ModelAndView("redirect:../administrator/displayById.do?administratorId="+id);
 						String requestURI = "administrator/displayById.do?administratorId="+id;
 						result.addObject("requestURI", requestURI);
 					}else{
-						result = new ModelAndView("redirect:../request/displayById.do?requestId="+id);
-						String requestURI = "request/displayById.do?requestId="+id;
+						result = new ModelAndView("redirect:../request/display.do?requestId="+id);
+						String requestURI = "request/display.do?requestId="+id;
 						result.addObject("requestURI", requestURI);
 					}
 				} catch (Throwable oops) {

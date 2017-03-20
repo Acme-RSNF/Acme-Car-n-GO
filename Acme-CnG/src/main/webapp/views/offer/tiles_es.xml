@@ -26,4 +26,8 @@
 		<put-attribute name="body" value="/views/offer/edit.jsp" />
 	</definition>
 	
+	<definition name="offer/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar oferta" />
+		<put-attribute name="body" value="/views/offer/display.jsp" />
+	</definition>
 </tiles-definitions>

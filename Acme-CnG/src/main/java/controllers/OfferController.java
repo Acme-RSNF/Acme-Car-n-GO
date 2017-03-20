@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.OfferService;
+import domain.Customer;
 import domain.Offer;
 
 @Controller
@@ -29,9 +30,23 @@ public class OfferController extends AbstractController {
 	public OfferController() {
 		super();
 	}
+	//Display-----------------------
+	@RequestMapping(value="/display", method=RequestMethod.GET)
+	public ModelAndView display(@RequestParam int offerId) {
+			ModelAndView result;
+			Offer offer;
+			
+			offer = offerService.findOne(offerId);
+			result=new ModelAndView("offer/display");
+			result.addObject("offer", offer);
+			result.addObject("comments", offer.getComments());
+			result.addObject("requestURI", "offer/display.do");
 
+			return result;
+		}
+	
 	//List--------------------------
-
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;

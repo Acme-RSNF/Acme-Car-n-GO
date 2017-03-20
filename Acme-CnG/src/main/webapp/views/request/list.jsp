@@ -139,7 +139,7 @@
 	
 	</security:authorize>
 	<display:column>
-		<a href="customer/displayByRequest.do?requestId=${row.id}"><spring:message code="request.view.customer" /></a>
+		<a href="customer/displayById.do?customerId=${row.customer.id}"><spring:message code="request.view.customer" /></a>
 	</display:column>
 	<display:column>
 		<a href="request/display.do?requestId=${row.id}"><spring:message code="request.view" /></a>
