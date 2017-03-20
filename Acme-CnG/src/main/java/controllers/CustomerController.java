@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CustomerService;
@@ -49,12 +50,25 @@ public class CustomerController extends AbstractController {
 			result=new ModelAndView("customer/display");
 			result.addObject("customer", customer);
 			result.addObject("comments", customer.getComments());
-			result.addObject("requestURI", "lessor/display.do");
+			result.addObject("requestURI", "customer/display.do");
 
 			return result;
 		}
 	
-	
+		@RequestMapping(value="/displayById", method=RequestMethod.GET)
+		public ModelAndView display(@RequestParam int customerId) {
+				ModelAndView result;
+				Customer customer;
+				
+				customer = customerService.findOne(customerId);
+				result=new ModelAndView("customer/display");
+				result.addObject("customer", customer);
+				result.addObject("comments", customer.getComments());
+				result.addObject("requestURI", "customer/displayById.do");
+
+				return result;
+			}
+		
 	
 	
 	// Creation ------------------------------------------------
