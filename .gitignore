@@ -26,3 +26,6 @@ Acme-CnG/target/classes/spring/config/converters.xml
 Acme-CnG/target/classes/spring/config/packages.xml
 Acme-CnG/target/m2e-wtp/web-resources/META-INF/maven/Design-and-Testing/Sample-Project/pom.xml
 Acme-CnG/target
+*/classpath
+*/target/*
+Acme-CnG/src/main/webapp/images/logo2.png
