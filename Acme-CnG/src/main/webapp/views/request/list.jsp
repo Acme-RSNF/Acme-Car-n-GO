@@ -23,45 +23,46 @@
 	class="displaytag"
 	pagesize="5"
 	requestURI="${requestURI}" >
-	
+<jstl:choose>
+	<jstl:when test="${row.banned==true}">
 	<spring:message code="request.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" sortable="true"/>
+	<display:column property="title" title="${titleHeader}" sortable="true" style="font-weight:bold"/>
 	
 	<spring:message code="request.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}" sortable="false"/>
+	<display:column property="description" title="${descriptionHeader}" sortable="false" style="font-weight:bold"/>
 	
 	<spring:message code="request.moment" var="momentHeader" />
-	<display:column title="${momentHeader}"	sortable="false"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
+	<display:column title="${momentHeader}"	sortable="false" style="font-weight:bold"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
 	
 	<spring:message code="request.origin" var="originHeader" />
-	<display:column property="origin" title="${originHeader}" sortable="true"/>
+	<display:column property="origin" title="${originHeader}" sortable="true" style="font-weight:bold"/>
 	
 	<spring:message code="request.origin.coordinates" var="originCoordinateHeader" />
-	<display:column title="${originCoordinateHeader}"> 
+	<display:column title="${originCoordinateHeader}" style="font-weight:bold"> 
 		<jstl:if test="${row.originCoordinate!=''}">
-			<jstl:out value="${row.originCoordinate.latitude}    ${row.originCoordinate.longitude}"/>
+			<jstl:out value="${row.originCoordinate.latitude}    ${row.originCoordinate.longitude}" />
 		</jstl:if>
 	</display:column>
 	
 	<spring:message code="request.destination" var="destinationHeader"/>
-	<display:column property="destination" title="${destinationHeader}" sortable="true"/>
+	<display:column property="destination" title="${destinationHeader}" sortable="true" style="font-weight:bold"/>
 	
 	<spring:message code="request.destination.coordinates" var="destinationCoordinateHeader"/>
-	<display:column title="${destinationCoordinate}"> 
+	<display:column title="${destinationCoordinate}" style="font-weight:bold"> 
 		<jstl:if test="${row.destinationCoordinate!=''}">
-			<jstl:out value="${row.destinationCoordinate.latitude}    ${row.destinationCoordinate.longitude}"/>
+			<jstl:out value="${row.destinationCoordinate.latitude}    ${row.destinationCoordinate.longitude}" />
 		</jstl:if>
 	</display:column>
 	
-	<security:authorize access="hasRole('CUSTOMER')">
+	
 	
 	<spring:message code="request.banned" var="bannedHeader" />
-	<display:column title="${bannedHeader}">
+	<display:column title="${bannedHeader}" style="font-weight:bold">
 		<jstl:if test="${row.banned==true}">
-		 <td bgcolor='red'>
+		
 			<spring:message code="request.banned.yes" var="yesH" />
 			<jstl:out value="${yesH}"/>
-		</td>
+		
 		</jstl:if>
 		<jstl:if test="${row.banned==false}">
 			<spring:message code="request.banned.no" var="noH" />
@@ -69,8 +70,55 @@
 		</jstl:if>
 	</display:column>
 	
-	</security:authorize>
 	
+	</jstl:when>
+	<jstl:otherwise>
+	<spring:message code="request.title" var="titleHeader" />
+	<display:column property="title" title="${titleHeader}" sortable="true" style="none"/>
+	
+	<spring:message code="request.description" var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}" sortable="false" style="none"/>
+	
+	<spring:message code="request.moment" var="momentHeader" />
+	<display:column title="${momentHeader}"	sortable="false" style="none"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
+	
+	<spring:message code="request.origin" var="originHeader" />
+	<display:column property="origin" title="${originHeader}" sortable="true" style="none"/>
+	
+	<spring:message code="request.origin.coordinates" var="originCoordinateHeader" />
+	<display:column title="${originCoordinateHeader}" style="none"> 
+		<jstl:if test="${row.originCoordinate!=''}">
+			<jstl:out value="${row.originCoordinate.latitude}    ${row.originCoordinate.longitude}"/>
+		</jstl:if>
+	</display:column>
+	
+	<spring:message code="request.destination" var="destinationHeader"/>
+	<display:column property="destination" title="${destinationHeader}" sortable="true" style="none"/>
+	
+	<spring:message code="request.destination.coordinates" var="destinationCoordinateHeader"/>
+	<display:column title="${destinationCoordinate}" style="none"> 
+		<jstl:if test="${row.destinationCoordinate!=''}">
+			<jstl:out value="${row.destinationCoordinate.latitude}    ${row.destinationCoordinate.longitude}"/>
+		</jstl:if>
+	</display:column>
+	
+	
+	
+	<spring:message code="request.banned" var="bannedHeader" />
+	<display:column title="${bannedHeader}" style="none">
+		<jstl:if test="${row.banned==true}">
+		
+			<spring:message code="request.banned.yes" var="yesH" />
+			<jstl:out value="${yesH}"/>
+		
+		</jstl:if>
+		<jstl:if test="${row.banned==false}">
+			<spring:message code="request.banned.no" var="noH" />
+			<jstl:out value="${noH}"/>
+		</jstl:if>
+	</display:column>
+	</jstl:otherwise>
+</jstl:choose>
 	<security:authorize access="hasRole('ADMIN')">
 	
 	<spring:message code="request.banned" var="bannedHeader" />
@@ -90,7 +138,12 @@
 	</display:column>
 	
 	</security:authorize>
-	
+	<display:column>
+		<a href="customer/displayByRequest.do?requestId=${row.id}"><spring:message code="request.view.customer" /></a>
+	</display:column>
+	<display:column>
+		<a href="request/display.do?requestId=${row.id}"><spring:message code="request.view" /></a>
+	</display:column>
 </display:table>
 
 </security:authorize>

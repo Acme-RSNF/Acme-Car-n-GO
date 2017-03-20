@@ -24,52 +24,97 @@
 	class="displaytag"
 	pagesize="5"
 	requestURI="${requestURI}" >
-	
-	<spring:message code="offer.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" sortable="true"/>
-	
-	<spring:message code="offer.description" var="descriptionHeader" />
-	<display:column property="description" title="${descriptionHeader}" sortable="false"/>
-	
-	<spring:message code="offer.moment" var="momentHeader" />
-	<display:column title="${momentHeader}"	sortable="false"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
-	
-	<spring:message code="offer.origin" var="originHeader" />
-	<display:column property="origin" title="${originHeader}" sortable="true"/>
-	
-	<spring:message code="offer.origin.coordinates" var="originCoordinateHeader" />
-	<display:column title="${originCoordinateHeader}"> 
-		<jstl:if test="${not empty row.originCoordinate}">
-			<jstl:out value="${row.originCoordinate.latitude}   ${row.originCoordinate.longitude}"/>
-		</jstl:if>
-	</display:column>
-	
-	<spring:message code="offer.destination" var="destinationHeader"/>
-	<display:column property="destination" title="${destinationHeader}" sortable="true"/>
-	
-	<spring:message code="offer.destination.coordinates" var="destinationCoordinateHeader"/>
-	<display:column title="${destinationCoordinate}"> 
-		<jstl:if test="${not empty row.destinationCoordinate}">
-			<jstl:out value="${row.destinationCoordinate.latitude}   ${row.destinationCoordinate.longitude}"/>
-		</jstl:if>
-	</display:column>
-	
-	<security:authorize access="hasRole('CUSTOMER')">
-	
-	<spring:message code="offer.banned" var="bannedHeader" />
-	<display:column title="${bannedHeader}">
-		<jstl:if test="${row.banned==true}">
-			<spring:message code="offer.banned.yes" var="yesH" />
-			<jstl:out value="${yesH}"/>
-		</jstl:if>
-		<jstl:if test="${row.banned==false}">
-			<spring:message code="offer.banned.no" var="noH" />
-			<jstl:out value="${noH}"/>
-		</jstl:if>
-	</display:column>
-	
-	</security:authorize>
-	
+<jstl:choose>
+	<jstl:when test="${row.banned==true}">	
+		<spring:message code="offer.title" var="titleHeader" />
+		<display:column property="title" title="${titleHeader}" sortable="true" style="font-weight:bold"/>
+		
+		<spring:message code="offer.description" var="descriptionHeader" />
+		<display:column property="description" title="${descriptionHeader}" sortable="false" style="font-weight:bold"/>
+		
+		<spring:message code="offer.moment" var="momentHeader" />
+		<display:column title="${momentHeader}"	sortable="false" style="font-weight:bold"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
+		
+		<spring:message code="offer.origin" var="originHeader" />
+		<display:column property="origin" title="${originHeader}" sortable="true" style="font-weight:bold"/>
+		
+		<spring:message code="offer.origin.coordinates" var="originCoordinateHeader" />
+		<display:column title="${originCoordinateHeader}" style="font-weight:bold"> 
+			<jstl:if test="${not empty row.originCoordinate}">
+				<jstl:out value="${row.originCoordinate.latitude}   ${row.originCoordinate.longitude}"/>
+			</jstl:if>
+		</display:column>
+		
+		<spring:message code="offer.destination" var="destinationHeader"/>
+		<display:column property="destination" title="${destinationHeader}" sortable="true" style="font-weight:bold"/>
+		
+		<spring:message code="offer.destination.coordinates" var="destinationCoordinateHeader" />
+		<display:column title="${destinationCoordinate}" style="font-weight:bold"> 
+			<jstl:if test="${not empty row.destinationCoordinate}">
+				<jstl:out value="${row.destinationCoordinate.latitude}   ${row.destinationCoordinate.longitude}"/>
+			</jstl:if>
+		</display:column>
+		
+		
+		
+		<spring:message code="offer.banned" var="bannedHeader" />
+		<display:column title="${bannedHeader}" style="font-weight:bold">
+			<jstl:if test="${row.banned==true}">
+				<spring:message code="offer.banned.yes" var="yesH" />
+				<jstl:out value="${yesH}"/>
+			</jstl:if>
+			<jstl:if test="${row.banned==false}">
+				<spring:message code="offer.banned.no" var="noH" />
+				<jstl:out value="${noH}"/>
+			</jstl:if>
+		</display:column>
+		
+	</jstl:when>
+	<jstl:otherwise>
+		<spring:message code="offer.title" var="titleHeader" />
+		<display:column property="title" title="${titleHeader}" sortable="true" style="none"/>
+		
+		<spring:message code="offer.description" var="descriptionHeader" />
+		<display:column property="description" title="${descriptionHeader}" sortable="false" style="none"/>
+		
+		<spring:message code="offer.moment" var="momentHeader" />
+		<display:column title="${momentHeader}"	sortable="false" style="none"><fmt:formatDate value="${row.moment }" pattern="dd/MM/yyyy" /></display:column>
+		
+		<spring:message code="offer.origin" var="originHeader" />
+		<display:column property="origin" title="${originHeader}" sortable="true" style="none"/>
+		
+		<spring:message code="offer.origin.coordinates" var="originCoordinateHeader" />
+		<display:column title="${originCoordinateHeader}" style="none"> 
+			<jstl:if test="${not empty row.originCoordinate}">
+				<jstl:out value="${row.originCoordinate.latitude}   ${row.originCoordinate.longitude}"/>
+			</jstl:if>
+		</display:column>
+		
+		<spring:message code="offer.destination" var="destinationHeader"/>
+		<display:column property="destination" title="${destinationHeader}" sortable="true" style="none"/>
+		
+		<spring:message code="offer.destination.coordinates" var="destinationCoordinateHeader"/>
+		<display:column title="${destinationCoordinate}" style="none"> 
+			<jstl:if test="${not empty row.destinationCoordinate}">
+				<jstl:out value="${row.destinationCoordinate.latitude}   ${row.destinationCoordinate.longitude}"/>
+			</jstl:if>
+		</display:column>
+		
+		
+		
+		<spring:message code="offer.banned" var="bannedHeader" />
+		<display:column title="${bannedHeader}" style="none">
+			<jstl:if test="${row.banned==true}">
+				<spring:message code="offer.banned.yes" var="yesH" />
+				<jstl:out value="${yesH}"/>
+			</jstl:if>
+			<jstl:if test="${row.banned==false}">
+				<spring:message code="offer.banned.no" var="noH" />
+				<jstl:out value="${noH}"/>
+			</jstl:if>
+		</display:column>
+	</jstl:otherwise>
+</jstl:choose>
 	<security:authorize access="hasRole('ADMIN')">
 	
 	<spring:message code="offer.banned" var="bannedHeader" />
@@ -89,7 +134,12 @@
 	</display:column>
 	
 	</security:authorize>
-	
+	<display:column>
+		<a href="customer/displayByOffer.do?offerId=${row.id}"><spring:message code="offer.view.customer" /></a>
+	</display:column>
+	<display:column>
+		<a href="offer/display.do?offerId=${row.id}"><spring:message code="offer.view" /></a>
+	</display:column>
 </display:table>
 
 </security:authorize>
