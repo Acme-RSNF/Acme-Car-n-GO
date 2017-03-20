@@ -116,11 +116,11 @@ public class CommentController extends AbstractController {
 					comment = commentService.save(comment);
 					int id = comment.getCommentable().getId();
 					if(customerService.findOne(id)!=null){
-						result = new ModelAndView("redirect:../customer/displayById.do?lessorId="+id);
+						result = new ModelAndView("redirect:../customer/displayById.do?customerId="+id);
 						String requestURI = "customer/displayById.do?customerId="+id;
 						result.addObject("requestURI", requestURI);
 					}else if(offerService.findOne(id)!=null){
-						result = new ModelAndView("redirect:../offer/displayById.do?lessorId="+id);
+						result = new ModelAndView("redirect:../offer/displayById.do?offerId="+id);
 						String requestURI = "offer/displayById.do?offerId="+id;
 						result.addObject("requestURI", requestURI);
 					}else if(administratorService.findOne(id)!=null){
