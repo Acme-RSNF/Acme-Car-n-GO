@@ -12,12 +12,6 @@
 <table id="row" class="table">
 	<tbody>
 		<tr>
-			<td>
-				<img src="${customer.picture}" width="100" height="100" >
-				
-			</td>
-		</tr>
-		<tr>
 			<th><spring:message code="customer.name"/></th>
 			<th><spring:message code="customer.surname"/></th>
 			
@@ -40,39 +34,60 @@
 	
 <display:table pagesize="10" class="displaytag" keepStatus="true" name="comments" id="row" requestURI="${requestURI}">	
 	<jstl:choose>
-	<jstl:when test="${customer.comment.banned==true && (customer.userAccount.username == pageContext.request.remoteUser || {pageContext.request.isUserInRole('ADMIN'))}">
-		<spring:message code="customer.comment.title" var="titleHeader" />
-		<display:column title="${titleHeader }" property="title" style="font-weight:bold"/>
-		
-		<spring:message code="customer.comment.postedMoment" var="postedMomentHeader"/>
-		<display:column title="${postedMomentHeader}" sortable="true" style="font-weight:bold"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy HH:mm" /></display:column>
-		
-		<spring:message code="customer.comment.text" var="textHeader"/>
-		<display:column title="${textHeader }" property="text" style="font-weight:bold"/>
-		
-		<spring:message code="customer.comment.actor" var="commentatorHeader"/>
-		<display:column title="${commentatorHeader }" style="font-weight:bold">
-				<jstl:out value="${row.commentator.name}" />
-		</display:column>
-		<spring:message code="customer.comment.stars" var="starsHeader"/>
-		<display:column title="${starsHeader }" property="stars" style="font-weight:bold"/>
+	<jstl:when test="${row.banned==true}">
+		 <jstl:choose>
+			<jstl:when test="${row.actor.userAccount.username == pageContext.request.remoteUser || pageContext.request.isUserInRole('ADMIN')}">
+				<spring:message code="customer.comment.title" var="titleHeader" />
+				<display:column title="${titleHeader }" property="title" style="font-weight:bold"/>
+				
+				<spring:message code="customer.comment.postedMoment" var="postedMomentHeader"/>
+				<display:column title="${postedMomentHeader}" sortable="true" style="font-weight:bold"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy HH:mm" /></display:column>
+				
+				<spring:message code="customer.comment.text" var="textHeader"/>
+				<display:column title="${textHeader }" property="text" style="font-weight:bold"/>
+				
+				<spring:message code="customer.comment.actor" var="commentatorHeader"/>
+				<display:column title="${commentatorHeader }" style="font-weight:bold">
+						<jstl:out value="${row.actor.name}" />
+				</display:column>
+				<spring:message code="customer.comment.stars" var="starsHeader"/>
+				<display:column title="${starsHeader }" property="stars" style="font-weight:bold"/>
+			</jstl:when>
+			<jstl:otherwise>
+				<spring:message code="customer.comment.title" var="titleHeader" />
+				<display:column title="${titleHeader }" property="title" style="display:none;"/>
+				
+				<spring:message code="customer.comment.postedMoment" var="postedMomentHeader"/>
+				<display:column title="${postedMomentHeader}" sortable="true" style="display:none;"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy HH:mm" /></display:column>
+				
+				<spring:message code="customer.comment.text" var="textHeader"/>
+				<display:column title="${textHeader }" property="text" style="display:none;"/>
+				
+				<spring:message code="customer.comment.actor" var="commentatorHeader"/>
+				<display:column title="${commentatorHeader }" style="display:none;">
+						<jstl:out value="${row.actor.name}" />
+				</display:column>
+				<spring:message code="customer.comment.stars" var="starsHeader"/>
+				<display:column title="${starsHeader }" property="stars" style="display:none;"/>
+			</jstl:otherwise>
+		</jstl:choose>
 	</jstl:when>
 	<jstl:otherwise>
-	<spring:message code="customer.comment.title" var="titleHeader"/>
-		<display:column title="${titleHeader }" property="title" />
+		<spring:message code="customer.comment.title" var="titleHeader"/>
+		<display:column title="${titleHeader }" property="title" style="none"/>
 		
 		<spring:message code="customer.comment.postedMoment" var="postedMomentHeader"/>
-		<display:column title="${postedMomentHeader}" sortable="true"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy HH:mm" /></display:column>
+		<display:column title="${postedMomentHeader}" sortable="true" style="none"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy HH:mm" /></display:column>
 		
 		<spring:message code="customer.comment.text" var="textHeader"/>
-		<display:column title="${textHeader }" property="text"/>
+		<display:column title="${textHeader }" property="text" style="none"/>
 		
 		<spring:message code="customer.comment.actor" var="commentatorHeader"/>
-		<display:column title="${commentatorHeader }">
-				<jstl:out value="${row.commentator.name}"/>
+		<display:column title="${commentatorHeader }" style="none">
+				<jstl:out value="${row.actor.name}"/>
 		</display:column>
 		<spring:message code="customer.comment.stars" var="starsHeader"/>
-		<display:column title="${starsHeader }" property="stars"/>
+		<display:column title="${starsHeader }" property="stars" style="none"/>
 	</jstl:otherwise>
 	</jstl:choose>
 </display:table>

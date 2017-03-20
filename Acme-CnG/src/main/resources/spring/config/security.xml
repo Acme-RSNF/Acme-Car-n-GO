@@ -75,7 +75,7 @@
 		<security:intercept-url pattern="/message/forward.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/message/reply.do" access="isAuthenticated()" />
 
-		
+		<security:intercept-url pattern="/customer/display.do" access="isAuthenticated()" />
 		
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
