@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.OfferRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.ApplyFor;
+import domain.Comment;
 import domain.Customer;
 import domain.Offer;
+import forms.OfferForm;
 
 @Service
 @Transactional
@@ -29,6 +34,9 @@ public class OfferService {
 
 	@Autowired
 	private CustomerService	customerService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -54,6 +62,8 @@ public class OfferService {
 		customer = customerService.findByPrincipal();
 
 		result.setCustomer(customer);
+		result.setBanned(false);
+		result.setIsCommentable(true);
 
 		return result;
 	}
@@ -138,4 +148,37 @@ public class OfferService {
 		else
 			offer.setBanned(true);
 	}
+
+	// Form methods -------------------------------------------------------------
+
+	public OfferForm generate() {
+		OfferForm result = new OfferForm();
+
+		return result;
+	}
+
+	public Offer reconstruct(OfferForm offerForm, BindingResult binding) {
+		Offer result;
+		Collection<Comment> comments = new ArrayList<Comment>();
+		Collection<ApplyFor> applies = new ArrayList<ApplyFor>();
+		Customer customer = customerService.findByPrincipal();
+
+		result = create();
+
+		result.setTitle(offerForm.getTitle());
+		result.setDescription(offerForm.getDescription());
+		result.setApplies(applies);
+		result.setComments(comments);
+		result.setDestination(offerForm.getDestination());
+		result.setOrigin(offerForm.getOrigin());
+		result.setDestinationCoordinate(offerForm.getDestinationCoordinate());
+		result.setOriginCoordinate(offerForm.getOriginCoordinate());
+		result.setMoment(offerForm.getMoment());
+		result.setCustomer(customer);
+
+		validator.validate(result, binding);
+
+		return result;
+	}
+
 }

@@ -31,7 +31,6 @@ public class OfferForm {
 	private Coordinate	originCoordinate;
 	private String		destination;
 	private Coordinate	destinationCoordinate;
-	private Boolean		banned;
 
 
 	// Constructor --------------------------------------------------
@@ -108,13 +107,6 @@ public class OfferForm {
 	}
 	public void setDestinationCoordinate(Coordinate destinationCoordinate) {
 		this.destinationCoordinate = destinationCoordinate;
-	}
-
-	public Boolean getBanned() {
-		return banned;
-	}
-	public void setBanned(Boolean banned) {
-		this.banned = banned;
 	}
 
 }
