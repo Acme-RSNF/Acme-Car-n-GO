@@ -181,4 +181,15 @@ public class OfferService {
 		return result;
 	}
 
+	public Collection<Offer> findByKey(String key) {
+		Collection<Offer> aux = offerRepository.findByKey(key);
+		Collection<Offer> result = new ArrayList<Offer>();
+		for (Offer o : aux)
+			if (o.getBanned() == false)
+				result.add(o);
+
+		return result;
+
+	}
+
 }

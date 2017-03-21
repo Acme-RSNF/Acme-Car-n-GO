@@ -19,6 +19,22 @@
 
 <security:authorize access="isAuthenticated()">
 
+<input type="text" value="" id="textSearch" />
+<input type="button" id="buttonSearch"
+	value="<spring:message code="offer.search"/>" />
+	
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#buttonSearch").click(function(){
+			window.location.replace('offer/search.do?key=' + $("#textSearch").val());
+		});
+		
+		$("#buttonSearch").onsubmit(function(){
+			window.location.replace('offer/search.do?key=' + $("#textSearch").val());
+		});
+	});
+</script>
+
 <display:table name="offers"
 	id="row"
 	class="displaytag"
@@ -49,7 +65,7 @@
 		<display:column property="destination" title="${destinationHeader}" sortable="true" style="font-weight:bold"/>
 		
 		<spring:message code="offer.destination.coordinates" var="destinationCoordinateHeader" />
-		<display:column title="${destinationCoordinate}" style="font-weight:bold"> 
+		<display:column title="${destinationCoordinateHeader}" style="font-weight:bold"> 
 			<jstl:if test="${not empty row.destinationCoordinate}">
 				<jstl:out value="${row.destinationCoordinate.latitude}   ${row.destinationCoordinate.longitude}"/>
 			</jstl:if>
