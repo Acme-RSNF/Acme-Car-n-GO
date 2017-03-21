@@ -33,14 +33,14 @@
 			<th><spring:message code="request.destination"/></th>
 		</tr>
 		<tr>
-			<td><jstl:out value="${request.originCoordinate}"/></td>
+			<td><jstl:out value="${request.originCoordinate.latitude} ${request.originCoordinate.longitude}"/></td>
 			<td><jstl:out value="${request.destination}"/></td>
 		</tr>
 		<tr>
 			<th><spring:message code="request.destinationCoordinate"/></th>
 		</tr>
 		<tr>
-			<td><jstl:out value="${request.destinationCoordinate}"/></td>
+			<td><jstl:out value="${request.destinationCoordinate.latitude} ${request.destinationCoordinate.longitude}"/></td>
 			
 		</tr>
 	</tbody>
