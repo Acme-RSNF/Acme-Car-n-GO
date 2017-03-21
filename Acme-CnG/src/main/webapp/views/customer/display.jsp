@@ -92,7 +92,7 @@
 	</jstl:choose>
 </display:table>
 
-<security:authorize access="hasAnyRole('CUSTOMER','ADMINISTRATOR')">
+<security:authorize access="hasAnyRole('CUSTOMER','ADMIN')">
 	<input type="button" name="comment" value="<spring:message code="customer.comment" />"
 			onclick="javascript: window.location.replace('comment/create.do?commentableId=${customer.id}')" />
 <br/>

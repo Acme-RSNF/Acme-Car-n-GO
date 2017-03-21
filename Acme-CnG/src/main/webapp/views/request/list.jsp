@@ -48,7 +48,7 @@
 	<display:column property="destination" title="${destinationHeader}" sortable="true" style="font-weight:bold"/>
 	
 	<spring:message code="request.destination.coordinates" var="destinationCoordinateHeader"/>
-	<display:column title="${destinationCoordinate}" style="font-weight:bold"> 
+	<display:column title="${destinationCoordinateHeader}" style="font-weight:bold"> 
 		<jstl:if test="${row.destinationCoordinate!=''}">
 			<jstl:out value="${row.destinationCoordinate.latitude}    ${row.destinationCoordinate.longitude}" />
 		</jstl:if>
