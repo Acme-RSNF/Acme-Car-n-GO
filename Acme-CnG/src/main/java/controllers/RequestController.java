@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RequestService;
-import domain.Offer;
 import domain.Request;
 
 @Controller
@@ -31,19 +30,19 @@ public class RequestController extends AbstractController {
 		super();
 	}
 	//Display-----------------------
-		@RequestMapping(value="/display", method=RequestMethod.GET)
-		public ModelAndView display(@RequestParam int requestId) {
-				ModelAndView result;
-				Request request;
-				
-				request = requestService.findOne(requestId);
-				result=new ModelAndView("request/display");
-				result.addObject("request", request);
-				result.addObject("comments", request.getComments());
-				result.addObject("requestURI", "request/display.do");
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int requestId) {
+		ModelAndView result;
+		Request request;
 
-				return result;
-			}
+		request = requestService.findOne(requestId);
+		result = new ModelAndView("request/display");
+		result.addObject("request", request);
+		result.addObject("comments", request.getComments());
+		result.addObject("requestURI", "request/display.do");
+
+		return result;
+	}
 	//List--------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -90,6 +89,24 @@ public class RequestController extends AbstractController {
 			result.addObject("message", "master-page.commit.error");
 		}
 
+		return result;
+	}
+
+	// SearchByKeyword -------------------------------------------------------
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView search(@RequestParam String key) {
+		ModelAndView result;
+		String requestUri = "request/search.do?key=" + key;
+		try {
+			Collection<Request> requests = requestService.findByKey(key);
+
+			result = new ModelAndView("request/list");
+			result.addObject("requests", requests);
+			result.addObject("requestURI", requestUri);
+		} catch (Throwable oops) {
+			result = list();
+		}
 		return result;
 	}
 

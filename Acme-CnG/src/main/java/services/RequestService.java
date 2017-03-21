@@ -181,4 +181,15 @@ public class RequestService {
 		return result;
 	}
 
+	public Collection<Request> findByKey(String key) {
+		Collection<Request> aux = requestRepository.findByKey(key);
+		Collection<Request> result = new ArrayList<Request>();
+		for (Request r : aux)
+			if (r.getBanned() == false)
+				result.add(r);
+
+		return result;
+
+	}
+
 }

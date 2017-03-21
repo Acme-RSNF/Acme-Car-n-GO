@@ -18,6 +18,22 @@
 
 <security:authorize access="isAuthenticated()">
 
+<input type="text" value="" id="textSearch" />
+<input type="button" id="buttonSearch"
+	value="<spring:message code="request.search"/>" />
+	
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#buttonSearch").click(function(){
+			window.location.replace('request/search.do?key=' + $("#textSearch").val());
+		});
+		
+		$("#buttonSearch").onsubmit(function(){
+			window.location.replace('request/search.do?key=' + $("#textSearch").val());
+		});
+	});
+</script>
+
 <display:table name="requests"
 	id="row"
 	class="displaytag"

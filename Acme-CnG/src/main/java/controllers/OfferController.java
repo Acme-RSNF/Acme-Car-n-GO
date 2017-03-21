@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.OfferService;
-import domain.Customer;
 import domain.Offer;
 
 @Controller
@@ -31,22 +30,22 @@ public class OfferController extends AbstractController {
 		super();
 	}
 	//Display-----------------------
-	@RequestMapping(value="/display", method=RequestMethod.GET)
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam int offerId) {
-			ModelAndView result;
-			Offer offer;
-			
-			offer = offerService.findOne(offerId);
-			result=new ModelAndView("offer/display");
-			result.addObject("offer", offer);
-			result.addObject("comments", offer.getComments());
-			result.addObject("requestURI", "offer/display.do");
+		ModelAndView result;
+		Offer offer;
 
-			return result;
-		}
-	
+		offer = offerService.findOne(offerId);
+		result = new ModelAndView("offer/display");
+		result.addObject("offer", offer);
+		result.addObject("comments", offer.getComments());
+		result.addObject("requestURI", "offer/display.do");
+
+		return result;
+	}
+
 	//List--------------------------
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -90,6 +89,24 @@ public class OfferController extends AbstractController {
 			result.addObject("message", "master-page.commit.error");
 		}
 
+		return result;
+	}
+
+	// SearchByKeyword -------------------------------------------------------
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView search(@RequestParam String key) {
+		ModelAndView result;
+		String requestUri = "offer/search.do?key=" + key;
+		try {
+			Collection<Offer> offers = offerService.findByKey(key);
+
+			result = new ModelAndView("offer/list");
+			result.addObject("offers", offers);
+			result.addObject("requestURI", requestUri);
+		} catch (Throwable oops) {
+			result = list();
+		}
 		return result;
 	}
 
