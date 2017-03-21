@@ -32,6 +32,7 @@
 		<value>/views/offer/tiles.xml</value>
 		<value>/views/comment/tiles.xml</value>
 		<value>/views/banner/tiles.xml</value>
+		<value>/views/applyFor/tiles.xml</value>
 		
 	</util:list>
 

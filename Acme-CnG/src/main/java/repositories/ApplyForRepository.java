@@ -13,4 +13,7 @@ import domain.Customer;
 public interface ApplyForRepository extends JpaRepository<ApplyFor,Integer>{
 	@Query("select r from ApplyFor r where r.customer= ?1")
 	Collection<ApplyFor> findByCreator(Customer c);
+	
+	@Query("select r from ApplyFor r where r.deal.customer= ?1")
+	Collection<ApplyFor> findByDealCreator(Customer c);
 }

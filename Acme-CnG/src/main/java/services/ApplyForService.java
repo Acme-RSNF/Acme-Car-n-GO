@@ -54,6 +54,7 @@ public class ApplyForService {
 		customer = customerService.findByPrincipal();
 
 		result.setCustomer(customer);
+		result.setStatus("PENDING");
 
 		return result;
 	}
@@ -123,6 +124,14 @@ public class ApplyForService {
 		Customer customer;
 		customer = customerService.findByPrincipal();
 		result = applyForRepository.findByCreator(customer);
+		return result;
+	}
+	
+	public Collection<ApplyFor> findByDealCreator() {
+		Collection<ApplyFor> result = new ArrayList<ApplyFor>();
+		Customer customer;
+		customer = customerService.findByPrincipal();
+		result = applyForRepository.findByDealCreator(customer);
 		return result;
 	}
 
