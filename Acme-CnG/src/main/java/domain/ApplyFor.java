@@ -4,13 +4,17 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = @Index(columnList = "status"))
 public class ApplyFor extends DomainEntity {
 
 	// Attributes --------------------------------------
@@ -35,8 +39,9 @@ public class ApplyFor extends DomainEntity {
 	private Customer	customer;
 	private Deal		deal;
 
+
 	@Valid
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -44,7 +49,7 @@ public class ApplyFor extends DomainEntity {
 		this.customer = customer;
 	}
 	@Valid
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Deal getDeal() {
 		return deal;
 	}
