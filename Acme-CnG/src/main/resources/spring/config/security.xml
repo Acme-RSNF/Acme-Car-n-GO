@@ -49,6 +49,7 @@
 		<security:intercept-url pattern="/offer/display.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/customer/displayById.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/offer/display.do" access="isAuthenticated()" />
+		<security:intercept-url pattern="/request/display.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/request/listAdmin.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/request/banUnbanRequest.do" access="hasRole('ADMIN')" /> 
 		
