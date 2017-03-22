@@ -52,9 +52,14 @@
 					<td><jstl:out value="${applyD.customer.name}"/></td>
 					<td><jstl:out value="${applyD.deal.title}"/></td>
 					<td><jstl:out value="${applyD.status}"/></td>
-					<td><input type="button" name="comment" value="<spring:message code="customer.comment" />"
-			onclick="javascript: window.location.replace('comment/create.do?commentableId=${customer.id}')" />
-					</td>
+					<td>
+					<jstl:if test="${applyD.status=='PENDING' }">
+						<input type="button" name="accept" value="<spring:message code="applyFor.accept" />"
+				onclick="javascript: window.location.replace('applyFor/accept.do?applyForId=${applyD.id}')" />
+						<input type="button" name="deny" value="<spring:message code="applyFor.deny" />"
+				onclick="javascript: window.location.replace('applyFor/deny.do?applyForId=${applyD.id}')" />
+					</jstl:if>
+						</td>
 				</tr>
 		</jstl:forEach>
 		</table>

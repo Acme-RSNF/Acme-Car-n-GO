@@ -78,6 +78,44 @@ public class ApplyForController extends AbstractController {
 		return result;
 	}
 
+	// Accept -------------------------------------------------------------
+	@RequestMapping(value = "/accept", method = RequestMethod.GET)
+	public ModelAndView accept(@RequestParam int applyForId) {
+		ModelAndView result;
+		Deal deal;
+		Collection<ApplyFor> applies;
+		
+		ApplyFor applyFor = applyForService.findOne(applyForId);
+		applyFor.setStatus("ACCEPTED");
+		applyForService.save(applyFor);
+		
+		deal = dealService.findOne(applyFor.getDeal().getId());
+		applies = deal.getApplies();
+		
+		for(ApplyFor a : applies){
+			if(a.getStatus().equals("PENDING")){
+				a.setStatus("DENIED");
+				applyForService.save(a);
+			}
+		}
+				
+		result = display();
+
+		return result;
+	}
+	
+	@RequestMapping(value = "/deny", method = RequestMethod.GET)
+	public ModelAndView deny(@RequestParam int applyForId) {
+		ModelAndView result;
+		
+		ApplyFor applyFor = applyForService.findOne(applyForId);
+		applyFor.setStatus("DENIED");
+		applyForService.save(applyFor);
+		
+		result = display();
+
+		return result;
+	}
 
 	// Ancillary methods ---------------------------------------------------
 

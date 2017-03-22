@@ -9,6 +9,7 @@ import javax.persistence.Embeddable;
 
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
 
 import domain.Actor;
 
@@ -43,6 +44,7 @@ public class MessageForm {
 		this.text = text;
 	}
 
+	
 	public Collection<String> getAttachment() {
 		return attachment;
 	}

@@ -71,6 +71,9 @@
 		<security:intercept-url pattern="/customer/request/create.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/customer/offer/myList.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/customer/offer/create.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/applyFor/display.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/applyFor/accept.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/applyFor/deny.do" access="hasRole('CUSTOMER')" />
 		
 		<security:intercept-url pattern="/message/received.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/sent.do" access="isAuthenticated()" />
