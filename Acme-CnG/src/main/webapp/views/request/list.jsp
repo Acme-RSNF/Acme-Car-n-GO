@@ -112,7 +112,7 @@
 	<display:column property="destination" title="${destinationHeader}" sortable="true" style="none"/>
 	
 	<spring:message code="request.destination.coordinates" var="destinationCoordinateHeader"/>
-	<display:column title="${destinationCoordinate}" style="none"> 
+	<display:column title="${destinationCoordinateHeader}" style="none"> 
 		<jstl:if test="${row.destinationCoordinate!=''}">
 			<jstl:out value="${row.destinationCoordinate.latitude}    ${row.destinationCoordinate.longitude}"/>
 		</jstl:if>
