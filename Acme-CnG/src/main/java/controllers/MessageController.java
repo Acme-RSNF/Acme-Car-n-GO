@@ -1,7 +1,6 @@
 
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -127,10 +126,7 @@ public class MessageController extends AbstractController {
 		ModelAndView result;
 		MessageForm messageForm = messageService.generate();
 
-		Actor actor = messageService.findOne(messageId).getSender();
-		Collection<Actor> actors = new ArrayList<Actor>();
-
-		actors.add(actor);
+		Collection<Actor> actors = messageService.reply(messageId);
 
 		result = new ModelAndView("message/forward");
 		result.addObject("messageForm", messageForm);

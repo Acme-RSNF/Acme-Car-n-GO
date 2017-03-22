@@ -138,6 +138,7 @@ public class MessageService {
 		au2.setAuthority("ADMIN");
 
 		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+		Assert.isTrue(message.getRecipient().equals(actorService.findByPrincipal()) || message.getSender().equals(actorService.findByPrincipal()));
 
 		Assert.notNull(message);
 		Actor actor = actorService.findByPrincipal();
@@ -165,6 +166,7 @@ public class MessageService {
 		result = messageRepository.messagesSentByActorId(actor.getId());
 		return result;
 	}
+	
 	public Collection<Message> messagesReceivedByActorId() {
 
 		UserAccount userAccount;
@@ -180,6 +182,32 @@ public class MessageService {
 		Actor actor = actorService.findByPrincipal();
 		result = actor.getReceived();
 		return result;
+	}
+	
+	// Reply --------------------------------------------------------------
+	
+	public Collection<Actor> reply(int messageId){
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+		
+		Message message = findOne(messageId);
+		Actor actor = actorService.findByPrincipal();
+		
+		Assert.isTrue(message.getRecipient().equals(actor));
+		
+		Actor sender = message.getSender();
+		Collection<Actor> actors = new ArrayList<Actor>();
+
+		actors.add(sender);
+		
+		return actors;
 	}
 
 	// Forward ------------------------------------------------------------
@@ -197,6 +225,8 @@ public class MessageService {
 
 		MessageForm result = generate();
 		Message message = findOne(messageId);
+		
+		Assert.isTrue(message.getRecipient().equals(actorService.findByPrincipal()) || message.getSender().equals(actorService.findByPrincipal()));
 
 		result.setAttachment(message.getAttachment());
 		result.setText(message.getText());
