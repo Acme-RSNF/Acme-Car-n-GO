@@ -13,6 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.MessageRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 import domain.Message;
 import forms.MessageForm;
@@ -45,6 +48,15 @@ public class MessageService {
 
 	public Message create() {
 
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		Message result;
 		result = new Message();
 
@@ -61,6 +73,16 @@ public class MessageService {
 	}
 
 	public Collection<Message> findAll() {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		Collection<Message> result;
 
 		result = messageRepository.findAll();
@@ -70,6 +92,16 @@ public class MessageService {
 	}
 
 	public Message findOne(int messageId) {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		Message result;
 
 		result = messageRepository.findOne(messageId);
@@ -80,6 +112,15 @@ public class MessageService {
 
 	public Message save(Message message) {
 
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		Assert.notNull(message);
 		Message result;
 		result = messageRepository.save(message);
@@ -88,6 +129,15 @@ public class MessageService {
 	}
 
 	public void delete(Message message) {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
 
 		Assert.notNull(message);
 		Actor actor = actorService.findByPrincipal();
@@ -100,54 +150,51 @@ public class MessageService {
 	// Other business methods -------------------------------------------------
 
 	public Collection<Message> messagesSentByActorId() {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		Collection<Message> result = new ArrayList<Message>();
 		Actor actor = actorService.findByPrincipal();
 		result = messageRepository.messagesSentByActorId(actor.getId());
 		return result;
 	}
 	public Collection<Message> messagesReceivedByActorId() {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		Collection<Message> result = new ArrayList<Message>();
 		Actor actor = actorService.findByPrincipal();
 		result = actor.getReceived();
 		return result;
 	}
 
-	//	public void sendMessage(Message message) {
-	//
-	//		// Creamos un segundo mensaje que será una copia del mensaje creado.
-	//		Message message2 = create();
-	//
-	//		message2.setAttachment(message.getAttachment());
-	//		message2.setMoment(message.getMoment());
-	//		message2.setRecipient(message.getRecipient());
-	//		message2.setSender(message.getSender());
-	//		message2.setText(message.getText());
-	//		message2.setTitle(message.getTitle());
-	//
-	//		// Guardamos los dos mensajes en la base de datos.
-	//		save(message);
-	//		save(message2);
-	//
-	//		// Añadimos los mensajes en la lista de mensajes enviados y recividos de los dos actores correspondients.
-	//		Actor sender = message.getSender();
-	//		Actor recipient = message.getRecipient();
-	//
-	//		Collection<Message> sent = sender.getSended();
-	//		Collection<Message> recived = recipient.getReceived();
-	//
-	//		sent.add(message);
-	//		recived.add(message2);
-	//
-	//		sender.setSended(sent);
-	//		recipient.setReceived(recived);
-	//
-	//		actorService.save(sender);
-	//		actorService.save(recipient);
-	//	}
-
 	// Forward ------------------------------------------------------------
 
 	public MessageForm forward(int messageId) {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		MessageForm result = generate();
 		Message message = findOne(messageId);
 
@@ -162,6 +209,16 @@ public class MessageService {
 	// Form methods ----------------------------------------------------------
 
 	public MessageForm generate() {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+
 		MessageForm result = new MessageForm();
 
 		result.setSender(actorService.findByPrincipal());
@@ -170,6 +227,15 @@ public class MessageService {
 	}
 
 	public Message reconstruct(MessageForm messageForm, BindingResult binding) {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
 
 		Message result = create();
 
