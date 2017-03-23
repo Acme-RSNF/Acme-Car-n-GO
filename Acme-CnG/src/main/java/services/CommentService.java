@@ -49,6 +49,15 @@ public class CommentService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Comment create() {
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+		
 		Date date = new Date(System.currentTimeMillis() - 1000);
 		Comment result;
 
@@ -95,7 +104,17 @@ public class CommentService {
 	}
 	
 	// Form methods ---------------------------
+	
 		public CommentForm generateForm(int commentableId) {
+			
+			UserAccount userAccount;
+			userAccount = LoginService.getPrincipal();
+			Authority au = new Authority();
+			au.setAuthority("CUSTOMER");
+			Authority au2 = new Authority();
+			au2.setAuthority("ADMIN");
+			Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+			
 			CommentForm commentForm = new CommentForm();
 
 			commentForm.setCommentableId(commentableId);
@@ -103,6 +122,15 @@ public class CommentService {
 		}
 
 		public Comment reconstruct(CommentForm commentForm, BindingResult binding) {
+			
+			UserAccount userAccount;
+			userAccount = LoginService.getPrincipal();
+			Authority au = new Authority();
+			au.setAuthority("CUSTOMER");
+			Authority au2 = new Authority();
+			au2.setAuthority("ADMIN");
+			Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+			
 			Comment result = create();
 
 			Assert.notNull(actorService.findByPrincipal(), "notCommentator");
