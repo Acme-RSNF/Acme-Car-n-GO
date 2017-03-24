@@ -160,6 +160,12 @@
 	<display:column>
 		<a href="request/display.do?requestId=${row.id}"><spring:message code="request.view" /></a>
 	</display:column>
+	<display:column>
+	<jstl:if test="${row.customer.userAccount.username != pageContext.request.remoteUser}">
+		<input type="button" name="apply" value="<spring:message code="request.apply" />"
+			onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
+	</jstl:if>
+	</display:column>
 </display:table>
 
 </security:authorize>

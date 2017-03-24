@@ -156,6 +156,16 @@
 	<display:column>
 		<a href="offer/display.do?offerId=${row.id}"><spring:message code="offer.view" /></a>
 	</display:column>
+	<display:column>
+	<jstl:set var="contains" value="false" />
+	<jstl:forEach items="${row.applies}" var="apply">
+			<jstl:if test="${apply.customer.userAccount.username!=pageContext.request.remoteUser && row.customer.userAccount.username != pageContext.request.remoteUser}}">
+				<input type="button" name="apply" value="<spring:message code="offer.apply" />"
+					onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
+			<jstl:set var="contains" value="true" />
+			</jstl:if>
+	</jstl:forEach>
+	</display:column>
 </display:table>
 
 </security:authorize>
