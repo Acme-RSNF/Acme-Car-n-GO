@@ -88,47 +88,48 @@ public class BannerController extends AbstractController {
 		Banner banner;
 
 		banner = bannerService.findOne(bannerId);
+		BannerForm bannerForm=bannerService.transform(banner);
 		Assert.notNull(banner);
 		result = new ModelAndView("banner/edit");
-		result.addObject("banner", banner);
-
+		result.addObject("bannerForm", bannerForm);
+		
 		return result;
 
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Banner banner, BindingResult binding) {
+	public ModelAndView save(@Valid BannerForm bannerForm, BindingResult binding) {
 
 		ModelAndView result = new ModelAndView();
 
 		if (binding.hasErrors())
-			result = createEditModelAndView(banner);
+			result = createEditModelAndView(bannerForm);
 		else
 			try {
-				banner = bannerService.reconstruct(banner, binding);
+				Banner banner= bannerService.reconstruct(bannerForm, binding);
 				bannerService.save(banner);
 				result = listAdmin();
 			} catch (Throwable oops) {
 				String msgCode = "banner.save.error";
-				result = createEditModelAndView(banner, msgCode);
+				result = createEditModelAndView(bannerForm, msgCode);
 			}
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Banner banner, BindingResult binding) {
+	public ModelAndView delete(BannerForm bannerForm, BindingResult binding) {
 
 		ModelAndView result;
 
-		banner = bannerService.reconstruct(banner, binding);
+		Banner banner = bannerService.reconstruct(bannerForm, binding);
 		if (binding.hasErrors())
-			result = createEditModelAndView(banner);
+			result = createEditModelAndView(banner,null);
 		else
 			try {
 				bannerService.delete(banner);
 				result = listAdmin();
 			} catch (Throwable oops) {
-				result = createEditModelAndView(banner);
+				result = createEditModelAndView(banner,null);
 			}
 		return result;
 	}
@@ -145,11 +146,11 @@ public class BannerController extends AbstractController {
 
 	}
 
-	protected ModelAndView createEditModelAndView(BannerForm banner, String message) {
+	protected ModelAndView createEditModelAndView(BannerForm bannerForm, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("banner/edit");
-		result.addObject("banner", banner);
+		result.addObject("bannerForm", bannerForm);
 
 		result.addObject("message", message);
 
@@ -157,13 +158,13 @@ public class BannerController extends AbstractController {
 
 	}
 
-	protected ModelAndView createEditModelAndView(Banner banner) {
+	protected ModelAndView createEditModelAndView(BannerForm bannerForm) {
+
 		ModelAndView result;
 
-		result = createEditModelAndView(banner, null);
+		result = createEditModelAndView(bannerForm, null);
 
 		return result;
-
 	}
 
 }

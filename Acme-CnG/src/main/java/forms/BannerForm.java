@@ -17,9 +17,11 @@ public class BannerForm {
 
 	private int		id;
 	private String	image;
-
+	private boolean isPrincipal;
 
 	// Constructor --------------------------------------------------
+
+	
 
 	public BannerForm() {
 		super();
@@ -46,5 +48,11 @@ public class BannerForm {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public boolean getIsPrincipal() {
+		return isPrincipal;
+	}
 
+	public void setIsPrincipal(boolean isPrincipal) {
+		this.isPrincipal = isPrincipal;
+	}
 }

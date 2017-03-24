@@ -22,15 +22,16 @@
 <security:authorize
 	access="hasRole('ADMIN')">
 
-	<form:form	action="${requestURI}"	modelAttribute="banner"> 
+	<form:form	action="banner/edit.do"	modelAttribute="bannerForm"> 
 	
 		<form:hidden path="id"/>
+		<form:hidden path="isPrincipal"/>
 		
 		<acme:textbox code="banner.image" path="image"/>
 		
 		
 		<acme:submit name="save" code="banner.save"/>
-		<jstl:if test="${banner.id != 0 && banner.isPrincipal == false}">
+		<jstl:if test="${bannerForm.id != 0 && bannerForm.isPrincipal==false}">
 			<acme:submit name="delete" code="banner.delete"/>
 		</jstl:if>
 		<acme:cancel code="banner.cancel" url="banner/listAdmin.do"/>

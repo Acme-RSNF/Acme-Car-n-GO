@@ -113,34 +113,29 @@ public class BannerService {
 		return result;
 	}
 
+	
+
+	
+
 	public Banner reconstruct(BannerForm bannerForm, BindingResult binding) {
-
-		Banner result = create();
-
-		result.setId(bannerForm.getId());
-		result.setImage(bannerForm.getImage());
-
-		validator.validate(result, binding);
-
-		return result;
-
-	}
-
-	public Banner reconstruct(Banner banner, BindingResult binding) {
 		Banner result;
-		if (banner.getId() == 0)
-			result = banner;
+		if (bannerForm.getId() == 0)
+			result = create();
 		else {
-			result = bannerRepository.findOne(banner.getId());
-			result.setImage(banner.getImage());
-			validator.validate(result, binding);
+			result = bannerRepository.findOne(bannerForm.getId());
+			
 		}
+		result.setImage(bannerForm.getImage());
+		result.setIsPrincipal(bannerForm.getIsPrincipal());
+		validator.validate(result, binding);
 		return result;
 	}
 
 	public BannerForm transform(Banner banner) {
 		BannerForm result = generateForm();
+		result.setId(banner.getId());
 		result.setImage(banner.getImage());
+		result.setIsPrincipal(banner.getIsPrincipal());
 		return result;
 	}
 
