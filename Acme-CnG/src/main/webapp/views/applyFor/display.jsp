@@ -35,6 +35,11 @@
 						</jstl:otherwise>
 					</jstl:choose>
 					<td><jstl:out value="${apply.status}"/></td>
+					<jstl:if test="${apply.status=='PENDING'}">
+						<td><input type="button" name="delete" value="<spring:message code="apply.delete" />"
+						onclick="if(confirm('<spring:message code="apply.confirm.delete" />')) return window.location.replace('applyFor/delete.do?id=${apply.id}')" />
+					
+					</jstl:if>
 				</tr>
 			</jstl:forEach>
 			</table>

@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +24,10 @@ import services.ApplyForService;
 import services.CustomerService;
 import services.DealService;
 import domain.ApplyFor;
+
 import domain.Customer;
 import domain.Deal;
+
 import forms.CustomerForm;
 
 @Controller
@@ -128,7 +131,19 @@ public class ApplyForController extends AbstractController {
 
 		return result;
 	}
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int id) {
 
+		ModelAndView result;
+		
+		ApplyFor apply = applyForService.findOne(id);
+		if(apply.getStatus().equals("PENDING")){
+			applyForService.delete(apply);
+		}
+		result = display();
+			
+		return result;
+	}
 	// Ancillary methods ---------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(CustomerForm customerForm) {
