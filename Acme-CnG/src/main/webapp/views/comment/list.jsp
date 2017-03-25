@@ -25,33 +25,67 @@
 	pagesize="5"
 	requestURI="${requestURI}" >
 	
-	<spring:message code="comment.title" var="titleHeader" />
-	<display:column property="title" title="${titleHeader}" sortable="true"/>
+	<jstl:choose>
+		<jstl:when test="${row.banned==true}">
+			<spring:message code="comment.title" var="titleHeader" />
+			<display:column property="title" title="${titleHeader}" sortable="true" style="font-weight:bold"/>
+			
+			<spring:message code="comment.postedMoment" var="postedMomentHeader" />
+			<display:column title="${postedMomentHeader}"	sortable="false" style="font-weight:bold"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy" /></display:column>
+			
+			<spring:message code="comment.text" var="textHeader" />
+			<display:column property="text" title="${textHeader}" sortable="false" style="font-weight:bold"/>
+			
+			<spring:message code="comment.stars" var="starsHeader" />
+			<display:column property="stars" title="${starsHeader}" sortable="true" style="font-weight:bold"/>
+			
+			<spring:message code="comment.banned" var="bannedHeader" />
+			<display:column title="${bannedHeader}" style="font-weight:bold">
+				<jstl:choose>
+					<jstl:when test="${row.banned}">
+						<a href="comment/banUnbanComment.do?commentId=${row.id}">
+							<spring:message code="comment.unban" />
+						</a>
+					</jstl:when>
+					<jstl:otherwise>
+						<a href="comment/banUnbanComment.do?commentId=${row.id}">
+							<spring:message code="comment.ban" />
+						</a>
+					</jstl:otherwise>
+				</jstl:choose>
+			</display:column>
 	
-	<spring:message code="comment.postedMoment" var="postedMomentHeader" />
-	<display:column title="${postedMomentHeader}"	sortable="false"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy" /></display:column>
-	
-	<spring:message code="comment.text" var="textHeader" />
-	<display:column property="text" title="${textHeader}" sortable="false"/>
-	
-	<spring:message code="comment.stars" var="starsHeader" />
-	<display:column property="stars" title="${starsHeader}" sortable="true"/>
-	
-	<spring:message code="comment.banned" var="bannedHeader" />
-	<display:column title="${bannedHeader}">
-		<jstl:choose>
-			<jstl:when test="${row.banned}">
-				<a href="comment/banUnbanComment.do?commentId=${row.id}">
-					<spring:message code="comment.unban" />
-				</a>
-			</jstl:when>
-			<jstl:otherwise>
-				<a href="comment/banUnbanComment.do?commentId=${row.id}">
-					<spring:message code="comment.ban" />
-				</a>
-			</jstl:otherwise>
-		</jstl:choose>
-	</display:column>
+		</jstl:when>
+		<jstl:otherwise>
+			<spring:message code="comment.title" var="titleHeader" />
+			<display:column property="title" title="${titleHeader}" sortable="true" style="none"/>
+			
+			<spring:message code="comment.postedMoment" var="postedMomentHeader" />
+			<display:column title="${postedMomentHeader}"	sortable="false" style="none"><fmt:formatDate value="${row.postedMoment }" pattern="dd/MM/yyyy" /></display:column>
+			
+			<spring:message code="comment.text" var="textHeader" />
+			<display:column property="text" title="${textHeader}" sortable="false" style="none"/>
+			
+			<spring:message code="comment.stars" var="starsHeader" />
+			<display:column property="stars" title="${starsHeader}" sortable="true" style="none"/>
+			
+			<spring:message code="comment.banned" var="bannedHeader" />
+			<display:column title="${bannedHeader}" style="none">
+				<jstl:choose>
+					<jstl:when test="${row.banned}">
+						<a href="comment/banUnbanComment.do?commentId=${row.id}">
+							<spring:message code="comment.unban" />
+						</a>
+					</jstl:when>
+					<jstl:otherwise>
+						<a href="comment/banUnbanComment.do?commentId=${row.id}">
+							<spring:message code="comment.ban" />
+						</a>
+					</jstl:otherwise>
+				</jstl:choose>
+			</display:column>
+		</jstl:otherwise>
+	</jstl:choose>
 	
 </display:table>
 
