@@ -110,6 +110,9 @@ public class MessageController extends AbstractController {
 				result = new ModelAndView("redirect:/message/sent.do");
 			} catch (Throwable oops) {
 				String msgCode = "message.error";
+				if (oops.getMessage().equals("badAttachment")){
+					msgCode = "message.attachment";
+				}
 				result = createEditModelAndView(messageForm, msgCode);
 			}
 		}
