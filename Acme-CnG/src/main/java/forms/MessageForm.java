@@ -7,9 +7,9 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.hibernate.validator.constraints.URL;
 
 import domain.Actor;
 
@@ -27,7 +27,7 @@ public class MessageForm {
 
 
 	// Getters and Setters --------------------------------
-
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return title;
@@ -36,6 +36,7 @@ public class MessageForm {
 		this.title = title;
 	}
 
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getText() {
 		return text;
@@ -44,7 +45,6 @@ public class MessageForm {
 		this.text = text;
 	}
 
-	
 	public Collection<String> getAttachment() {
 		return attachment;
 	}

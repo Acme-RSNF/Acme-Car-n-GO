@@ -19,6 +19,7 @@ import services.CommentService;
 import services.CommentableService;
 import services.CustomerService;
 import services.OfferService;
+import services.RequestService;
 import domain.Comment;
 import domain.Commentable;
 import forms.CommentForm;
@@ -43,6 +44,9 @@ public class CommentController extends AbstractController {
 
 	@Autowired
 	private OfferService			offerService;
+
+	@Autowired
+	private RequestService			requestService;
 
 
 	//Constructor----------------------
@@ -99,6 +103,19 @@ public class CommentController extends AbstractController {
 
 	}
 
+	@RequestMapping(value = "/create2", method = RequestMethod.GET)
+	public ModelAndView create2(@RequestParam int commentableId) {
+
+		ModelAndView result;
+		CommentForm commentForm;
+
+		commentForm = commentService.generateForm(commentableId);
+
+		result = createEditModelAndView2(commentForm, null);
+		return result;
+
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid CommentForm commentForm, BindingResult binding) {
 
@@ -112,23 +129,15 @@ public class CommentController extends AbstractController {
 				comment = commentService.reconstruct(commentForm, binding);
 				comment = commentService.save(comment);
 				int id = comment.getCommentable().getId();
-				if (customerService.findOne(id) != null) {
+				if (customerService.findOne(id) != null)
 					result = new ModelAndView("redirect:../customer/displayById.do?customerId=" + id);
-					String requestURI = "customer/displayById.do?customerId=" + id;
-					result.addObject("requestURI", requestURI);
-				} else if (offerService.findOne(id) != null) {
-					result = new ModelAndView("redirect:../offer/display.do?offerId=" + id);
-					String requestURI = "offer/display.do?offerId=" + id;
-					result.addObject("requestURI", requestURI);
-				} else if (administratorService.findOne(id) != null) {
-					result = new ModelAndView("redirect:../administrator/displayById.do?administratorId=" + id);
-					String requestURI = "administrator/displayById.do?administratorId=" + id;
-					result.addObject("requestURI", requestURI);
-				} else {
+				else if (requestService.findOne(id) != null)
 					result = new ModelAndView("redirect:../request/display.do?requestId=" + id);
-					String requestURI = "request/display.do?requestId=" + id;
-					result.addObject("requestURI", requestURI);
-				}
+				else if (offerService.findOne(id) != null)
+					result = new ModelAndView("redirect:../offer/display.do?offerId=" + id);
+				else if (administratorService.findOne(id) != null)
+					result = new ModelAndView("redirect:../administrator/displayById.do?administratorId=" + id);
+
 			} catch (Throwable oops) {
 				String msgCode;
 				if (oops.getMessage().equals("notCommentator")) {
@@ -143,12 +152,53 @@ public class CommentController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit2", method = RequestMethod.POST, params = "save")
+	public ModelAndView save2(@Valid CommentForm commentForm, BindingResult binding) {
+
+		ModelAndView result = new ModelAndView();
+		Comment comment;
+
+		if (binding.hasErrors())
+			result = createEditModelAndView(commentForm, null);
+		else
+			try {
+				comment = commentService.reconstruct(commentForm, binding);
+				comment = commentService.save(comment);
+				int id = comment.getCommentable().getId();
+				if (offerService.findOne(id) != null)
+					result = new ModelAndView("redirect:../offer/display.do?offerId=" + id);
+
+			} catch (Throwable oops) {
+				String msgCode;
+				if (oops.getMessage().equals("notCommentator")) {
+					msgCode = "comment.notCommentator";
+					result = createEditModelAndView2(commentForm, msgCode);
+				}
+				if (oops.getMessage().equals("notCommentable")) {
+					msgCode = "comment.notCommentable";
+					result = createEditModelAndView2(commentForm, msgCode);
+				}
+			}
+		return result;
+	}
+
 	//Ancillary Methods---------------------------
 
 	protected ModelAndView createEditModelAndView(CommentForm commentForm, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("comment/edit");
+		result.addObject("commentForm", commentForm);
+		result.addObject("message", message);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndView2(CommentForm commentForm, String message) {
+		ModelAndView result;
+
+		result = new ModelAndView("comment/edit2");
 		result.addObject("commentForm", commentForm);
 		result.addObject("message", message);
 
