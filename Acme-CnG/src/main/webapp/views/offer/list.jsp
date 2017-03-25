@@ -159,12 +159,15 @@
 	<display:column>
 	<jstl:set var="contains" value="false" />
 	<jstl:forEach items="${row.applies}" var="apply">
-			<jstl:if test="${apply.customer.userAccount.username!=pageContext.request.remoteUser && row.customer.userAccount.username != pageContext.request.remoteUser}}">
-				<input type="button" name="apply" value="<spring:message code="offer.apply" />"
-					onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
-			<jstl:set var="contains" value="true" />
+			<jstl:if test="${apply.customer.userAccount.username==pageContext.request.remoteUser}">
+				<jstl:set var="contains" value="true" />
 			</jstl:if>
 	</jstl:forEach>
+	<jstl:if test="${contains==false && pageContext.request.remoteUser!=row.customer.userAccount.username}">
+				<input type="button" name="apply" value="<spring:message code="offer.apply" />"
+					onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
+			</jstl:if>
+	
 	</display:column>
 </display:table>
 

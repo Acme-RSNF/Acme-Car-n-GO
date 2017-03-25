@@ -161,10 +161,16 @@
 		<a href="request/display.do?requestId=${row.id}"><spring:message code="request.view" /></a>
 	</display:column>
 	<display:column>
-	<jstl:if test="${row.customer.userAccount.username != pageContext.request.remoteUser}">
-		<input type="button" name="apply" value="<spring:message code="request.apply" />"
-			onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
-	</jstl:if>
+	<jstl:set var="contains" value="false" />
+	<jstl:forEach items="${row.applies}" var="apply">
+			<jstl:if test="${apply.customer.userAccount.username==pageContext.request.remoteUser}">
+				<jstl:set var="contains" value="true" />
+			</jstl:if>
+	</jstl:forEach>
+	<jstl:if test="${contains==false && pageContext.request.remoteUser!=row.customer.userAccount.username}">
+				<input type="button" name="apply" value="<spring:message code="request.apply" />"
+					onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
+			</jstl:if>
 	</display:column>
 </display:table>
 
