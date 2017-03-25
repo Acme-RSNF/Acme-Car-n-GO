@@ -110,4 +110,13 @@ public class RequestController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value ="/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int requestId){
+
+		Request request = requestService.findOne(requestId);
+		if(request.getApplies().isEmpty())
+			requestService.delete(request);
+		
+		return list();
+	}
 }

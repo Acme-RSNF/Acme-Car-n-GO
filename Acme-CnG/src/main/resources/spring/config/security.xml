@@ -52,11 +52,14 @@
 		<security:intercept-url pattern="/offer/search.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/request/search.do" access="isAuthenticated()" />
 		<security:intercept-url pattern="/request/listAdmin.do" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/request/banUnbanRequest.do" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/request/banUnbanRequest.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/request/delete.do" access="hasRole('CUSTOMER')" />
+		 
 		
 		<security:intercept-url pattern="/offer/list.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/offer/listAdmin.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/offer/banUnbanOffer.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/offer/delete.do" access="hasRole('CUSTOMER')" />
 		
 		<security:intercept-url pattern="/comment/listAdmin.do" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/comment/banUnbanComment.do" access="hasRole('ADMIN')" />  

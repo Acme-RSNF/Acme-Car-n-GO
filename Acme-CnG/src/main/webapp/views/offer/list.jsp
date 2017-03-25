@@ -167,7 +167,12 @@
 				<input type="button" name="apply" value="<spring:message code="offer.apply" />"
 					onclick="javascript: window.location.replace('applyFor/register.do?dealId=${row.id}')" />
 			</jstl:if>
-	
+	</display:column>
+	<display:column>
+		<jstl:if test="${pageContext.request.remoteUser==row.customer.userAccount.username && empty row.applies}">
+			<input type="button" name="delete" value="<spring:message code="offer.delete" />"
+			 onclick="if(confirm('<spring:message code="offer.confirm.delete" />')) return window.location.replace('offer/delete.do?offerId=${row.id}')" />
+		</jstl:if>
 	</display:column>
 </display:table>
 

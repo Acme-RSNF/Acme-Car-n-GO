@@ -109,5 +109,15 @@ public class OfferController extends AbstractController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value ="/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int offerId){
+
+		Offer offer = offerService.findOne(offerId);
+		if(offer.getApplies().isEmpty())
+			offerService.delete(offer);
+			
+		return list();
+	}
 
 }
