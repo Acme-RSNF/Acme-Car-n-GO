@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.apache.commons.validator.routines.UrlValidator;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -168,7 +167,7 @@ public class MessageService {
 		result = messageRepository.messagesSentByActorId(actor.getId());
 		return result;
 	}
-	
+
 	public Collection<Message> messagesReceivedByActorId() {
 
 		UserAccount userAccount;
@@ -185,11 +184,11 @@ public class MessageService {
 		result = actor.getReceived();
 		return result;
 	}
-	
+
 	// Reply --------------------------------------------------------------
-	
-	public Collection<Actor> reply(int messageId){
-		
+
+	public Collection<Actor> reply(int messageId) {
+
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
@@ -198,17 +197,17 @@ public class MessageService {
 		au2.setAuthority("ADMIN");
 
 		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
-		
+
 		Message message = findOne(messageId);
 		Actor actor = actorService.findByPrincipal();
-		
+
 		Assert.isTrue(message.getRecipient().equals(actor));
-		
+
 		Actor sender = message.getSender();
 		Collection<Actor> actors = new ArrayList<Actor>();
 
 		actors.add(sender);
-		
+
 		return actors;
 	}
 
@@ -227,7 +226,7 @@ public class MessageService {
 
 		MessageForm result = generate();
 		Message message = findOne(messageId);
-		
+
 		Assert.isTrue(message.getRecipient().equals(actorService.findByPrincipal()) || message.getSender().equals(actorService.findByPrincipal()));
 
 		result.setAttachment(message.getAttachment());
@@ -272,11 +271,9 @@ public class MessageService {
 		Message result = create();
 
 		Assert.isTrue(!messageForm.getSender().equals(messageForm.getRecipient()));
-		if( !messageForm.getAttachment().isEmpty()){
-			for(String s : messageForm.getAttachment()){
-				Assert.isTrue(url.isValid(s),"badAttachment");
-			}
-		}
+		if (!messageForm.getAttachment().isEmpty())
+			for (String s : messageForm.getAttachment())
+				Assert.isTrue(url.isValid(s), "badAttachment");
 		result.setAttachment(messageForm.getAttachment());
 		result.setRecipient(messageForm.getRecipient());
 		result.setSender(actorService.findByPrincipal());

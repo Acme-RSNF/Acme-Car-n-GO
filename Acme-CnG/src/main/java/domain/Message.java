@@ -6,20 +6,16 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-
-import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
-import org.hibernate.annotations.CollectionType;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Message extends DomainEntity {
@@ -73,8 +69,9 @@ public class Message extends DomainEntity {
 	private Actor	sender;
 	private Actor	recipient;
 
+
 	@Valid
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Actor getSender() {
 		return sender;
 	}
@@ -82,7 +79,7 @@ public class Message extends DomainEntity {
 		this.sender = sender;
 	}
 	@Valid
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	public Actor getRecipient() {
 		return recipient;
 	}

@@ -32,7 +32,7 @@
 		
 		<acme:submit name="save" code="banner.save"/>
 		<jstl:if test="${bannerForm.id != 0 && bannerForm.isPrincipal==false}">
-			<acme:submit name="delete" code="banner.delete"/>
+			<input type="submit" name="delete" value="<spring:message code="banner.delete" />" onclick="return confirm('<spring:message code="banner.confirm.delete" />')" />
 		</jstl:if>
 		<acme:cancel code="banner.cancel" url="banner/listAdmin.do"/>
 		
