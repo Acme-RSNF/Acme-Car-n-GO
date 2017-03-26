@@ -81,6 +81,13 @@ public class ApplyForService {
 
 		Assert.notNull(applyFor);
 		ApplyFor result;
+		
+		Collection<ApplyFor> applies = findByCreator();
+		
+		for(ApplyFor a : applies){
+			Assert.isTrue(a.getDeal().getId()!=applyFor.getDeal().getId());
+		}
+		
 		result = applyForRepository.save(applyFor);
 
 		return result;
@@ -113,6 +120,8 @@ public class ApplyForService {
 
 		Assert.notNull(applyFor);
 		Assert.isTrue(applyFor.getId() != 0);
+		Assert.isTrue(applyFor.getStatus().equals("PENDING"));
+		Assert.isTrue(applyFor.getCustomer().equals(customerService.findByPrincipal()));
 
 		applyForRepository.delete(applyFor);
 	}
