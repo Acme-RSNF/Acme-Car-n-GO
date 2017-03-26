@@ -41,7 +41,11 @@ public class BannerService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Banner create() {
-
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Banner result;
 		result = new Banner();
 		result.setIsPrincipal(false);
@@ -68,7 +72,11 @@ public class BannerService {
 	}
 
 	public Banner save(Banner banner) {
-
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Assert.notNull(banner);
 		Banner result;
 		result = bannerRepository.save(banner);
@@ -77,7 +85,11 @@ public class BannerService {
 	}
 
 	public void delete(Banner banner) {
-
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Assert.notNull(banner);
 		Assert.isTrue(banner.getId() != 0);
 		if (banner.getIsPrincipal() == false)
