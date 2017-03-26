@@ -91,7 +91,15 @@ public class CustomerService {
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String md5 = encoder.encodePassword(password, null);
 		customer.getUserAccount().setPassword(md5);
-
+		
+		if(customer.getId()!=0){
+			Assert.isTrue(findByPrincipal().getId()==customer.getId());
+			UserAccount userAccount;
+			userAccount = LoginService.getPrincipal();
+			Authority au = new Authority();
+			au.setAuthority("CUSTOMER");
+			Assert.isTrue(userAccount.getAuthorities().contains(au));
+		}
 		Customer result = customerRepository.save(customer);
 
 		return result;
@@ -108,6 +116,12 @@ public class CustomerService {
 	public void delete(Customer customer) {
 		Assert.notNull(customer);
 		Assert.isTrue(customer.getId() != 0);
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 
 		customerRepository.delete(customer);
 	}

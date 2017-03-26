@@ -21,11 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplyForService;
-import services.CustomerService;
 import services.DealService;
 import domain.ApplyFor;
-
-import domain.Customer;
 import domain.Deal;
 
 import forms.CustomerForm;
@@ -42,8 +39,6 @@ public class ApplyForController extends AbstractController {
 	@Autowired
 	private DealService	dealService;
 	
-	@Autowired
-	private CustomerService	customerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -75,19 +70,11 @@ public class ApplyForController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int dealId) {
 		ModelAndView result;
-		Customer customer=customerService.findByPrincipal();
 		Deal deal = dealService.findOne(dealId);
-		Boolean contains=false;
-		for(ApplyFor a :deal.getApplies()){
-			if(a.getCustomer().equals(customer)){
-				contains=true;
-			}
-		}
-		if(contains==false){
-			ApplyFor applyFor = applyForService.create();
-			applyFor.setDeal(deal);
-			applyForService.save(applyFor);
-		}
+	
+		ApplyFor applyFor = applyForService.create();
+		applyFor.setDeal(deal);
+		applyForService.save(applyFor);
 		result = display();
 
 		return result;
