@@ -27,9 +27,9 @@ public class CustomerServiceTest extends AbstractTest {
 
 	// Tests --------------------------------------------------
 
-	/*An actor who is authenticated as a customer must be able to Apply for an offer or a request, 
-	 * which must be accepted by the customer who posted it. Applications can be pending, accepted, or denied. 
-	 * 
+	/*An actor who is not authenticated must be able to:
+			Watch a welcome page with a banner that publicises Acme Car'n go! and a button to
+				register as a customer or to login.
 	 * Para ello vamos a probar crear un applyFor estando registrado en el sistema como customer, sin 
 	 * estar registrado en el sistema y siendo admin.
 	 * Comprobamos también que no permite hacer 2 deals desde el mismo customer hacia la misma deal*/
