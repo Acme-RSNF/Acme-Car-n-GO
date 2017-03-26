@@ -3,7 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,13 +39,11 @@ public class AdministratorService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Administrator create() {
-		UserAccount userAccount = new UserAccount();
-		List<Authority> authorities = new ArrayList<Authority>();
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
 		Authority au = new Authority();
 		au.setAuthority("ADMIN");
-		authorities.add(au);
-		userAccount.setAuthorities(authorities);
-
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Administrator result;
 		result = new Administrator();
 		result.setUserAccount(userAccount);
@@ -80,6 +78,11 @@ public class AdministratorService {
 	}
 
 	public Administrator save(Administrator administrator) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Assert.notNull(administrator);
 
 		Administrator result;
@@ -90,6 +93,11 @@ public class AdministratorService {
 	}
 
 	public void delete(Administrator administrator) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Assert.notNull(administrator);
 		Assert.isTrue(administrator.getId() != 0);
 

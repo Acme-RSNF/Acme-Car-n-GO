@@ -1,7 +1,7 @@
 
 package services;
 
-import java.util.Collection;
+
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+
 
 import utilities.AbstractTest;
-import domain.Actor;
+
 import domain.ApplyFor;
-import domain.Message;
-import forms.MessageForm;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/junit.xml"})
@@ -23,10 +22,6 @@ import forms.MessageForm;
 public class ApplyForServiceTest extends AbstractTest {
 
 	// The SUT -----------------------------------------------
-
-	@Autowired
-	private MessageService	messageService;
-	
 
 	@Autowired
 	private ApplyForService	applyForService;
