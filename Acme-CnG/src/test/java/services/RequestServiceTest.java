@@ -135,38 +135,72 @@ public class RequestServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * List the requests.
+	 * Delete a request.
 	 * 
-	 * Vamos a registrarnos como un customer y listar las requests
-	 * y vamos a hacer lo mismo como usuario no autenticado
+	 * Vamos a registrarnos como un customer y borrar una request
+	 * y vamos a hacer lo mismo como un ususario no autenticado
 	 */
 	@Test
 	public void driverDelete() {
 		Object testingData[][] = {
 			{
-				"customer1", null
+				"customer1", 64, null
 			}, // Borraremos una request al ser un customer.
 			{
-				null, IllegalArgumentException.class
+				null, 64, IllegalArgumentException.class
 			}
 		// pero no podemos borrarla como usuario no autenticado.
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			templateList((String) testingData[i][0], (Class<?>) testingData[i][1]);
+			templateDelete((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 
-	protected void templateDelete(String username, Class<?> expected) {
+	protected void templateDelete(String username, int id, Class<?> expected) {
 		Class<?> caught;
-
-		Request request = requestService.findOne(64);
-		Collection<Request> auxR = requestService.findAll();
 
 		caught = null;
 		try {
 			authenticate(username); // Nos autenticamos como el usuario
-			requestService.delete(request); // Obtenemos los requests.
-			Assert.isTrue(!auxR.contains(request)); // Comprobamos que la lista de requests ya no esta la request borrada
+			Request request = requestService.findOne(id); //Buscamos la request a borrar
+			requestService.delete(request); // Borramos la request.
+			unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+
+	/*
+	 * Ban or unban a request.
+	 * 
+	 * Vamos a registrarnos como un admin y banear una request
+	 * y vamos a hacer lo mismo como un customer, pero éste no podría
+	 */
+	@Test
+	public void driverBanUnban() {
+		Object testingData[][] = {
+			{
+				"admin", 64, null
+			}, // Banearemos una request(no está baneada) al ser un admin.
+			{
+				"customer1", 64, IllegalArgumentException.class
+			}
+		// Y probaremos a hacerlo como customer, pero no se podría.
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			templateBanUnban((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void templateBanUnban(String username, int id, Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			authenticate(username); // Nos autenticamos como el usuario
+			requestService.banUnbanRequest(requestService.findOne(id)); // Obtenemos los requests.
+			Assert.isTrue(requestService.findOne(id).getBanned() == true); // Comprobamos que la request esta baneada
 			unauthenticate();
 		} catch (Throwable oops) {
 			caught = oops.getClass();

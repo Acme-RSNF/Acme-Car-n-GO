@@ -142,6 +142,8 @@ public class RequestService {
 		Assert.isTrue(request.getId() != 0);
 
 		requestRepository.delete(request);
+		Collection<Request> auxR = findAll();
+		Assert.isTrue(!auxR.contains(request));
 	}
 
 	// Other business methods -------------------------------------------------
