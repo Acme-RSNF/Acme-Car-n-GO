@@ -69,8 +69,21 @@ public class OfferService {
 	}
 
 	public Collection<Offer> findAll() {
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+	
+		
 		Collection<Offer> result;
 
+		
+		
 		result = offerRepository.findAll();
 		Assert.notNull(result);
 
@@ -78,6 +91,18 @@ public class OfferService {
 	}
 
 	public Offer findOne(int offerId) {
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
+	
+		
+		
 		Offer result;
 
 		result = offerRepository.findOne(offerId);
@@ -184,6 +209,15 @@ public class OfferService {
 	}
 
 	public Collection<Offer> findByKey(String key) {
+		
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+		
+		Assert.isTrue(!key.isEmpty());
+		
 		Collection<Offer> aux = offerRepository.findByKey(key);
 		Collection<Offer> result = new ArrayList<Offer>();
 		for (Offer o : aux)

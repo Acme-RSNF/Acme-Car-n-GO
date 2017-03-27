@@ -2,6 +2,7 @@
 package services;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.Coordinate;
 import domain.Offer;
+import domain.Request;
 import forms.OfferForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -155,4 +157,131 @@ public class OfferServiceTest extends AbstractTest {
 		}
 		checkExceptions(expected, caught);
 	}
+	
+	/*
+	 * List the offer.
+	 * 
+	 * Vamos a registrarnos como un customer y listar las offer
+	 * y vamos a hacer lo mismo como usuario no autenticado
+	 */
+	@Test
+	public void driverList() {
+		Object testingData[][] = {
+			{"customer1", null}, // Obtenedremos todas las offer al ser un customer.
+			{"admin", null}, // Obtendremos todas las offers
+			{null, IllegalArgumentException.class} // Y tambien lo haremos como usuario no autenticado.
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			templateList((String) testingData[i][0], (Class<?>) testingData[i][1]);
+	}
+
+	protected void templateList(String username, Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			authenticate(username); // Nos autenticamos como el usuario
+			Collection<Offer> offers = offerService.findAll(); // Obtenemos los offer.
+			Assert.isTrue(!offers.isEmpty()); // Comprobamos que la lista de requests no esta vacía
+			unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
+	/*
+	 * Ban or unban a offer.
+	 * 
+	 * Vamos a registrarnos como un admin y banear una offer
+	 * y vamos a hacer lo mismo como un customer, pero éste no podría
+	 */
+	@Test
+	public void driverBanUnban() {
+		Object testingData[][] = {
+			// Desbanearemos una request(está baneada) al ser un admin.
+			{"admin", 59, null}, 
+			// Banearemos una request(no está baneada) al ser un admin.
+			{"admin", 60, null}, 
+			 // Y probaremos a hacerlo como customer, pero no se podría.
+			{"customer1", 59, IllegalArgumentException.class},
+			 // Y probaremos a hacerlo sin autenticar, pero no se podría.
+			{null, 59, IllegalArgumentException.class},
+			// Intentamos banear/desbanear una offer que no existe 
+			{"admin", 79, IllegalArgumentException.class}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			templateBanUnban((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void templateBanUnban(String username, int id, Class<?> expected) {
+		Class<?> caught;
+
+		Boolean ban;
+		Offer offer;
+		
+		caught = null;
+		try {
+			authenticate(username); // Nos autenticamos como el usuario
+			
+			offer = offerService.findOne(id);
+			ban = offer.getBanned();
+			offerService.banUnbanOffer(offer); // Obtenemos los requests.
+			offer = offerService.save(offer);
+			Assert.isTrue(offer.getBanned() != ban); // Comprobamos que la request esta baneada
+			unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+
+	/*
+	 * Search for offers using a single keyword that must appear somewhere
+	 * in their titles, descriptions, or places.
+	 * 
+	 * 
+	 * Vamos a registrarnos como un customer y buscar offers con una palabra clave
+	 * y vamos a hacer lo mismo como usuario no autenticado
+	 */
+	@Test
+	public void driverSearch() {
+		Object testingData[][] = {
+			// Obtenedremos los resultados de la busqueda por títulor.
+			{"customer1", "Offer 2", null}, 
+			// Obtenedremos los resultados de la busqueda por descripción.
+			{"customer1", "descripcion", null}, 
+			// Obtenedremos los resultados de la busqueda por origen.
+			{"customer1", "Madrid", null}, 
+			// Obtenedremos los resultados de la busqueda por destino.
+			{"customer1", "Sevilla", null}, 
+			// Intentamos hacer una búsqueda siendo la key nula
+			{"customer1", "", IllegalArgumentException.class},
+			// Intentamos hacer una búsqueda siendo admin
+			{"admin", "Offer 2", IllegalArgumentException.class},
+			// Intentamos hacer una búsqueda sin estar autenticados
+			{null, "Offer 2", IllegalArgumentException.class}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			templateSearch((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void templateSearch(String username, String keyword, Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			authenticate(username); // Nos autenticamos como el usuario
+			Collection<Offer> offers = offerService.findByKey(keyword); // Obtenemos los requests de la busqueda.
+			Assert.isTrue(!offers.isEmpty()); // Comprobamos que la lista de requests no esta vacía
+			unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+	
 }
