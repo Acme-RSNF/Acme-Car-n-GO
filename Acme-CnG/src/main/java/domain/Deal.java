@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.persistence.Column;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -52,6 +53,7 @@ public class Deal extends Commentable {
 		this.description = description;
 	}
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getMoment() {
@@ -80,6 +82,7 @@ public class Deal extends Commentable {
 		this.originCoordinate = originCoordinate;
 	}
 
+	@NotBlank
 	public String getDestination() {
 		return destination;
 	}

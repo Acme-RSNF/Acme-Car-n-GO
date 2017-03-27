@@ -43,11 +43,16 @@ public class OfferServiceTest extends AbstractTest {
 	@Test
 	public void driverCreate() {
 		Object testingData[][] = {
-			{
-				"customer1", "Titulo", "Descripcion", "26/03/2017", "Sevilla", "37.3914", "-5.9591", "Cordoba", "37.8881", "-4.7793", null
-			}, {
-				"customer1", "Titulo", "Descripcion", "26/03/2017", "Sevilla", " ", " ", "Cordoba", " ", " ", null
-			}
+			{"customer1", "Titulo", "Descripcion", "26/03/2017", "Sevilla", "37.3914", "-5.9591", "Cordoba", "37.8881", "-4.7793", null}, 
+			{"customer1", "Titulo", "Descripcion", "26/03/2017", "Sevilla", " ", " ", "Cordoba", " ", " ", null},
+			{"admin", "Titulo", "Descripcion", "26/03/2017", "Sevilla", " ", " ", "Cordoba", " ", " ", IllegalArgumentException.class},
+			{null, "Titulo", "Descripcion", "26/03/2017", "Sevilla", " ", " ", "Cordoba", " ", " ", IllegalArgumentException.class},
+			{"customer1", " ", "Descripcion", "26/03/2017", "Sevilla", " ", " ", "Cordoba", " ", " ", NullPointerException.class},
+			{"customer1", "Titulo", " ", "26/03/2017", "Sevilla", " ", " ", "Cordoba", " ", " ", NullPointerException.class},
+			{"customer1", "Titulo", "Descripcion", "", "Sevilla", " ", " ", "Cordoba", " ", " ", IllegalArgumentException.class},
+			{"customer1", "Titulo", "Descripcion", "26/03/2017", " ", " ", " ", "Cordoba", " ", " ", NullPointerException.class},
+			{"customer1", "Titulo", "Descripcion", "26/03/2017", "Sevilla", " ", " ", " ", " ", " ", NullPointerException.class}
+			
 
 		};
 
@@ -72,6 +77,7 @@ public class OfferServiceTest extends AbstractTest {
 
 			offerForm.setTitle(title);
 
+			Assert.isTrue(!moment.equals(""));
 			offerForm.setMoment(fecha.parse(moment));
 			offerForm.setDescription(description);
 
