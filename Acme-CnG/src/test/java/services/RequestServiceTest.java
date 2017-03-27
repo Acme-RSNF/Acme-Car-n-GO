@@ -208,4 +208,43 @@ public class RequestServiceTest extends AbstractTest {
 		checkExceptions(expected, caught);
 	}
 
+	/*
+	 * Search for requests using a single keyword that must appear somewhere
+	 * in their titles, descriptions, or places.
+	 * 
+	 * 
+	 * Vamos a registrarnos como un customer y buscar requests con una palabra clave
+	 * y vamos a hacer lo mismo como usuario no autenticado
+	 */
+	@Test
+	public void driverSearch() {
+		Object testingData[][] = {
+			{
+				"customer1", "request2", null
+			}, // Obtenedremos los resultados de la busqueda al ser un customer.
+			{
+				null, "request2", IllegalArgumentException.class
+			}
+		// Y tambien lo haremos como usuario no autenticado, pero no hará nada.
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			templateSearch((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
+	}
+
+	protected void templateSearch(String username, String keyword, Class<?> expected) {
+		Class<?> caught;
+
+		caught = null;
+		try {
+			authenticate(username); // Nos autenticamos como el usuario
+			Collection<Request> requests = requestService.findByKey(keyword); // Obtenemos los requests de la busqueda.
+			Assert.isTrue(!requests.isEmpty()); // Comprobamos que la lista de requests no esta vacía
+			unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+		checkExceptions(expected, caught);
+	}
+
 }

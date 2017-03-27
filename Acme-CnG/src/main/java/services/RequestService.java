@@ -202,6 +202,12 @@ public class RequestService {
 	}
 
 	public Collection<Request> findByKey(String key) {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
+
 		Collection<Request> aux = requestRepository.findByKey(key);
 		Collection<Request> result = new ArrayList<Request>();
 		for (Request r : aux)
