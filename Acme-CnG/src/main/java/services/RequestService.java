@@ -69,6 +69,15 @@ public class RequestService {
 	}
 
 	public Collection<Request> findAll() {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
 		Collection<Request> result;
 
 		result = requestRepository.findAll();
@@ -78,6 +87,15 @@ public class RequestService {
 	}
 
 	public Request findOne(int requestId) {
+
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("CUSTOMER");
+		Authority au2 = new Authority();
+		au2.setAuthority("ADMIN");
+
+		Assert.isTrue(userAccount.getAuthorities().contains(au) || userAccount.getAuthorities().contains(au2));
 		Request result;
 
 		result = requestRepository.findOne(requestId);
