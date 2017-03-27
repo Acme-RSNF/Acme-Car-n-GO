@@ -122,6 +122,8 @@ public class OfferService {
 
 		Assert.notNull(offer);
 		Assert.isTrue(offer.getId() != 0);
+		Assert.isTrue(offer.getApplies().isEmpty());
+		Assert.isTrue(offer.getCustomer().equals(customerService.findByPrincipal()));
 
 		offerRepository.delete(offer);
 	}
