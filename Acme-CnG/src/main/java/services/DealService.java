@@ -116,12 +116,22 @@ public class DealService {
 	// Dashboard Services -----------------------
 
 	public Double ratioOfferVsRequest() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Double result;
 		result = dealRepository.ratioOfferVsRequest();
 		return result;
 	}
 
 	public Double avgApplyDeal() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Double result;
 		result = dealRepository.avgApplyDeal();
 		return result;

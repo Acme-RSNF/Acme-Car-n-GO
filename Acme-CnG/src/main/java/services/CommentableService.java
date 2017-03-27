@@ -6,8 +6,12 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.CommentableRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Commentable;
 
 @Service
@@ -56,6 +60,11 @@ public class CommentableService {
 	//DashBoard Services -----
 
 	public Double avgComment() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Double result;
 		result = commentableRepository.avgComment();
 		return result;

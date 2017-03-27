@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
+import security.Authority;
 import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 
 @Service
@@ -96,18 +98,33 @@ public class ActorService {
 	//Dashboard Services ---------
 
 	public Double avgCommentByActor() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Double result;
 		result = actorRepository.avgCommentByActor();
 		return result;
 	}
 
 	public Collection<Actor> actorAvgCommentPlusTenPercent() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Actor> result = new ArrayList<Actor>();
 		result = actorRepository.actorAvgCommentPlusTenPercent();
 		return result;
 	}
 
 	public Collection<Actor> actorAvgCommentMinusTenPercent() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Actor> result = new ArrayList<Actor>();
 		result = actorRepository.actorAvgCommentMinusTenPercent();
 		return result;
@@ -132,6 +149,11 @@ public class ActorService {
 	}
 
 	public Collection<Double> minAvgMaxReceived() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Double> result;
 		Double aux;
 
@@ -150,12 +172,22 @@ public class ActorService {
 	}
 
 	public Collection<Actor> actorSentMoreMessage() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Actor> result = new ArrayList<Actor>();
 		result = actorRepository.actorSentMoreMessage();
 		return result;
 	}
 
 	public Collection<Actor> actorReceivedMoreMessage() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Actor> result = new ArrayList<Actor>();
 		result = actorRepository.actorReceivedMoreMessage();
 		return result;

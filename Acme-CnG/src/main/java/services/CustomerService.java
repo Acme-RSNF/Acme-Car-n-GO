@@ -153,18 +153,33 @@ public class CustomerService {
 	//Dashboard Services ------
 
 	public Double avgOfferRequestCustomer() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Double result;
 		result = customerRepository.avgOfferRequestCustomer();
 		return result;
 	}
 
 	public Collection<Customer> customerApplyAccepted() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Customer> result;
 		result = customerRepository.customerApplyAccepted();
 		return result;
 	}
 
 	public Collection<Customer> customerApplyDenied() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		Authority au = new Authority();
+		au.setAuthority("ADMIN");
+		Assert.isTrue(userAccount.getAuthorities().contains(au));
 		Collection<Customer> result;
 		result = customerRepository.customerApplyDenied();
 		return result;
