@@ -122,7 +122,8 @@ public class CustomerService {
 		Authority au = new Authority();
 		au.setAuthority("CUSTOMER");
 		Assert.isTrue(userAccount.getAuthorities().contains(au));
-
+		Assert.isTrue(customer.getUserAccount().equals(LoginService.getPrincipal()));
+		
 		customerRepository.delete(customer);
 	}
 

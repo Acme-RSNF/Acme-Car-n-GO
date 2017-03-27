@@ -4,6 +4,7 @@ package services;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,17 +129,14 @@ public class CustomerServiceTest extends AbstractTest {
 	@Test
 	public void driverDelete() {
 		Object testingData[][] = {
-			{
-				"customer1", 50, null
-			}, {
-				"admin", 50, NullPointerException.class
-			}, {
-				null, 50, IllegalArgumentException.class
-			}
+			{"customer1", 50, null},
+			{"customer2", 50, DataIntegrityViolationException.class},
+			{"admin", 50, DataIntegrityViolationException.class},
+			{null, 50, IllegalArgumentException.class}
 
 		};
 		for (int i = 0; i < testingData.length; i++)
-			templateEdit((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
+			templateDelete((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}
 	protected void templateDelete(String user, int id, Class<?> expected) {
 		Class<?> caught;
@@ -147,8 +145,10 @@ public class CustomerServiceTest extends AbstractTest {
 		try {
 			authenticate(user);//Nos autenticamos como usuario
 			Customer customer = customerService.findOne(id);
+			Assert.notNull(customer);
 			customerService.delete(customer);//Eliminamos el administrador
-			Assert.isNull(customer);//Comprobamos que no sea nulo
+			Customer customer2 = customerService.findOne(id);
+			Assert.isNull(customer2);//Comprobamos que sea nulo
 			unauthenticate();
 		} catch (Throwable oops) {
 			caught = oops.getClass();
