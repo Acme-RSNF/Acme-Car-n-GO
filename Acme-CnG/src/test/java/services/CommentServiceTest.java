@@ -29,7 +29,10 @@ public class CommentServiceTest extends AbstractTest {
 	// Tests ----------------------------------------------------
 
 	/*
-	 * An admin can ban or unban a comment that he or she finds inappropriate.
+	 * An actor who is authenticated as an administrator must be able to:
+		Ban a comment that he or she finds inappropriate. Such comments must not be
+		displayed to a general audience, only to the administrators and the actor who posted
+		it.
 	 */
 	@Test
 	public void driveBanUnbanComment() {

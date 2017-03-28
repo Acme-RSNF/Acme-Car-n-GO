@@ -100,11 +100,8 @@ public class BannerServiceTest extends AbstractTest {
 	@Test
 	public void driverDelete() {
 		Object testingData[][] = {
-			{
-				"admin", 41, null
-			}, {
-				"customer1", 41, IllegalArgumentException.class
-			}
+			{"admin", 41, null},
+			{"customer1", 41, IllegalArgumentException.class}
 		};
 		for (int i = 0; i < testingData.length; i++)
 			templateDelete((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);

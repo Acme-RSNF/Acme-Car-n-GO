@@ -66,8 +66,6 @@ public class BannerService {
 		Banner result;
 
 		result = bannerRepository.findOne(bannerId);
-		Assert.notNull(result);
-
 		return result;
 	}
 

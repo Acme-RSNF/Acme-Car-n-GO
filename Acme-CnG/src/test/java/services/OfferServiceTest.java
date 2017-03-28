@@ -15,7 +15,6 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.Coordinate;
 import domain.Offer;
-import domain.Request;
 import forms.OfferForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
